@@ -1,0 +1,450 @@
+{
+	"info": {
+		"name": "PlayStayHome - Complete API",
+		"description": "Collection complète pour tester toutes les APIs du projet PlayStayHome",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{"key": "Content-Type", "value": "application/json"},
+							{"key": "Accept", "value": "application/json"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\",\n  \"password_confirmation\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/register",
+							"host": ["{{base_url}}"],
+							"path": ["api", "register"]
+						}
+					}
+				},
+				{
+					"name": "Register Admin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{"key": "Content-Type", "value": "application/json"},
+							{"key": "Accept", "value": "application/json"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Admin User\",\n  \"email\": \"admin@example.com\",\n  \"password\": \"password123\",\n  \"password_confirmation\": \"password123\",\n  \"role\": \"admin\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/register",
+							"host": ["{{base_url}}"],
+							"path": ["api", "register"]
+						}
+					}
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{"key": "Content-Type", "value": "application/json"},
+							{"key": "Accept", "value": "application/json"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/login",
+							"host": ["{{base_url}}"],
+							"path": ["api", "login"]
+						}
+					}
+				},
+				{
+					"name": "Get Current User",
+					"request": {
+						"method": "GET",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{token}}"}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/user",
+							"host": ["{{base_url}}"],
+							"path": ["api", "user"]
+						}
+					}
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{token}}"}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/logout",
+							"host": ["{{base_url}}"],
+							"path": ["api", "logout"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Consoles",
+			"item": [
+				{
+					"name": "Get All Consoles",
+					"request": {
+						"method": "GET",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{token}}"}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/consoles",
+							"host": ["{{base_url}}"],
+							"path": ["api", "consoles"]
+						}
+					}
+				},
+				{
+					"name": "Get Console by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{token}}"}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/consoles/1",
+							"host": ["{{base_url}}"],
+							"path": ["api", "consoles", "1"]
+						}
+					}
+				},
+				{
+					"name": "Create Console (Admin)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{"key": "Content-Type", "value": "application/json"},
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{admin_token}}"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"PlayStation 5\",\n  \"brand\": \"Sony\",\n  \"daily_price\": 50,\n  \"ability\": \"4K Gaming, Ray Tracing\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/consoles",
+							"host": ["{{base_url}}"],
+							"path": ["api", "consoles"]
+						}
+					}
+				},
+				{
+					"name": "Update Console (Admin)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{"key": "Content-Type", "value": "application/json"},
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{admin_token}}"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"PlayStation 5 Pro\",\n  \"daily_price\": 60\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/consoles/1",
+							"host": ["{{base_url}}"],
+							"path": ["api", "consoles", "1"]
+						}
+					}
+				},
+				{
+					"name": "Delete Console (Admin)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{admin_token}}"}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/consoles/1",
+							"host": ["{{base_url}}"],
+							"path": ["api", "consoles", "1"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Games",
+			"item": [
+				{
+					"name": "Get All Games",
+					"request": {
+						"method": "GET",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{token}}"}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/games",
+							"host": ["{{base_url}}"],
+							"path": ["api", "games"]
+						}
+					}
+				},
+				{
+					"name": "Get Game by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{token}}"}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/games/1",
+							"host": ["{{base_url}}"],
+							"path": ["api", "games", "1"]
+						}
+					}
+				},
+				{
+					"name": "Create Game (Admin)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{"key": "Content-Type", "value": "application/json"},
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{admin_token}}"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"FIFA 24\",\n  \"genre\": \"Sport\",\n  \"image\": \"https://example.com/fifa24.jpg\",\n  \"console_ids\": [1, 2]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/games",
+							"host": ["{{base_url}}"],
+							"path": ["api", "games"]
+						}
+					}
+				},
+				{
+					"name": "Update Game (Admin)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{"key": "Content-Type", "value": "application/json"},
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{admin_token}}"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"FIFA 25\",\n  \"genre\": \"Sport\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/games/1",
+							"host": ["{{base_url}}"],
+							"path": ["api", "games", "1"]
+						}
+					}
+				},
+				{
+					"name": "Delete Game (Admin)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{admin_token}}"}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/games/1",
+							"host": ["{{base_url}}"],
+							"path": ["api", "games", "1"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Coupons",
+			"item": [
+				{
+					"name": "Get All Coupons",
+					"request": {
+						"method": "GET",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{token}}"}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/coupons",
+							"host": ["{{base_url}}"],
+							"path": ["api", "coupons"]
+						}
+					}
+				},
+				{
+					"name": "Get Coupon by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{token}}"}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/coupons/1",
+							"host": ["{{base_url}}"],
+							"path": ["api", "coupons", "1"]
+						}
+					}
+				},
+				{
+					"name": "Validate Coupon",
+					"request": {
+						"method": "POST",
+						"header": [
+							{"key": "Content-Type", "value": "application/json"},
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{token}}"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"code\": \"SUMMER2024\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/coupons/validate",
+							"host": ["{{base_url}}"],
+							"path": ["api", "coupons", "validate"]
+						}
+					}
+				},
+				{
+					"name": "Create Coupon (Admin)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{"key": "Content-Type", "value": "application/json"},
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{admin_token}}"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"code\": \"SUMMER2024\",\n  \"value\": 20,\n  \"expiration_date\": \"2024-12-31\",\n  \"limit\": 100,\n  \"is_active\": true\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/coupons",
+							"host": ["{{base_url}}"],
+							"path": ["api", "coupons"]
+						}
+					}
+				},
+				{
+					"name": "Update Coupon (Admin)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{"key": "Content-Type", "value": "application/json"},
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{admin_token}}"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"value\": 30,\n  \"limit\": 150\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/coupons/1",
+							"host": ["{{base_url}}"],
+							"path": ["api", "coupons", "1"]
+						}
+					}
+				},
+				{
+					"name": "Delete Coupon (Admin)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{admin_token}}"}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/coupons/1",
+							"host": ["{{base_url}}"],
+							"path": ["api", "coupons", "1"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Chat",
+			"item": [
+				{
+					"name": "Get Messages with User",
+					"request": {
+						"method": "GET",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{token}}"}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/chat/2",
+							"host": ["{{base_url}}"],
+							"path": ["api", "chat", "2"]
+						},
+						"description": "Récupère tous les messages avec l'utilisateur ID 2"
+					}
+				},
+				{
+					"name": "Send Message",
+					"request": {
+						"method": "POST",
+						"header": [
+							{"key": "Content-Type", "value": "application/json"},
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{token}}"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"message\": \"Bonjour, je veux réserver une console\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/chat/2",
+							"host": ["{{base_url}}"],
+							"path": ["api", "chat", "2"]
+						},
+						"description": "Envoie un message à l'utilisateur ID 2"
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "admin_token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
