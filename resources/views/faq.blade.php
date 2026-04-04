@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FAQ - PLAYSTAIHOME</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,11 +18,11 @@
         }
 
         .text-primary {
-            color: #1978e5;
+            color: #2f6bff;
         }
 
         .bg-primary {
-            background-color: #1978e5;
+            background-color: #2f6bff;
         }
 
         .border-primary {
@@ -34,35 +35,32 @@
             align-items: center;
             height: 40px;
             font-size: 0.875rem;
-            font-weight: 500;
+            font-weight: 600;
             color: #4b5563;
-            transition: color 0.2s ease;
+            transition: color .2s ease;
         }
 
         .nav-link::after {
             content: "";
             position: absolute;
             left: 0;
-            bottom: 0;
+            bottom: -1px;
             width: 100%;
             height: 2px;
-            background-color: #1978e5;
+            background: #2f6bff;
             transform: scaleX(0);
             transform-origin: center;
-            transition: transform 0.2s ease;
+            transition: transform .2s ease;
         }
 
-        .nav-link:hover {
-            color: #111827;
+        .nav-link:hover,
+        .nav-link.active {
+            color: #2f6bff;
         }
 
         .nav-link:hover::after,
         .nav-link.active::after {
             transform: scaleX(1);
-        }
-
-        .nav-link.active {
-            color: #111827;
         }
 
         summary {
@@ -96,13 +94,12 @@
                 <div class="flex flex-1 items-center justify-end gap-8">
                     <nav class="hidden items-center gap-9 md:flex">
                         <a href="/" class="nav-link">Home</a>
+                        <a href="/catalogue" class="nav-link">Catalogue</a>
                         <a href="/contact" class="nav-link">Contact Us</a>
                         <a href="/faq" class="nav-link active">FAQ</a>
                         <a href="/register" class="nav-link">Sign Up</a>
                         <a href="/login" class="nav-link">Sign In</a>
                     </nav>
-
-                    
                 </div>
             </div>
         </header>
