@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log In - PLAYSTAIHOME</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
@@ -21,7 +22,7 @@
                 <a class="text-gray-600 text-sm font-medium hover:text-primary" href="faq">FAQ</a>
                 <a class="text-gray-600 text-sm font-medium hover:text-primary" href="contact">Contact US</a>
             </nav>
-            <button class="bg-primary text-white px-5 py-2 rounded-lg text-sm font-bold hover:bg-blue-700">Sign Up</button>
+            <a href="/register" class="bg-primary text-white px-5 py-2 rounded-lg text-sm font-bold hover:bg-blue-700">Sign Up</a>
         </div>
     </header>
 
