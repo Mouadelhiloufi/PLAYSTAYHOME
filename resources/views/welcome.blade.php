@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PLAYSTAIHOME</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -262,6 +263,30 @@
             border-radius: 16px;
             background: #1f2937;
         }
+        .ps5-viewer-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+}
+
+.ps5-viewer-wrap::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  width: 65%;
+  height: 45px;
+  background: rgba(59, 130, 246, 0.45);
+  filter: blur(28px);
+  border-radius: 999px;
+  z-index: 0;
+}
+
+.ps5-viewer-wrap model-viewer {
+  position: relative;
+  z-index: 1;
+}
     </style>
 </head>
 <body>
@@ -278,6 +303,7 @@
                 <div class="flex flex-1 items-center justify-end gap-8">
                     <nav class="hidden items-center gap-9 md:flex">
                         <a href="/" class="nav-link active">Home</a>
+                        <a href="/catalogue" class="nav-link">Catalogue</a>
                         <a href="/contact" class="nav-link">Contact Us</a>
                         <a href="/faq" class="nav-link">FAQ</a>
                         <a href="/register" class="nav-link">Sign Up</a>
@@ -288,7 +314,7 @@
         </header>
 
         <main>
-            <section class="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-6 py-16 md:grid-cols-2 md:py-10">
+            <section class=" mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-6 py-16 md:grid-cols-2 md:py-10">
                 <div class="max-w-xl">
                     <p class="mb-6 text-xs font-extrabold uppercase tracking-widest text-primary">Nouveau : PS5 Slim disponible</p>
                     <h1 class="max-w-md text-5xl font-black leading-none tracking-tight text-gray-900 md:text-6xl">
@@ -313,6 +339,7 @@
                 </div>
 
                 <div class="flex justify-center md:justify-end">
+                    <div class="ps5-viewer-wrap ">
                     <model-viewer
                         src="/models/ps5.glb"
                         alt="PlayStation 5"
@@ -323,8 +350,10 @@
                         reveal="auto"
                         shadow-intensity="1.5"
                         shadow-blur="1" shadow-softness="1.5"
+                        class="overflow-visible"
                         style="width: 100%; max-width: 560px; height: 380px; background: transparent;"
                     ></model-viewer>
+                    </div>
                 </div>
             </section>
 
