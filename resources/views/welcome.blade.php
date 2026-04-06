@@ -309,7 +309,7 @@
                     </p>
 
                     <div class="mt-8 flex flex-wrap gap-4">
-                        <a href="#" class="rounded-xl bg-primary px-6 py-3 text-sm font-bold text-white shadow-lg shadow-blue-200">
+                        <a href="/catalogue" class="rounded-xl bg-primary px-6 py-3 text-sm font-bold text-white shadow-lg shadow-blue-200">
                             Voir le catalogue
                         </a>
                         <a href="#" class="rounded-xl border border-gray-200 bg-white px-6 py-3 text-sm font-bold text-gray-700">
@@ -381,10 +381,10 @@
                         <h2 class="text-3xl font-extrabold tracking-tight text-gray-900">Nos Consoles Disponible</h2>
                         <p class="mt-2 text-sm text-gray-500">Sélectionnez la plateforme de votre choix</p>
                     </div>
-                    <a href="#" class="text-sm font-bold text-primary">Voir tout le catalogue <i class="fa-solid fa-arrow-right ml-1"></i></a>
+                    <a href="/catalogue" class="text-sm font-bold text-primary">Voir tout le catalogue <i class="fa-solid fa-arrow-right ml-1"></i></a>
                 </div>
 
-                <div class="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
+                <div id="containerConsoles" class="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
                     <article class="console-card rounded-3xl p-4">
                         <div class="console-figure flex items-center justify-center">
                             <img src="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$native$" alt="PS5" class="h-32 object-contain">
@@ -406,46 +406,7 @@
                         </div>
                     </article>
 
-                    <article class="console-card rounded-3xl p-4">
-                        <div class="console-figure flex items-center justify-center">
-                            <img src="https://compass-ssl.xbox.com/assets/d4/6e/d46e61ac-73a0-4a09-9d93-f4ebf0e23d6f.png?n=XSX_Page-Hero-0_Console_1083x1222.png" alt="Xbox Series X" class="h-32 object-contain">
-                        </div>
-                        <div class="mt-5">
-                            <div class="flex items-start justify-between gap-4">
-                                <div>
-                                    <h3 class="text-base font-bold text-gray-900">Xbox Series X</h3>
-                                    <p class="mt-1 text-xs text-gray-400">Etat : Excellent</p>
-                                </div>
-                                <span class="rounded-full bg-green-100 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-green-600">Disponible</span>
-                            </div>
-                            <div class="mt-5 flex items-end justify-between">
-                                <p class="text-3xl font-black text-primary">90 <span class="text-lg">DH</span><span class="ml-1 text-xs font-medium text-gray-400">/ jour</span></p>
-                                <button class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-900 text-white">
-                                    <i class="fa-solid fa-ellipsis-vertical text-xs"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="console-card rounded-3xl p-4 opacity-75">
-                        <div class="console-figure flex items-center justify-center">
-                            <img src="https://gmedia.playstation.com/is/image/SIEPDC/ps4-pro-product-thumbnail-01-en-14sep21?$native$" alt="PS4 Pro" class="h-32 object-contain">
-                        </div>
-                        <div class="mt-5">
-                            <div class="flex items-start justify-between gap-4">
-                                <div>
-                                    <h3 class="text-base font-bold text-gray-900">PlayStation 4 Pro</h3>
-                                    <p class="mt-1 text-xs text-gray-400">Etat : Très bon</p>
-                                </div>
-                            </div>
-                            <div class="mt-5 flex items-end justify-between">
-                                <p class="text-3xl font-black text-gray-300">60 <span class="text-lg">DH</span><span class="ml-1 text-xs font-medium text-gray-300">/ jour</span></p>
-                                <button class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-200 text-gray-400">
-                                    <i class="fa-solid fa-lock text-xs"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </article>
+                    
                 </div>
             </section>
         </main>
@@ -508,13 +469,103 @@
                 </div>
             </div>
         </footer>
-    </div><script>
+    </div>
+    <script>
         window.addEventListener('load', function () {
         const viewer = document.getElementById('ps5Viewer');
 
         viewer.addEventListener('load', () => {
             viewer.autoRotate = true;
         });
-    });</script>
+    });
+
+    let count=0;
+    let container=document.getElementById("containerConsoles");
+    
+    
+    getConsoles();
+    async function getConsoles(){
+    let res=await fetch("http://playstayhome.test/api/consoles",{
+        "headers":{'Accept' : 'application/json' }
+    });
+    let consoles=await res.json();
+    console.log(consoles);
+    container.innerHTML="";
+    consoles.forEach(console=>{
+        if(count>=6) return;
+        
+        let gamesHtml = '';
+        if (console.games && console.games.length > 0) {
+            console.games.forEach(game => {
+                gamesHtml += `
+                    <div class="px-3 py-2 text-sm text-gray-700 font-medium hover:bg-blue-50 hover:text-primary cursor-default rounded-lg transition-colors truncate">
+                        • ${game.title}
+                    </div>
+                `;
+            });
+        } else {
+            gamesHtml = `<div class="px-3 py-3 text-xs text-gray-400 italic text-center">Aucun jeu inclus</div>`;
+        }
+        
+        container.innerHTML += `<article class="console-card rounded-3xl p-4">
+                        <div class="console-figure flex items-center justify-center">
+                            <img src="${console.image}" alt="${console.name}" class="h-32 object-contain">
+                        </div>
+                        <div class="mt-5">
+                            <div class="flex items-start justify-between gap-4">
+                                <div>
+                                    <h3 class="text-base font-bold text-gray-900">${console.name}</h3>
+                                    <p class="mt-1 text-xs text-gray-400">Brand : ${console.brand}</p>
+                                </div>
+                                <span class="rounded-full bg-green-100 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-green-600">Disponible</span>
+                            </div>
+                            <div class="mt-5 flex items-end justify-between relative">
+                                <p class="text-3xl font-black text-primary">${console.daily_price} <span class="text-lg">DH</span><span class="ml-1 text-xs font-medium text-gray-400">/ jour</span></p>
+                                
+                                <div class="relative">
+                                    <button onclick="toggleConsoleMenu(${console.id}); event.stopPropagation();" class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-900 text-white hover:bg-gray-800 transition-colors">
+                                        <i class="fa-solid fa-ellipsis-vertical text-xs"></i>
+                                    </button>
+                                    
+                                    <!-- Menu Déroulant -->
+                                    <div id="console-menu-${console.id}" class="hidden absolute right-0 bottom-10 w-56 rounded-xl bg-white shadow-xl border border-gray-100 z-50 overflow-hidden transform origin-bottom-right transition-all">
+                                        <div class="p-3 bg-gray-50 border-b border-gray-100">
+                                            <p class="text-[10px] font-black text-gray-500 uppercase tracking-widest"><i class="fa-solid fa-gamepad mr-1"></i> Jeux Inclus</p>
+                                        </div>
+                                        <div class="p-2 max-h-40 overflow-y-auto" onclick="event.stopPropagation();">
+                                            ${gamesHtml}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>`
+                    count++;
+    })
+    }
+
+    function toggleConsoleMenu(id) {
+        const menu = document.getElementById(`console-menu-${id}`);
+        const isHidden = menu.classList.contains('hidden');
+        
+        // Cacher tous les autres menus d'abord
+        document.querySelectorAll('[id^="console-menu-"]').forEach(el => {
+            el.classList.add('hidden');
+        });
+
+        // Afficher ou cacher le menu cliqué
+        if (isHidden) {
+            menu.classList.remove('hidden');
+        }
+    }
+
+    // Fermer le menu lors d'un clic en dehors
+    document.addEventListener('click', function(event) {
+        document.querySelectorAll('[id^="console-menu-"]').forEach(el => {
+            el.classList.add('hidden');
+        });
+    });
+    
+    </script>
 </body>
 </html>

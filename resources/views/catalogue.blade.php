@@ -184,6 +184,29 @@
             }
         }
 
+        /* Scrollbar custom personnalisée pour les jeux (scrollbar X) */
+        .games-scroll-container {
+            display: flex;
+            overflow-x: auto;
+            gap: 1rem;
+            padding-bottom: 0.5rem;
+            scrollbar-width: thin;
+            scrollbar-color: #cbd5e1 transparent;
+        }
+
+        .games-scroll-container::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .games-scroll-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .games-scroll-container::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 20px;
+        }
+
     </style>
 </head>
 <body>
@@ -196,13 +219,16 @@
                     <div class="panel p-5">
                         <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400">Plateforme</h3>
                         <div class="mt-4 space-y-3">
-                            <button class="flex w-full items-center justify-between rounded-xl border border-blue-100 bg-blue-50 px-3 py-2 text-sm font-semibold text-blue-700">
-                                <span class="flex items-center gap-2"><i class="fab fa-playstation"></i> PlayStation</span>
-                                <span class="h-3 w-3 rounded-full border border-blue-300"></span>
+                            <button id="btnTous" class="flex w-full items-center justify-between rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors">
+                                <span class="flex items-center gap-2"><i class="fa-solid fa-gamepad"></i> Tous</span>
+                                
                             </button>
-                            <button class="flex w-full items-center justify-between rounded-xl border border-green-100 bg-green-50 px-3 py-2 text-sm font-semibold text-green-700">
+                            <button id="btnPlayStation" class="flex w-full items-center justify-between rounded-xl border border-blue-100 bg-blue-50 px-3 py-2 text-sm font-semibold text-blue-700">
+                                <span class="flex items-center gap-2"><i class="fab fa-playstation"></i> PlayStation</span>
+                                
+                            </button>
+                            <button id="btnXbox" class="flex w-full items-center justify-between rounded-xl border border-green-100 bg-green-50 px-3 py-2 text-sm font-semibold text-green-700">
                                 <span class="flex items-center gap-2"><i class="fa-brands fa-xbox"></i> Xbox</span>
-                                <span class="h-3 w-3 rounded-full border border-green-300"></span>
                             </button>
                         </div>
                     </div>
@@ -210,10 +236,10 @@
                     <div class="panel p-5">
                         <div class="flex items-center justify-between">
                             <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400">Prix max / jour</h3>
-                            <span class="rounded-lg bg-blue-50 px-2 py-1 text-xs font-bold text-primary">300 DH</span>
+                            <span id="priceDisplay" class="rounded-lg bg-blue-50 px-2 py-1 text-xs font-bold text-primary">300 DH</span>
                         </div>
-                        <div class="mt-5 h-1 rounded-full bg-gray-200">
-                            <div class="h-1 w-4/5 rounded-full bg-primary"></div>
+                        <div class="mt-5">
+                            <input type="range" id="priceRange" min="50" max="300" value="300" class="w-full h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary">
                         </div>
                         <div class="mt-2 flex justify-between text-xs text-gray-400">
                             <span>50 DH</span>
@@ -222,98 +248,28 @@
                     </div>
 
                     <div class="panel p-5">
-                        <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400">Etat</h3>
-                        <div class="mt-4 flex flex-wrap gap-2">
-                            <button class="rounded-full border border-gray-200 px-3 py-1 text-xs text-gray-500">Tous</button>
-                            <button class="rounded-full border border-gray-200 px-3 py-1 text-xs text-gray-500">Neuf</button>
-                            <button class="rounded-full border border-gray-200 px-3 py-1 text-xs text-gray-500">Excellent</button>
-                            <button class="rounded-full border border-gray-200 px-3 py-1 text-xs text-gray-500">Reconditionne</button>
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400">Jeux inclus</h3>
+                        <div class="mt-4">
+                            <div class="relative">
+                                <i class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                                <input type="text" id="searchGameInput" placeholder="Rechercher un jeu (ex: FIFA)..." class="w-full rounded-xl border border-gray-200 bg-gray-50 py-2.5 pl-9 pr-3 text-sm text-gray-700 outline-none focus:border-primary focus:bg-white transition-colors">
+                            </div>
                         </div>
                     </div>
 
-                    <button class="w-full rounded-xl bg-primary px-4 py-3 text-sm font-bold text-white shadow-md shadow-blue-200">
-                        Appliquer
-                    </button>
-                    <button class="w-full text-sm font-semibold text-gray-300">
-                        Reinitialiser les filtres
-                    </button>
+                    
                 </aside>
 
                 <div class="catalog-content">
                     <div class="mb-3 flex items-center justify-between">
-                        <h1 class="text-2xl font-black tracking-tight text-gray-900">Catalogue <span class="text-primary">(12)</span></h1>
+                        <h1 class="text-2xl font-black tracking-tight text-gray-900">Catalogue <span class="text-primary" id="catalog-count">(0)</span></h1>
                         <button class="rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-500">
                             Trier par : Nouveautes
                         </button>
                     </div>
 
-                    <div class="catalog-products">
-                        <article class="panel catalog-card catalog-card-featured">
-                            <div class="soft-box catalog-card-media">
-                                <span class="inline-block rounded-full bg-blue-100 px-2 py-1 text-[9px] font-bold uppercase text-blue-700">PS5 Slim</span>
-                                <div class="catalog-card-image">
-                                    <img src="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$native$" alt="PS5" class="object-contain">
-                                </div>
-                            </div>
-                            <div class="catalog-card-head">
-                                <div class="w-full">
-    <h3 class="catalog-card-title w-full text-lg">PlayStation 5 Slim</h3>
-    <p class="mt-1 inline-block rounded bg-green-100 px-0.5 py-0 text-[8px] font-bold uppercase text-green-700">
-        Etat : Neuf
-    </p>
-</div>
-                                <div class="text-right">
-                                    <p class="catalog-card-price">100 DH</p>
-                                    <p class="text-[9px] text-gray-400">/ par jour</p>
-                                </div>
-                            </div>
-                            <p class="catalog-card-note text-center text-[7px] font-bold uppercase tracking-wider text-gray-300">Jeux inclus avec la location</p>
-                            <div class="catalog-card-games flex justify-center gap-4 text-center">
-                                <div>
-                                    <div class="mx-auto h-8 w-8 rounded-lg border border-gray-200 bg-gray-50"></div>
-                                    <p class="mt-1 text-[7px] text-gray-300">FC 25</p>
-                                </div>
-                                <div>
-                                    <div class="mx-auto h-8 w-8 rounded-lg border border-gray-200 bg-gray-50"></div>
-                                    <p class="mt-1 text-[7px] text-gray-300">FC 24</p>
-                                </div>
-                            </div>
-                            <button class="catalog-card-cta w-full rounded-xl bg-primary py-2 text-[10px] font-bold text-white">Reserver maintenant</button>
-                        </article>
-
-                        <article class="panel catalog-card catalog-card-featured">
-                            <div class="soft-box catalog-card-media">
-                                <span class="inline-block rounded-full bg-blue-100 px-2 py-1 text-[9px] font-bold uppercase text-blue-700">PS5 Slim</span>
-                                <div class="catalog-card-image">
-                                    <img src="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$native$" alt="PS5" class="object-contain">
-                                </div>
-                            </div>
-                            <div class="catalog-card-head">
-                                <div class="w-full">
-    <h3 class="catalog-card-title w-full text-lg">PlayStation 5 Slim</h3>
-    <p class="mt-1 inline-block rounded bg-green-100 px-0.5 py-0 text-[8px] font-bold uppercase text-green-700">
-        Etat : Neuf
-    </p>
-</div>
-                                <div class="text-right">
-                                    <p class="catalog-card-price">100 DH</p>
-                                    <p class="text-[9px] text-gray-400">/ par jour</p>
-                                </div>
-                            </div>
-                            <p class="catalog-card-note text-center text-[7px] font-bold uppercase tracking-wider text-gray-300">Jeux inclus avec la location</p>
-                            <div class="catalog-card-games flex justify-center gap-4 text-center">
-                                <div>
-                                    <div class="mx-auto h-8 w-8 rounded-lg border border-gray-200 bg-gray-50"></div>
-                                    <p class="mt-1 text-[7px] text-gray-300">FC 25</p>
-                                </div>
-                                <div>
-                                    <div class="mx-auto h-8 w-8 rounded-lg border border-gray-200 bg-gray-50"></div>
-                                    <p class="mt-1 text-[7px] text-gray-300">FC 24</p>
-                                </div>
-                            </div>
-                            <button class="catalog-card-cta w-full rounded-xl bg-primary py-2 text-[10px] font-bold text-white">Reserver maintenant</button>
-                        </article>
-                        
+                    <div id="catalog-products-container" class="catalog-products">
+                        <!-- Résultat dynamique injecté ici -->
                     </div>
                 </div>
             </section>
@@ -378,5 +334,142 @@
             </div>
         </footer>
     </div>
+
+    <script>
+        let container = document.getElementById("catalog-products-container");
+        let countSpan = document.getElementById("catalog-count");
+        let btnTous = document.getElementById("btnTous");
+        let btnPlayStation=document.getElementById("btnPlayStation");
+        let btnXbox=document.getElementById("btnXbox");
+        let searchGameInput = document.getElementById("searchGameInput");
+        let priceRange = document.getElementById("priceRange");
+        let priceDisplay = document.getElementById("priceDisplay");
+
+        getConsoles();
+        let consoles = [];
+
+        async function getConsoles() {
+            try {
+                let res = await fetch("http://playstayhome.test/api/consoles", {
+                    "headers": { 'Accept': 'application/json' }
+                });
+                consoles = await res.json();
+                displayConsoles(consoles);
+            } catch (error) {
+                console.error("Erreur lors de la récupération des consoles :", error);
+            }
+        }
+               function displayConsoles(consoles){
+                container.innerHTML = "";
+                countSpan.innerText = `(${consoles.length})`; // Mise a jour du compteur en haut "Catalogue (X)"
+
+                consoles.forEach(console => {
+                    
+                    let gamesHtml = '';
+                    if (console.games && console.games.length > 0) {
+                        console.games.forEach(game => {
+                            gamesHtml += `
+                                <div class="flex flex-col items-center min-w-[50px]">
+                                    <div class="h-12 w-12 rounded-lg border border-gray-200 bg-gray-50 flex items-center justify-center overflow-hidden shadow-sm">
+                                        ${game.image 
+                                            ? `<img src="${game.image}" alt="${game.title}" class="h-full w-full object-cover">` 
+                                            : `<i class="fa-solid fa-gamepad text-gray-300 text-lg"></i>`
+                                        }
+                                    </div>
+                                    <p class="mt-1.5 w-12 text-center text-[8px] font-medium text-gray-500 truncate" title="${game.title}">${game.title}</p>
+                                </div>
+                            `;
+                        });
+                    } else {
+                        gamesHtml = `<p class="w-full text-center text-[10px] text-gray-400 italic">Aucun jeu inclus pour le moment</p>`;
+                    }
+
+                    // Construction de la carte complete
+                    container.innerHTML += `
+                        <article class="panel catalog-card catalog-card-featured flex flex-col justify-between">
+                            <div>
+                                <div class="soft-box catalog-card-media relative">
+                                    <span class="absolute top-3 left-3 inline-block rounded-full bg-blue-100 px-2.5 py-1 text-[9px] font-bold uppercase text-blue-700">${console.brand}</span>
+                                    <div class="catalog-card-image">
+                                        <img src="${console.image}" alt="${console.name}" class="object-contain drop-shadow-lg">
+                                    </div>
+                                </div>
+                                <div class="catalog-card-head mt-4">
+                                    <div class="w-full flex flex-col">
+                                        <h3 class="catalog-card-title text-lg text-gray-900">${console.name}</h3>
+                                        <div class="mt-1.5 flex items-center gap-2">
+                                            <span class="inline-block rounded bg-green-100 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide text-green-700">Disponible</span>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="text-right flex-shrink-0 ml-3">
+                                        <p class="catalog-card-price text-2xl font-black text-primary">${console.daily_price} DH</p>
+                                        <p class="text-[9px] font-medium text-gray-400 mt-1 uppercase tracking-wide">/ par jour</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-5 border-t border-gray-100 pt-4">
+                                <p class="text-[9px] font-bold uppercase tracking-widest text-gray-400 mb-3"><i class="fa-solid fa-gamepad mr-1"></i> Jeux inclus :</p>
+                                
+                                <!-- LE CONTENEUR DES JEUX AVEC LE SCROLL HORIZONTAL (scroll-x) -->
+                                <div class="games-scroll-container">
+                                    ${gamesHtml}
+                                </div>
+
+                                <button onclick="window.location.href='/reservation?console_id=${console.id}'" class="mt-5 w-full rounded-xl bg-primary hover:bg-blue-700 transition-colors duration-300 py-3 text-xs font-bold text-white shadow-lg">
+                                    Reserver la ${console.brand}
+                                </button>
+                            </div>
+                        </article>
+                    `;
+                });
+            }
+
+                btnTous.addEventListener('click', () => {
+                    displayConsoles(consoles);
+                });
+
+                btnPlayStation.addEventListener('click',()=>{
+                    let playConsoles=consoles.filter(c=>c.name.toLowerCase().includes("playstation") || c.brand.toLowerCase().includes("sony"));
+                    displayConsoles(playConsoles);
+                });
+
+                btnXbox.addEventListener('click', () => {
+                    let xboxConsoles = consoles.filter(c => c.name.toLowerCase().includes("xbox") || c.brand.toLowerCase().includes("microsoft"));
+                    displayConsoles(xboxConsoles);
+                });
+
+                searchGameInput.addEventListener('input', (e) => {
+                    let searchTerm = e.target.value.toLowerCase();
+                    
+                    let filteredConsoles = consoles.filter(console => {
+                        // On verifie si la console a des jeux
+                        if (!console.games || console.games.length === 0) return false;
+                        
+                        // On regarde si au moins un des jeux continent le texte recherche
+                        return console.games.some(game => game.title.toLowerCase().includes(searchTerm));
+                    });
+                    
+                    displayConsoles(filteredConsoles);
+                });
+
+                priceRange.addEventListener('input', (e) => {
+                    let maxPrice = parseInt(e.target.value);
+                    priceDisplay.innerText = maxPrice + " DH";
+                    
+                    let filteredConsoles = consoles.filter(console => {
+                        return parseFloat(console.daily_price) <= maxPrice;
+                    });
+                    
+                    displayConsoles(filteredConsoles);
+                });
+
+            
+
+
+        
+    </script>
 </body>
+
 </html>

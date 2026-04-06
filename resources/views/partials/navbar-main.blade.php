@@ -18,12 +18,68 @@
                 <a href="/chat" class="nav-link {{ request()->routeIs('catalogue') ? 'active' : '' }}">Chat</a>
                  -->
 
-                @guest
-                    
+                <!-- Liens visibles uniquement pour les invités (non connectés) -->
+                <div id="nav-guest-links" class="flex items-center gap-9">
                     <a href="/register" class="nav-link {{ request()->routeIs('register') ? 'active' : '' }}">Sign Up</a>
                     <a href="/login" class="nav-link {{ request()->routeIs('login') ? 'active' : '' }}">Sign In</a>
-                @endguest
+                </div>
+
+                <!-- Liens visibles uniquement pour les utilisateurs connectés -->
+                <div id="nav-auth-links" class="hidden items-center gap-9">
+                    <a href="/profile" class="nav-link">Profile</a>
+                    <a href="#" id="navLogoutBtn" class="nav-link text-red-600 hover:text-red-800">Logout</a>
+                </div>
             </nav>
         </div>
     </div>
 </header>
+
+<script>
+    // Comme l'authentification se fait via API (token dans localStorage), 
+    // on gère l'affichage de la navbar avec une fonction immédiate.
+    function initNavbar() {
+        const token = localStorage.getItem('token');
+        const guestLinks = document.getElementById('nav-guest-links');
+        const authLinks = document.getElementById('nav-auth-links');
+        const logoutBtn = document.getElementById('navLogoutBtn');
+
+        if (token) {
+            // Utilisateur connecté
+            guestLinks.style.display = 'none';
+            authLinks.style.display = 'flex';
+        } else {
+            // Utilisateur déconnecté
+            guestLinks.style.display = 'flex';
+            authLinks.style.display = 'none';
+        }
+
+        // Gérer la déconnexion
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', async (e) => {
+                e.preventDefault();
+                
+                // Optionnel : appeler l'API de logout pour invalider le token côté serveur
+                try {
+                    await fetch('/api/logout', {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': 'Bearer ' + token,
+                            'Accept': 'application/json'
+                        }
+                    });
+                } catch(err) {
+                    console.error('Erreur lors du logout API', err);
+                }
+
+                // Supprimer le token du navigateur
+                localStorage.removeItem('token');
+                
+                // Rediriger vers l'accueil ou le login
+                window.location.href = '/login';
+            });
+        }
+    }
+
+    // Exécuter la fonction de vérification tout de suite
+    initNavbar();
+</script>
