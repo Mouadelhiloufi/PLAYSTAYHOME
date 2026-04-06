@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Console;
 use Illuminate\Http\Request;
+use App\Models\Reservation;
 use Illuminate\Support\Facades\Storage;
 
 class ConsoleController extends Controller
@@ -37,6 +38,23 @@ class ConsoleController extends Controller
             'message' => 'Console créée avec succès',
             'console' => $console,
         ], 201);
+    }
+
+
+    public function reservedDates($id){
+
+    $blocketDates=[];
+    $reservations = Reservation::where('console_id',$id)
+    ->where('end_date','>=',now()->toDateString())
+    ->get(['start_date','end_date']);
+
+    foreach($reservations as $res){
+        $blocketDates[]=[
+            'from'=>$res->start_date,
+            'to'=>$res->end_date
+        ];
+    }
+    return response()->json($blocketDates);
     }
 
     public function show(Console $console)

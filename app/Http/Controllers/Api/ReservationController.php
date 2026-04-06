@@ -49,6 +49,25 @@ class ReservationController extends Controller
         ], 201);
     }
 
+    public function calculate(Request $request)
+    {
+        $request->validate([
+            'console_id' => 'required|exists:consoles,id',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date',
+            'coupon_code' => 'nullable|string',
+        ]);
+
+        $estimation = $this->reservationService->calculateEstimation(
+            $request->only(['console_id', 'start_date', 'end_date', 'coupon_code'])
+        );
+
+        return response()->json([
+            'message' => 'Devis calculé avec succès.',
+            'data' => $estimation
+        ], 200);
+    }
+
     public function show($id)
     {
         $reservation = Reservation::with(['console', 'user'])->findOrFail($id);
