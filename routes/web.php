@@ -25,3 +25,7 @@ Route::get('/contact', function () {
 Route::get('/catalogue', function () {
     return view('catalogue');
 })->name('catalogue');
+
+Route::get('/reservation', function () {
+    return view('reservation');
+})->name('reservation');
