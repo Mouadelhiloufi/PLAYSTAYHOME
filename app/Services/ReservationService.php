@@ -55,18 +55,7 @@ class ReservationService{
     }
 
         // Calcul du prix total
-        $totalPrice = 0;
-
-        foreach (CarbonPeriod::create($startDate, $endDate) as $date) {
-            $price = $console->daily_price;
-
-            // Tarif majoré le weekend (samedi et dimanche)
-            if ($date->isWeekend()) {
-                $price *= 1.5;
-            }
-
-            $totalPrice += $price;
-        }
+        $totalPrice = $this->calculatePrice($console, $startDate, $endDate);
 
         // Gestion du coupon
         $couponId = null;
@@ -118,14 +107,57 @@ class ReservationService{
         ]);
 
 
-    
-
-
     }
 
+    public function calculatePrice(Console $console, Carbon $startDate, Carbon $endDate): float
+    {
+        $totalPrice = 0;
 
-    
+        foreach (CarbonPeriod::create($startDate, $endDate) as $date) {
+            $price = $console->daily_price;
 
+            // Tarif majoré le weekend (samedi et dimanche)
+            if ($date->isWeekend()) {
+                $price *= 1.5;
+            }
 
+            $totalPrice += $price;
+        }
 
+        return $totalPrice;
+    }
+
+    public function calculateEstimation(array $data): array
+    {
+        $console = Console::findOrFail($data['console_id']);
+        $startDate = Carbon::parse($data['start_date'])->startOfDay();
+        $endDate = Carbon::parse($data['end_date'])->startOfDay();
+
+        if ($endDate->lt($startDate)) {
+            throw ValidationException::withMessages([
+                'end_date' => 'La date de fin doit être supérieure ou égale à la date de début.',
+            ]);
+        }
+
+        $days = (int) $startDate->diffInDays($endDate) + 1;
+        $totalPrice = $this->calculatePrice($console, $startDate, $endDate);
+        
+        $discount = 0;
+        
+        if (isset($data['coupon_code'])) {
+            $coupon = Coupon::where('code', $data['coupon_code'])->first();
+            
+            if ($coupon && $coupon->expiration_date >= now()->toDateString() && $coupon->reservations()->count() < $coupon->limit) {
+                // Pas besoin de lever d'exception pour un devis, on applique la réduction si c'est possible
+                $discount = min($coupon->value, $totalPrice);
+            }
+        }
+
+        return [
+            'days' => $days,
+            'subtotal' => $totalPrice,
+            'discount' => $discount,
+            'total' => round(max(0, $totalPrice - $discount), 2),
+        ];
+    }
 }
