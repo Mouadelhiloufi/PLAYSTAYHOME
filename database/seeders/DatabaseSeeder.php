@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             ConsoleSeeder::class,
             GameSeeder::class,
             CouponSeeder::class,
+            ManetteSeeder::class,
         ]);
     }
 }

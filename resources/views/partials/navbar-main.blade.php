@@ -24,10 +24,24 @@
                     <a href="/login" class="nav-link {{ request()->routeIs('login') ? 'active' : '' }}">Sign In</a>
                 </div>
 
-                <!-- Liens visibles uniquement pour les utilisateurs connectés -->
-                <div id="nav-auth-links" class="hidden items-center gap-9">
-                    <a href="/profile" class="nav-link">Profile</a>
-                    <a href="#" id="navLogoutBtn" class="nav-link text-red-600 hover:text-red-800">Logout</a>
+                  <!-- Liens visibles uniquement pour les utilisateurs connectés -->
+                  <div id="nav-auth-links" class="hidden items-center gap-6">
+                      
+                      <!-- Bouton Chat (Client) -->
+                      <a href="/chat" class="hidden md:flex items-center justify-center h-9 w-9 rounded-full bg-blue-50 text-primary hover:bg-primary hover:text-white transition-colors border border-blue-100 shadow-sm relative group" title="Support Client">
+                          <i class="fa-regular fa-comment-dots"></i>
+                          <!-- Notification badge (Optionnel visuellement) -->
+                          <span class="absolute 0 top-0 right-0 h-2.5 w-2.5 bg-red-500 rounded-full border-2 border-white"></span>
+                      </a>
+
+                    <a href="/mon-compte" class="flex items-center gap-2 nav-link" id="navProfileLink">
+                        <!-- L'image remplacera le texte si elle existe -->
+                        <div id="navProfileAvatar" class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-primary font-bold overflow-hidden shadow-sm border border-blue-200">
+                            <i class="fa-regular fa-user text-sm"></i>
+                        </div>
+                        <span id="navProfileName" class="text-sm font-medium">Profile</span>
+                    </a>
+                    
                 </div>
             </nav>
         </div>
@@ -47,6 +61,34 @@
             // Utilisateur connecté
             guestLinks.style.display = 'none';
             authLinks.style.display = 'flex';
+            
+            // On peut chercher les infos user pour remplacer l'avatar
+            fetch('/api/user', {
+                headers: {
+                    'Authorization': 'Bearer ' + token,
+                    'Accept': 'application/json'
+                }
+            })
+            .then(res => res.json())
+            .then(user => {
+                if(user && user.name) {
+                    const avatar = document.getElementById('navProfileAvatar');
+                    const name = document.getElementById('navProfileName');
+                    
+                    // Cacher le texte 'Profile'
+                    name.classList.add('hidden');
+                    
+                    // Mettre la photo ou l'initiale
+                    if (user.photo_url) {
+                        avatar.innerHTML = `<img src="${user.photo_url}" alt="${user.name}" class="h-full w-full object-cover">`;
+                    } else {
+                        // S'il n'a pas de photo on affiche sa première lettre
+                        avatar.innerHTML = `<span class="text-sm font-black uppercase text-primary">${user.name.charAt(0)}</span>`;
+                    }
+                }
+            })
+            .catch(err => console.error("Erreur chargement profile:", err));
+            
         } else {
             // Utilisateur déconnecté
             guestLinks.style.display = 'flex';

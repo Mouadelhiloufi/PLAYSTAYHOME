@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\ChatController;
 use App\Http\Controllers\Api\ConsoleController;
 use App\Http\Controllers\Api\CouponController;
 use App\Http\Controllers\Api\GameController;
+use App\Http\Controllers\Api\ManetteController;
 use App\Http\Controllers\Api\ReservationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -16,6 +17,11 @@ Route::get('/consoles', [ConsoleController::class, 'index']);
 Route::get('/consoles/{id}/reserved-dates', [ConsoleController::class, 'reservedDates']);
 Route::get('/consoles/{console}', [ConsoleController::class, 'show']);
 
+Route::get('/manettes/available', [ManetteController::class, 'listAvailableManettes']);
+Route::post('/manettes', [ManetteController::class, 'addManette']);
+Route::patch('/manettes/{id}/status', [ManetteController::class, 'updateStatus']);
+Route::delete('/manettes/{id}', [ManetteController::class, 'removeController']);
+
 Route::get('/games', [GameController::class, 'index']);
 Route::get('/games/{game}', [GameController::class, 'show']);
 
@@ -24,6 +30,7 @@ Route::get('/consoles/{id}/reserved-dates', [ConsoleController::class, 'reserved
 Route::middleware('auth:sanctum')->group(function () {
 Route::post('/logout', [AuthController::class, 'logout']);
 Route::get('/user', fn(Request $request) => $request->user());
+Route::post('/user/update', [AuthController::class, 'updateProfile']);
     
     
     
