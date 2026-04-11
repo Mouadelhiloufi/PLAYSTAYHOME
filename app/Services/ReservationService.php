@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Console;
 use App\Models\Coupon;
 use App\Models\Reservation;
+use App\Models\Manette;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Support\Facades\Auth;
@@ -57,6 +58,15 @@ class ReservationService{
         // Calcul du prix total
         $totalPrice = $this->calculatePrice($console, $startDate, $endDate);
 
+        // --- Ajout du supplément manettes ---
+        $nombreManettes = $data['nombre_manettes'] ?? 0;
+        if($nombreManettes == 3) {
+            $totalPrice += 25;
+        } else if($nombreManettes == 4) {
+            $totalPrice += 50;
+        }
+        // ------------------------------------
+
         // Gestion du coupon
         $couponId = null;
 
@@ -78,7 +88,7 @@ class ReservationService{
                 ]);
             }
 
-            if ($coupon->reservations()->count() >= $coupon->limit) {
+            if ($coupon->limit <= 0) {
                 throw ValidationException::withMessages([
                     'coupon_code' => 'Le coupon a atteint sa limite d\'utilisation.',
                 ]);
@@ -96,7 +106,23 @@ class ReservationService{
             $couponId = $coupon->id;
         }
 
-        return Reservation::create([
+        // On vérifie s'il demande des manettes
+        $manettesDisponibles = [];
+
+        if ($nombreManettes > 0) {
+            $manettesDisponibles = Manette::where('status', 'available')
+                ->inRandomOrder()
+                ->take($nombreManettes)
+                ->pluck('id');
+
+            if ($manettesDisponibles->count() < $nombreManettes) {
+                throw ValidationException::withMessages([
+                    'nombre_manettes' => 'Pas assez de manettes disponibles pour le moment.',
+                ]);
+            }
+        }
+
+        $reservation = Reservation::create([
             'user_id' => Auth::id(),
             'console_id' => $console->id,
             'coupon_id' => $couponId,
@@ -106,7 +132,19 @@ class ReservationService{
             'status' => 'active',
         ]);
 
+        if ($nombreManettes > 0) {
+            $reservation->manettes()->attach($manettesDisponibles); // Attachement dynamique !
+            // Changer le statut des manettes à "loué"
+            Manette::whereIn('id', $manettesDisponibles)->update(['status' => 'louer']);
+        }
+        if ($couponId) {
+            $coupon = Coupon::find($couponId);
+            if ($coupon) {
+                $coupon->decrement('limit');
+            }
+        }
 
+        return $reservation->load('manettes'); // Charge la relation pour la réponse
     }
 
     public function calculatePrice(Console $console, Carbon $startDate, Carbon $endDate): float
@@ -142,6 +180,15 @@ class ReservationService{
         $days = (int) $startDate->diffInDays($endDate) + 1;
         $totalPrice = $this->calculatePrice($console, $startDate, $endDate);
         
+        // --- Ajout du supplément manettes ---
+        $manettesCount = isset($data['nombre_manettes']) ? (int) $data['nombre_manettes'] : 0;
+        if($manettesCount == 3) {
+            $totalPrice += 25;
+        } else if($manettesCount == 4) {
+            $totalPrice += 50;
+        }
+        // ------------------------------------
+
         $discount = 0;
         
         if (isset($data['coupon_code'])) {

@@ -37,10 +37,11 @@ class ReservationController extends Controller
             'start_date' => 'required|date',
             'end_date' => 'required|date',
             'coupon_code' => 'nullable|string',
+            'nombre_manettes' => 'nullable|integer|min:0|max:4', // Par exemple max 4 manettes
         ]);
 
         $reservation = $this->reservationService->createReservation(
-            $request->only(['console_id', 'start_date', 'end_date', 'coupon_code'])
+            $request->only(['console_id', 'start_date', 'end_date', 'coupon_code', 'nombre_manettes'])
         );
 
         return response()->json([

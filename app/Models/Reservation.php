@@ -37,4 +37,9 @@ class Reservation extends Model
     {
         return $this->belongsTo(Coupon::class);
     }
+
+    public function manettes()
+    {
+        return $this->belongsToMany(Manette::class);
+    }
 }

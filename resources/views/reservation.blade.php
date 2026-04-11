@@ -176,12 +176,35 @@
                             </div>
                         </div>
 
+                        <!-- Manettes supplémentaires -->
+                        <div class="mb-6">
+                            <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">Manettes supplémentaires</label>
+                            <div class="flex items-center justify-between bg-gray-50 p-2 rounded-xl border border-gray-200">
+                                <div class="flex items-center gap-3">
+                                    <div class="bg-white p-1 rounded-lg border border-gray-200">
+                                        <!-- Image réelle de Google (Manette Xbox/PS5) -->
+                                        <img src="https://cdn.kulturegeek.fr/wp-content/uploads/2022/08/DualSense-Edge-Manette-PS5.jpg" alt="Manette" class="h-8 w-8 object-contain">
+                                    </div>
+                                    <span id="prixManette" class="text-xs font-bold text-gray-900">Manettes (+0 DH)</span>
+                                </div>
+                                <div class="flex items-center bg-white rounded-lg border border-gray-200">
+                                    <button type="button" id="btn-minus" class="w-8 h-8 flex items-center justify-center text-gray-600 hover:text-primary transition-colors disabled:opacity-30 disabled:cursor-not-allowed" disabled>
+                                        <i class="fas fa-minus text-[10px]"></i>
+                                    </button>
+                                    <span id="manettes-count" class="w-6 text-center font-bold text-xs text-gray-900">0</span>
+                                    <button type="button" id="btn-plus" class="w-8 h-8 flex items-center justify-center text-gray-600 hover:text-primary transition-colors disabled:opacity-30 disabled:cursor-not-allowed">
+                                        <i class="fas fa-plus text-[10px]"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Coupon -->
                         <div class="mb-6">
                             <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">Coupon de réduction</label>
                             <div class="flex gap-2">
-                                <input type="text" placeholder="CODE10" class="flex-grow rounded-lg border border-gray-200 px-3 py-1.5 text-xs focus:border-primary focus:outline-none">
-                                <button class="bg-gray-900 hover:bg-gray-800 text-white px-4 py-1.5 rounded-lg text-xs font-bold transition-colors">OK</button>
+                                <input type="text" id="couponInput" placeholder="CODE10" class="flex-grow rounded-lg border border-gray-200 px-3 py-1.5 text-xs focus:border-primary focus:outline-none">
+                                <button type="button" id="btnApplyCoupon" class="bg-gray-900 hover:bg-gray-800 text-white px-4 py-1.5 rounded-lg text-xs font-bold transition-colors">OK</button>
                             </div>
                         </div>
 
@@ -191,7 +214,7 @@
                             <span class="text-xl font-black text-primary" id="totalDisplay">0 DH</span>
                         </div>
 
-                        <button class="w-full bg-primary hover:bg-blue-600 text-white font-bold py-3 text-sm rounded-xl shadow-lg shadow-blue-200 transition-colors">
+                        <button id="btnReserve" class="w-full bg-primary hover:bg-blue-600 text-white font-bold py-3 text-sm rounded-xl shadow-lg shadow-blue-200 transition-colors">
                             Réserver maintenant
                         </button>
                     </div>
@@ -287,6 +310,49 @@
                 reservedDatesArray = [];
             }
 
+            // --- Gestion des Manettes ---
+
+            let manettePrix=document.getElementById("prixManette");
+            let manettesCount = 0;
+            const maxManettes = 4;
+            const btnMinus = document.getElementById('btn-minus');
+            const btnPlus = document.getElementById('btn-plus');
+            const countDisplay = document.getElementById('manettes-count');
+
+            
+
+            function updateManettesCounter() {
+                if(countDisplay) countDisplay.innerText = manettesCount;
+                if(btnMinus) btnMinus.disabled = manettesCount <= 0;
+                if(btnPlus) btnPlus.disabled = manettesCount >= maxManettes;
+                
+                // Mettre à jour l'affichage du prix de la manette
+                if(manettesCount < 3){
+                    manettePrix.innerHTML = "Manettes (+0 DH)";
+                } else if(manettesCount == 3){
+                    manettePrix.innerHTML = "Manettes (+25 DH)";
+                } else if(manettesCount == 4){
+                    manettePrix.innerHTML = "Manettes (+50 DH)";
+                }
+                
+                // Recalculer le devis si on a déjà 2 dates choisies
+                if (typeof fp !== 'undefined' && fp.selectedDates && fp.selectedDates.length === 2 && currentConsoleInfo) {
+                    calculateReservationWithApi(fp.selectedDates[0], fp.selectedDates[1]);
+                }
+            }
+
+            
+
+            if (btnMinus && btnPlus) {
+                btnMinus.addEventListener('click', () => {
+                    if (manettesCount > 0) { manettesCount--; updateManettesCounter(); }
+                });
+                btnPlus.addEventListener('click', () => {
+                    if (manettesCount < maxManettes) { manettesCount++; updateManettesCounter(); }
+                });
+            }
+            // ----------------------------
+
             // 1. Initialiser le calendrier (avec les dates bloquees !!)
             const fp = flatpickr("#datePicker", {
                 inline: true,
@@ -337,6 +403,8 @@
                 const options = { day: 'numeric', month: 'short' };
                 document.getElementById('datesDisplay').innerText = `${start.toLocaleDateString('fr-FR', options)} - ${end.toLocaleDateString('fr-FR', options)}`;
                 
+                const couponCode = document.getElementById('couponInput').value.trim();
+
                 try {
                     let res = await fetch("/api/reservations/calculate", {
                         method: "POST",
@@ -348,7 +416,9 @@
                         body: JSON.stringify({
                             console_id: currentConsoleInfo.id,
                             start_date: start.toISOString().split('T')[0],
-                            end_date: end.toISOString().split('T')[0]
+                            end_date: end.toISOString().split('T')[0],
+                            nombre_manettes: manettesCount,
+                            coupon_code: couponCode !== "" ? couponCode : null
                         })
                     });
                     
@@ -357,7 +427,23 @@
                     if (res.ok && response.data) {
                         let info = response.data;
                         document.getElementById('durationDisplay').innerText = `${info.days} jour(s)`;
-                        document.getElementById('totalDisplay').innerText = `${info.total} DH`;
+                        
+                        // 1. On calcule le prix supplémentaire des manettes
+                        let prixManettes = 0;
+                        if (manettesCount === 3) prixManettes = 25;
+                        if (manettesCount === 4) prixManettes = 50;
+
+                        // 2. On ajoute ce prix au total renvoyé par l'API
+                        let finalTotal = parseFloat(info.total) + prixManettes;
+
+                        // S'il y a un discount, on peut l'afficher proprement en barrant l'ancien prix
+                        if(info.discount > 0) {
+                             let finalSubtotal = parseFloat(info.subtotal) + prixManettes;
+                             document.getElementById('totalDisplay').innerHTML = `<span class="text-xs text-gray-400 line-through mr-2">${finalSubtotal} DH</span> ${finalTotal} DH`;
+                        } else {
+                             document.getElementById('totalDisplay').innerText = `${finalTotal} DH`;
+                        }
+
                     } else {
                         console.error("Erreur API:", response.message || response);
                         alert("Erreur lors du calcul : " + (response.message || "Non autorisé"));
@@ -368,9 +454,92 @@
                 }
             }
 
+            // Attacher l'événement au bouton OK du coupon pour forcer un recalcul (devis)
+            document.getElementById('btnApplyCoupon').addEventListener('click', () => {
+                // 1. On récupère les dates sélectionnées dans le calendrier
+                let dates = fp.selectedDates;
+                
+                // 2. Si on a bien choisi 2 dates (début et fin)
+                if (dates.length === 2) {
+                    let dateDebut = dates[0];
+                    let dateFin = dates[1];
+                    
+                    // On lance le calcul du prix
+                    calculateReservationWithApi(dateDebut, dateFin);
+                } else {
+                    // Sinon, on affiche un message d'erreur
+                    alert("Sélectionnez d'abord vos dates !");
+                }
+            });
+
+            // 4. Action du bouton Final : Créer la réservation
+            const btnReserve = document.getElementById('btnReserve');
+            btnReserve.addEventListener('click', async () => {
+                if (typeof fp === 'undefined' || !fp.selectedDates || fp.selectedDates.length !== 2) {
+                    alert("Veuillez d'abord sélectionner une date de début et de fin sur le calendrier.");
+                    return;
+                }
+                
+                if (!currentConsoleInfo) {
+                    alert("Les informations de la console ne sont pas encore chargées.");
+                    return;
+                }
+
+                btnReserve.innerText = "Création en cours...";
+                btnReserve.disabled = true;
+                btnReserve.classList.add("opacity-70", "cursor-not-allowed");
+
+                const start = fp.selectedDates[0];
+                const end = fp.selectedDates[1];
+                const couponCode = document.getElementById('couponInput').value.trim();
+
+                try {
+                    let res = await fetch("/api/reservations", {
+                        method: "POST",
+                        headers: { 
+                            "Content-Type": "application/json",
+                            "Accept": "application/json",
+                            "Authorization": "Bearer " + token
+                        },
+                        body: JSON.stringify({
+                            console_id: currentConsoleInfo.id,
+                            start_date: start.toISOString().split('T')[0],
+                            end_date: end.toISOString().split('T')[0],
+                            nombre_manettes: manettesCount,
+                            coupon_code: couponCode !== "" ? couponCode : null // Envoi du coupon
+                        })
+                    });
+                    
+                    let response = await res.json();
+                    
+                    if (res.ok && response.data) {
+                        alert("Félicitations, votre réservation est confirmée !");
+                        // Rediriger vers l'historique ou le catalogue
+                        window.location.href = '/catalogue';
+                    } else {
+                        // En cas de validation failed coté serveur
+                        let errorMsg = response.message || "Erreur lors de la réservation.";
+                        if (response.errors) {
+                            // Concaténer toutes les alertes de validation
+                            let validationErrors = Object.values(response.errors).flat().join("\n");
+                            errorMsg += "\n" + validationErrors;
+                        }
+                        alert(errorMsg);
+                    }
+                } catch (e) {
+                    console.error("Erreur réseau pour reserver:", e);
+                    alert("Une erreur de connexion est survenue.");
+                } finally {
+                    // Remettre le bouton à son état d'origine en cas d'erreur
+                    btnReserve.innerText = "Réserver maintenant";
+                    btnReserve.disabled = false;
+                    btnReserve.classList.remove("opacity-70", "cursor-not-allowed");
+                }
+            });
+
         } // fin de initPage()
 
-        // 4. Lancement immédiat de la fonction
+        // 5. Lancement immédiat de la fonction
         initPage();
     </script>
 </body>
