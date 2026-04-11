@@ -146,6 +146,12 @@
                             <input id="confirm_password" name="confirm_password" type="password" placeholder="••••••••" data-parsley-equalto="#password" data-parsley-required="true" class="w-full pl-12 pr-4 py-4 rounded-lg border border-gray-200 bg-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none">
                         </div>
                     </div>
+                    <div class="space-y-2">
+                        <label class="block text-gray-700 text-sm font-semibold uppercase tracking-wider">Profile Photo (Optional)</label>
+                        <div class="relative input-wrapper">
+                            <input id="photo" name="photo" type="file" accept="image/*" class="w-full px-4 py-3 rounded-lg border border-gray-200 bg-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none">
+                        </div>
+                    </div>
                     <div class="flex items-center gap-3 pt-2">
                         <input type="checkbox" id="terms" class="rounded border-gray-300 text-primary focus:ring-primary">
                         <label for="terms" class="text-sm text-gray-500">
@@ -205,6 +211,7 @@
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
         const confirmPassword = document.getElementById("confirm_password").value;
+        const photoFile = document.getElementById("photo").files[0];
         const termsAccepted = document.getElementById("terms").checked;
 
         if (!termsAccepted) {
@@ -213,17 +220,20 @@
         }
 
         try {
+            const formData = new FormData();
+            formData.append('name', name);
+            formData.append('email', email);
+            formData.append('password', password);
+            formData.append('password_confirmation', confirmPassword);
+            
+            if (photoFile) {
+                formData.append('photo', photoFile);
+            }
+
             const response = await fetch('http://playstayhome.test/api/register', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    name,
-                    email,
-                    password,
-                    password_confirmation: confirmPassword
-                }),
+                // Ne pas mettre de Content-Type ici, le navigateur le met tout seul avec le boundary pour FormData
+                body: formData,
             });
 
             console.log(response);

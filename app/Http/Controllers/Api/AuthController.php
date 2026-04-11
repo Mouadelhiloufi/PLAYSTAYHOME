@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
@@ -16,14 +17,21 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email',
             'password' => 'required|string|min:6|confirmed',
+            'photo' => 'nullable|image|max:2048', // Photo optionnelle (max 2Mo)
         ]);
 
+        $photoPath = null;
+
+        if ($request->hasFile('photo')) {
+            $photoPath = $request->file('photo')->store('users/photos', 'public');
+        }
         
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
             'role' => 'client',
+            'photo' => $photoPath,
         ]);
 
         $token = $user->createToken('auth_token')->plainTextToken;
@@ -60,6 +68,39 @@ class AuthController extends Controller
         ]);
     }
 
+
+    public function updateProfile(Request $request)
+    {
+        $user = $request->user();
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'password' => 'nullable|string|min:6|confirmed',
+            'photo' => 'nullable|image|max:2048',
+        ]);
+
+        if ($request->hasFile('photo')) {
+            if ($user->photo) {
+                Storage::disk('public')->delete($user->photo);
+            }
+            $user->photo = $request->file('photo')->store('users/photos', 'public');
+        }
+
+        $user->name = $validated['name'];
+        $user->email = $validated['email'];
+
+        if (!empty($validated['password'])) {
+            $user->password = Hash::make($validated['password']);
+        }
+
+        $user->save();
+
+        return response()->json([
+            'message' => 'Profil mis à jour avec succès',
+            'user' => $user
+        ]);
+    }
 
     public function logout(Request $request)
     {

@@ -29,3 +29,15 @@ Route::get('/catalogue', function () {
 Route::get('/reservation', function () {
     return view('reservation');
 })->name('reservation');
+
+Route::get('/mon-compte', function () {
+    return view('mon-compte');
+})->name('mon-compte');
+
+Route::get('/modifier-profil', function () {
+    return view('modifier-profil');
+})->name('modifier-profil');
+
+Route::get('/chat', function () {
+    return view('chat');
+})->name('chat');

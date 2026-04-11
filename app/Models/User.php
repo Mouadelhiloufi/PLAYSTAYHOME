@@ -26,7 +26,15 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'photo',
     ];
+
+    protected $appends = ['photo_url'];
+
+    public function getPhotoUrlAttribute()
+    {
+        return $this->photo ? asset('storage/' . $this->photo) : null;
+    }
 
     /**
      * The attributes that should be hidden for serialization.
