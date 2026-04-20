@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PLAYSTAIHOME</title>
+    <title>playstayhome</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -155,6 +155,11 @@
             border: 1px solid #e8edf5;
             background: #ffffff;
             box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+        }
+
+        .console-card.locked {
+            opacity: 0.6;
+            filter: grayscale(0.2);
         }
 
         .console-figure {
@@ -339,7 +344,7 @@
 
             <section class="border-t border-gray-100 bg-white/60">
                 <div class="mx-auto max-w-6xl px-6 py-16">
-                    <h2 class="text-center text-3xl font-extrabold tracking-tight text-gray-900">Pourquoi choisir PLAYSTAIHOME ?</h2>
+                    <h2 class="text-center text-3xl font-extrabold tracking-tight text-gray-900">Pourquoi choisir PLAYSTAYHOME ?</h2>
 
                     <div class="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
                         <article class="rounded-2xl border border-gray-100 bg-white p-8 shadow-sm">
@@ -417,7 +422,7 @@
                     <div>
                         <div class="flex items-center gap-2 text-primary">
                             <i class="fab fa-playstation text-2xl opacity-50"></i>
-                            <span class="text-2xl font-extrabold tracking-tight text-gray-900">PLAYSTAIHOME</span>
+                            <span class="text-2xl font-extrabold tracking-tight text-gray-900">PLAYSTAYHOME</span>
                         </div>
                         <p class="mt-5 max-w-xs text-sm leading-7 text-gray-400">
                             Your premier destination for high-end gaming equipment and the latest digital adventures.
@@ -461,7 +466,7 @@
                 </div>
 
                 <div class="mt-14 flex flex-col gap-4 border-t border-gray-100 pt-8 text-xs text-gray-300 md:flex-row md:items-center md:justify-between">
-                    <p>© 2026 PLAYSTAIHOME. All rights reserved.</p>
+                    <p>© 2026 <strong>PLAYSTAYHOME</strong>. All rights reserved.</p>
                     <div class="flex items-center gap-6">
                         <span>English (US)</span>
                         <span>USD</span>
@@ -506,8 +511,17 @@
         } else {
             gamesHtml = `<div class="px-3 py-3 text-xs text-gray-400 italic text-center">Aucun jeu inclus</div>`;
         }
+
+        const isAvailable = !!console.ability;
+        const statusLabel = isAvailable ? 'Disponible' : 'Non disponible';
+        const statusClass = isAvailable ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600';
+        const cardClass = isAvailable ? '' : ' locked';
+        const lockBadge = isAvailable
+            ? ''
+            : '<span class="absolute top-3 right-3 z-20 inline-flex h-10 w-10 items-center justify-center rounded-full bg-red-100 text-red-600 shadow-md pointer-events-none"><i class="fa-solid fa-lock text-base"></i></span>';
         
-        container.innerHTML += `<article class="console-card rounded-3xl p-4">
+        container.innerHTML += `<article class="console-card rounded-3xl p-4 relative${cardClass}">
+                        ${lockBadge}
                         <div class="console-figure flex items-center justify-center">
                             <img src="${console.image}" alt="${console.name}" class="h-32 object-contain">
                         </div>
@@ -517,7 +531,7 @@
                                     <h3 class="text-base font-bold text-gray-900">${console.name}</h3>
                                     <p class="mt-1 text-xs text-gray-400">Brand : ${console.brand}</p>
                                 </div>
-                                <span class="rounded-full bg-green-100 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-green-600">Disponible</span>
+                                <span class="rounded-full px-2 py-1 text-[10px] font-bold uppercase tracking-wide ${statusClass}">${statusLabel}</span>
                             </div>
                             <div class="mt-5 flex items-end justify-between relative">
                                 <p class="text-3xl font-black text-primary">${console.daily_price} <span class="text-lg">DH</span><span class="ml-1 text-xs font-medium text-gray-400">/ jour</span></p>

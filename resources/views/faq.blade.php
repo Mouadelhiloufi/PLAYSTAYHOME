@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FAQ - PLAYSTAIHOME</title>
+    <title>FAQ - playstayhome</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -89,7 +89,7 @@
                 <div class="flex flex-col gap-3">
                     <h1 class="text-4xl font-black tracking-tight text-gray-900 lg:text-5xl">Frequently Asked Questions</h1>
                     <p class="max-w-2xl text-lg text-gray-600">
-                        Everything you need to know about PLAYSTAIHOME products and services. Can't find what you're looking for? Reach out to our team.
+                        Everything you need to know about <strong>PLAYSTAYHOME</strong> products and services. Can't find what you're looking for? Reach out to our team.
                     </p>
                 </div>
             </section>
@@ -185,7 +185,7 @@
                             <i class="fa-solid fa-chevron-down faq-chevron text-gray-500"></i>
                         </summary>
                         <div class="border-t border-gray-100 px-5 pb-5 pt-4 text-gray-600">
-                            Absolutely. Within the PLAYSTAIHOME app settings, navigate to "Manage Household" to invite family members using their email addresses.
+                            Absolutely. Within the <strong>PLAYSTAYHOME</strong> app settings, navigate to "Manage Household" to invite family members using their email addresses.
                         </div>
                     </details>
                 </div>
@@ -218,7 +218,7 @@
                     <div>
                         <div class="mb-4 flex items-center gap-3 text-primary">
                             <i class="fab fa-playstation text-2xl opacity-50"></i>
-                            <span class="font-bold text-gray-900">PLAYSTAIHOME</span>
+                            <span class="font-bold text-gray-900">PLAYSTAYHOME</span>
                         </div>
                         <p class="text-sm leading-relaxed text-gray-500">
                             Making homes smarter, safer, and more comfortable with cutting-edge technology.
@@ -257,7 +257,7 @@
                 </div>
 
                 <div class="mt-12 border-t border-gray-100 pt-8 text-center text-xs text-gray-400">
-                    © 2026 PLAYSTAIHOME Inc. All rights reserved.
+                    © 2026 <strong>PLAYSTAYHOME</strong> Inc. All rights reserved.
                 </div>
             </div>
         </footer>

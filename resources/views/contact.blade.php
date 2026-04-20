@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us - PLAYSTAIHOME</title>
+    <title>Contact Us - playstayhome</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -119,7 +119,7 @@
                                     <i class="fa-regular fa-envelope"></i>
                                 </div>
                                 <h3 class="font-bold text-gray-900">Email Us</h3>
-                                <p class="text-sm text-gray-600">hello@playstaihome.com</p>
+                                <p class="text-sm text-gray-600">hello@playstayhome.com</p>
                                 <p class="text-xs text-gray-500">Fast response within 24h</p>
                             </div>
 
@@ -166,7 +166,7 @@
                     <div class="md:col-span-2">
                         <div class="mb-6 flex items-center gap-3 text-primary">
                             <i class="fab fa-playstation text-2xl opacity-50"></i>
-                            <h2 class="text-xl font-bold text-gray-900">PLAYSTAIHOME</h2>
+                            <h2 class="text-xl font-bold text-gray-900">PLAYSTAYHOME</h2>
                         </div>
                         <p class="max-w-sm text-sm leading-relaxed text-gray-500">
                             Redefining the property experience. We help you find, buy, and manage your dream homes with cutting-edge technology and local expertise.
@@ -195,7 +195,7 @@
                 </div>
 
                 <div class="mt-12 border-t border-gray-200 pt-8 text-center">
-                    <p class="text-xs text-gray-500">© 2026 PLAYSTAIHOME Real Estate. All rights reserved.</p>
+                    <p class="text-xs text-gray-500">© 2026 <strong>PLAYSTAYHOME</strong> Real Estate. All rights reserved.</p>
                 </div>
             </div>
         </footer>

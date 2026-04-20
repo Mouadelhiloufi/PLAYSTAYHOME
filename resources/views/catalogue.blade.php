@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catalogue - PLAYSTAIHOME</title>
+    <title>Catalogue - playstayhome</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -91,6 +91,11 @@
 
         .catalog-card {
             padding: 0.8rem;
+        }
+
+        .catalog-card.locked {
+            opacity: 0.6;
+            filter: grayscale(0.2);
         }
 
         .catalog-card-media {
@@ -281,7 +286,7 @@
                     <div>
                         <div class="flex items-center gap-2 text-primary">
                             <i class="fab fa-playstation text-2xl opacity-50"></i>
-                            <span class="text-2xl font-extrabold tracking-tight text-gray-900">PLAYSTAIHOME</span>
+                            <span class="text-2xl font-extrabold tracking-tight text-gray-900">PLAYSTAYHOME</span>
                         </div>
                         <p class="mt-5 max-w-xs text-sm leading-7 text-gray-400">
                             Your premier destination for high-end gaming equipment and the latest digital adventures.
@@ -325,7 +330,7 @@
                 </div>
 
                 <div class="mt-14 flex flex-col gap-4 border-t border-gray-100 pt-8 text-xs text-gray-300 md:flex-row md:items-center md:justify-between">
-                    <p>&copy; 2026 PLAYSTAIHOME. All rights reserved.</p>
+                    <p>&copy; 2026 <strong>PLAYSTAYHOME</strong>. All rights reserved.</p>
                     <div class="flex items-center gap-6">
                         <span>English (US)</span>
                         <span>USD</span>
@@ -384,9 +389,25 @@
                         gamesHtml = `<p class="w-full text-center text-[10px] text-gray-400 italic">Aucun jeu inclus pour le moment</p>`;
                     }
 
+                    const isAvailable = !!console.ability;
+                    const statusLabel = isAvailable ? 'Disponible' : 'Non disponible';
+                    const statusClass = isAvailable ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700';
+                    const cardClass = isAvailable ? '' : ' locked';
+                    const lockBadge = isAvailable
+                        ? ''
+                        : '<span class="absolute top-3 right-3 z-20 inline-flex h-10 w-10 items-center justify-center rounded-full bg-red-100 text-red-600 shadow-md pointer-events-none"><i class="fa-solid fa-lock text-base"></i></span>';
+                    const buttonClass = isAvailable
+                        ? 'mt-5 w-full rounded-xl bg-primary hover:bg-blue-700 transition-colors duration-300 py-3 text-xs font-bold text-white shadow-lg'
+                        : 'mt-5 w-full rounded-xl bg-gray-200 py-3 text-xs font-bold text-gray-500 cursor-not-allowed';
+                    const buttonLabel = isAvailable ? `Reserver la ${console.brand}` : 'Indisponible';
+                    const buttonAction = isAvailable
+                        ? `onclick="window.location.href='/reservation?console_id=${console.id}'"`
+                        : 'disabled';
+
                     // Construction de la carte complete
                     container.innerHTML += `
-                        <article class="panel catalog-card catalog-card-featured flex flex-col justify-between">
+                        <article class="panel catalog-card catalog-card-featured flex flex-col justify-between relative${cardClass}">
+                            ${lockBadge}
                             <div>
                                 <div class="soft-box catalog-card-media relative">
                                     <span class="absolute top-3 left-3 inline-block rounded-full bg-blue-100 px-2.5 py-1 text-[9px] font-bold uppercase text-blue-700">${console.brand}</span>
@@ -398,8 +419,7 @@
                                     <div class="w-full flex flex-col">
                                         <h3 class="catalog-card-title text-lg text-gray-900">${console.name}</h3>
                                         <div class="mt-1.5 flex items-center gap-2">
-                                            <span class="inline-block rounded bg-green-100 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide text-green-700">Disponible</span>
-                                            
+                                            <span class="inline-block rounded px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide ${statusClass}">${statusLabel}</span>
                                         </div>
                                     </div>
                                     <div class="text-right flex-shrink-0 ml-3">
@@ -417,8 +437,8 @@
                                     ${gamesHtml}
                                 </div>
 
-                                <button onclick="window.location.href='/reservation?console_id=${console.id}'" class="mt-5 w-full rounded-xl bg-primary hover:bg-blue-700 transition-colors duration-300 py-3 text-xs font-bold text-white shadow-lg">
-                                    Reserver la ${console.brand}
+                                <button ${buttonAction} class="${buttonClass}">
+                                    ${buttonLabel}
                                 </button>
                             </div>
                         </article>
@@ -428,16 +448,19 @@
 
                 btnTous.addEventListener('click', () => {
                     displayConsoles(consoles);
+                    window.scrollTo({top: 0, behavior: 'smooth'});
                 });
 
                 btnPlayStation.addEventListener('click',()=>{
                     let playConsoles=consoles.filter(c=>c.name.toLowerCase().includes("playstation") || c.brand.toLowerCase().includes("sony"));
                     displayConsoles(playConsoles);
+                    window.scrollTo({top: 0, behavior: 'smooth'});
                 });
 
                 btnXbox.addEventListener('click', () => {
                     let xboxConsoles = consoles.filter(c => c.name.toLowerCase().includes("xbox") || c.brand.toLowerCase().includes("microsoft"));
                     displayConsoles(xboxConsoles);
+                    window.scrollTo({top: 0, behavior: 'smooth'});
                 });
 
                 searchGameInput.addEventListener('input', (e) => {
@@ -452,6 +475,7 @@
                     });
                     
                     displayConsoles(filteredConsoles);
+                    window.scrollTo({top: 0, behavior: 'smooth'});
                 });
 
                 priceRange.addEventListener('input', (e) => {
@@ -463,6 +487,7 @@
                     });
                     
                     displayConsoles(filteredConsoles);
+                    window.scrollTo({top: 0, behavior: 'smooth'});
                 });
 
             
