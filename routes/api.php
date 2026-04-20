@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\ConsoleController;
 use App\Http\Controllers\Api\CouponController;
 use App\Http\Controllers\Api\GameController;
 use App\Http\Controllers\Api\ManetteController;
+use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\ReservationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -42,6 +43,10 @@ Route::post('/coupons/validate', [CouponController::class, 'validate']);
     
 Route::get('/chat/{userId}', [ChatController::class, 'index']);
 Route::post('/chat/{userId}', [ChatController::class, 'store']);
+
+Route::get('/notifications', [NotificationController::class, 'index']);
+// Route::post('/notifications', [NotificationController::class, 'store']);
+Route::patch('/notifications/{id}/read', [NotificationController::class, 'markAsRead']);
     
     // Routes de reservation
 
@@ -50,12 +55,15 @@ Route::post('/chat/{userId}', [ChatController::class, 'store']);
     Route::get('/reservations', [ReservationController::class, 'index']);
     Route::post('/reservations', [ReservationController::class, 'store']);
     Route::post('/reservations/calculate', [ReservationController::class, 'calculate']);
-    Route::get('/reservations/{reservation}', [ReservationController::class, 'show']);
-    Route::put('/reservations/{reservation}/cancel', [ReservationController::class, 'cancel']);
+    Route::get('/reservations/{reservation}', [ReservationController::class, 'show'])->whereNumber('reservation');
+    Route::put('/reservations/{reservation}/cancel', [ReservationController::class, 'cancel'])->whereNumber('reservation');
 
     Route::middleware('admin')->group(function () {
+        Route::get('/users', [AuthController::class, 'index']);
+        Route::get('/admin/stats/monthly-revenue', [ReservationController::class, 'monthlyRevenue']);
         Route::post('/consoles', [ConsoleController::class, 'store']);
         Route::put('/consoles/{console}', [ConsoleController::class, 'update']);
+        Route::put('/consoles/{console}/games', [ConsoleController::class, 'syncGames']);
         Route::delete('/consoles/{console}', [ConsoleController::class, 'destroy']);
         
         Route::post('/games', [GameController::class, 'store']);

@@ -41,3 +41,24 @@ Route::get('/modifier-profil', function () {
 Route::get('/chat', function () {
     return view('chat');
 })->name('chat');
+
+
+Route::get('/admin/dashboard', function () {
+    return view('admin.dashboard');
+});
+
+Route::get('/admin/reservations', function () {
+    return view('admin.reservations');
+});
+
+Route::get('/admin/chat', function () {
+    return view('admin.chat');
+});
+
+Route::get('/admin/users', function () {
+    return view('admin.users');
+});
+
+Route::get('/admin/consoles-games', function () {
+    return view('admin.consoles-games');
+});
