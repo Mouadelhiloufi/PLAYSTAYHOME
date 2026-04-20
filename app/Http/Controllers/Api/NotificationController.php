@@ -3,16 +3,16 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {
-    public function index(){
-        $notifications = Notification::where('user_id', Auth::id())
-            ->latest()
-            ->get();
+    public function index(Request $request){
+        $notifications = $request->user()->notifications()->latest()->get()->map(function ($notification) {
+            $notification->diff_human = $notification->created_at->diffForHumans();
+            return $notification;
+        });
 
         return response()->json([
             'message' => 'Notifications récupérées avec succès.',
@@ -20,40 +20,15 @@ class NotificationController extends Controller
         ], 200);
     }
 
-    public function store(Request $request){
-        $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'title' => 'required|string|max:255',
-            'message' => 'required|string',
-            'type' => 'nullable|string|max:100',
-        ]);
+    // public function markAsRead(Request $request, $id)
+    // {
+    //     $notification = $request->user()->notifications()->findOrFail($id);
 
-        $notification = Notification::create([
-            'user_id' => $request->user_id,
-            'title' => $request->title,
-            'message' => $request->message,
-            'type' => $request->type,
-            'is_read' => false,
-        ]);
+    //     $notification->markAsRead();
 
-        return response()->json([
-            'message' => 'Notification créée avec succès.',
-            'data' => $notification,
-        ], 201);
-    }
-
-
-    public function markAsRead($id)
-    {
-        $notification = Notification::where('user_id', Auth::id())->findOrFail($id);
-
-        $notification->update([
-            'is_read' => true,
-        ]);
-
-        return response()->json([
-            'message' => 'Notification marquée comme lue.',
-            'data' => $notification,
-        ], 200);
-    }
+    //     return response()->json([
+    //         'message' => 'Notification marquée comme lue.',
+    //         'data' => $notification,
+    //     ], 200);
+    // }
 }
