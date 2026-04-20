@@ -19,14 +19,55 @@ class ReservationController extends Controller
 
     public function index()
     {
-        $reservations = Reservation::with('console')
-            ->where('user_id', Auth::id())
-            ->latest()
-            ->get();
+        $user = Auth::user();
+
+        $query = Reservation::with(['console', 'user'])->latest();
+
+        if (!$user || $user->role !== 'admin') {
+            $query->where('user_id', Auth::id());
+        }
+
+        $reservations = $query->get();
 
         return response()->json([
             'message' => 'Liste des réservations récupérée avec succès.',
             'data' => $reservations
+        ], 200);
+    }
+
+    public function monthlyRevenue()
+    {
+        $month = now()->month;
+        $year = now()->year;
+
+        $revenue = Reservation::query()
+            ->whereYear('start_date', $year)
+            ->whereMonth('start_date', $month)
+            ->sum('total_price');
+
+        // Si le mois courant est vide, on prend le dernier mois dispo.
+        if ((float) $revenue === 0.0) {
+            $lastStartDate = Reservation::query()->max('start_date');
+
+            if ($lastStartDate) {
+                $last = \Carbon\Carbon::parse($lastStartDate);
+                $month = $last->month;
+                $year = $last->year;
+
+                $revenue = Reservation::query()
+                    ->whereYear('start_date', $year)
+                    ->whereMonth('start_date', $month)
+                    ->sum('total_price');
+            }
+        }
+
+        return response()->json([
+            'message' => 'Revenu du mois récupéré avec succès.',
+            'data' => [
+                'monthly_revenue' => (float) $revenue,
+                'month' => $month,
+                'year' => $year,
+            ],
         ], 200);
     }
 

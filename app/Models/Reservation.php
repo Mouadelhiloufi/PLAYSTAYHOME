@@ -23,6 +23,10 @@ class Reservation extends Model
         'total_price' => 'decimal:2',
     ];
 
+    protected $appends = [
+        'duration_days',
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -41,5 +45,15 @@ class Reservation extends Model
     public function manettes()
     {
         return $this->belongsToMany(Manette::class);
+    }
+
+    public function getDurationDaysAttribute(): int
+    {
+        if (!$this->start_date || !$this->end_date) {
+            return 0;
+        }
+
+        // On compte les deux dates incluses: du jour de début au jour de fin.
+        return $this->start_date->diffInDays($this->end_date) + 1;
     }
 }

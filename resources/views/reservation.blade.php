@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reservation - PLAYSTAIHOME</title>
+    <title>Reservation - playstayhome</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -227,7 +227,7 @@
                 <div class="grid grid-cols-1 gap-8 md:grid-cols-4">
                     <div>
                         <div class="flex items-center gap-2 text-primary font-black text-xl mb-4">
-                            <i class="fab fa-playstation"></i> PLAYSTAIHOME
+                            <i class="fab fa-playstation"></i> PLAYSTAYHOME
                         </div>
                         <p class="text-xs text-gray-400">Making homes smarter, safer, and more comfortable with cutting-edge technology.</p>
                     </div>
@@ -256,7 +256,7 @@
                     </div>
                 </div>
                 <div class="text-center text-xs text-gray-400 mt-12 pt-8 border-t border-gray-100">
-                    © 2026 PLAYSTAIHOME. All rights reserved.
+                    © 2026 <strong>PLAYSTAYHOME</strong>. All rights reserved.
                 </div>
             </div>
         </footer>
@@ -318,13 +318,25 @@
             const btnMinus = document.getElementById('btn-minus');
             const btnPlus = document.getElementById('btn-plus');
             const countDisplay = document.getElementById('manettes-count');
-
+            let fp;
+           
             
 
             function updateManettesCounter() {
                 if(countDisplay) countDisplay.innerText = manettesCount;
                 if(btnMinus) btnMinus.disabled = manettesCount <= 0;
                 if(btnPlus) btnPlus.disabled = manettesCount >= maxManettes;
+                const btnReserve = document.getElementById("btnReserve");
+
+                if (btnReserve) {
+                    if (manettesCount < 1) {
+                        btnReserve.disabled = true;
+                        btnReserve.classList.add("opacity-50", "cursor-not-allowed");
+                    } else {
+                        btnReserve.disabled = false;
+                        btnReserve.classList.remove("opacity-50", "cursor-not-allowed");
+                    }
+                }
                 
                 // Mettre à jour l'affichage du prix de la manette
                 if(manettesCount < 3){
@@ -336,7 +348,7 @@
                 }
                 
                 // Recalculer le devis si on a déjà 2 dates choisies
-                if (typeof fp !== 'undefined' && fp.selectedDates && fp.selectedDates.length === 2 && currentConsoleInfo) {
+                if (fp && fp.selectedDates && fp.selectedDates.length === 2 && currentConsoleInfo) {
                     calculateReservationWithApi(fp.selectedDates[0], fp.selectedDates[1]);
                 }
             }
@@ -351,10 +363,12 @@
                     if (manettesCount < maxManettes) { manettesCount++; updateManettesCounter(); }
                 });
             }
+
+            updateManettesCounter();
             // ----------------------------
 
-            // 1. Initialiser le calendrier (avec les dates bloquees !!)
-            const fp = flatpickr("#datePicker", {
+            // caledrier creation
+            fp = flatpickr("#datePicker", {
                 inline: true,
                 mode: "range",
                 locale: "fr",
@@ -372,7 +386,7 @@
                 }
             });
 
-            // 2. Fetch les informations de la console sélectionnée via API
+            
             try {
                 let res = await fetch(`/api/consoles/${consoleId}`, {
                     headers: { 'Accept': 'application/json' }
@@ -380,15 +394,14 @@
                 
                 let json = await res.json();
                 
-                // Si la console est trouvée (le controlleur renvoie l'objet directement, pas de json.data)
                 if(json.id) {
                     currentConsoleInfo = json;
                     
-                    // MàJ des images
+                    
                     if(document.getElementById('consoleImage')) document.getElementById('consoleImage').src = currentConsoleInfo.image;
                     if(document.getElementById('recapImage')) document.getElementById('recapImage').src = currentConsoleInfo.image;
                     if(document.getElementById('brand')) document.getElementById('brand').innerText =`brand : ${currentConsoleInfo.brand}`
-                    // MàJ des textes
+                    
                     if(document.getElementById('recapTitle')) document.getElementById('recapTitle').innerText = currentConsoleInfo.name;
                     if(document.getElementById('dailyPriceDisplay')) document.getElementById('dailyPriceDisplay').innerText = `${currentConsoleInfo.daily_price} DH / jour`;
                 }
@@ -398,7 +411,7 @@
                 alert("Impossible de charger les détails de cette console.");
             }
 
-            // 3. Fonction pour demander le devis exact au backend
+            // 3. demande au backend le calcul 
             async function calculateReservationWithApi(start, end) {
                 const options = { day: 'numeric', month: 'short' };
                 document.getElementById('datesDisplay').innerText = `${start.toLocaleDateString('fr-FR', options)} - ${end.toLocaleDateString('fr-FR', options)}`;
@@ -415,8 +428,8 @@
                         },
                         body: JSON.stringify({
                             console_id: currentConsoleInfo.id,
-                            start_date: start.toISOString().split('T')[0],
-                            end_date: end.toISOString().split('T')[0],
+                            start_date: `${start.getFullYear()}-${String(start.getMonth() + 1).padStart(2, '0')}-${String(start.getDate()).padStart(2, '0')}`,
+                            end_date: `${end.getFullYear()}-${String(end.getMonth() + 1).padStart(2, '0')}-${String(end.getDate()).padStart(2, '0')}`,
                             nombre_manettes: manettesCount,
                             coupon_code: couponCode !== "" ? couponCode : null
                         })
@@ -503,8 +516,8 @@
                         },
                         body: JSON.stringify({
                             console_id: currentConsoleInfo.id,
-                            start_date: start.toISOString().split('T')[0],
-                            end_date: end.toISOString().split('T')[0],
+                            start_date: `${start.getFullYear()}-${String(start.getMonth() + 1).padStart(2, '0')}-${String(start.getDate()).padStart(2, '0')}`,
+                            end_date: `${end.getFullYear()}-${String(end.getMonth() + 1).padStart(2, '0')}-${String(end.getDate()).padStart(2, '0')}`,
                             nombre_manettes: manettesCount,
                             coupon_code: couponCode !== "" ? couponCode : null // Envoi du coupon
                         })
@@ -534,6 +547,7 @@
                     btnReserve.innerText = "Réserver maintenant";
                     btnReserve.disabled = false;
                     btnReserve.classList.remove("opacity-70", "cursor-not-allowed");
+                    updateManettesCounter();
                 }
             });
 

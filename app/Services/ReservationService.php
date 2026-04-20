@@ -10,9 +10,15 @@ use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
-
+use App\Notifications\ReservationDay;
 
 class ReservationService{
+
+    private function countInclusiveDays(Carbon $startDate, Carbon $endDate): int
+    {
+        // On inclut le jour de début et le jour de fin.
+        return $startDate->diffInDays($endDate) + 1;
+    }
     
     public function createReservation(array $data): Reservation
     {
@@ -29,7 +35,7 @@ class ReservationService{
             ]);
         }
 
-        $days = $startDate->diffInDays($endDate) + 1;
+        $days = $this->countInclusiveDays($startDate, $endDate);
 
 
 
@@ -144,6 +150,16 @@ class ReservationService{
             }
         }
 
+        // Schedule the notification when reservation is created
+        $reminderTime = $endDate->copy()->subHours(24);
+        
+        // If it's already past the 24h mark, send immediately, else schedule for the exact time
+        if (now()->greaterThanOrEqualTo($reminderTime)) {
+            Auth::user()->notify(new ReservationDay($reservation));
+        } else {
+            Auth::user()->notify((new ReservationDay($reservation))->delay($reminderTime));
+        }
+
         return $reservation->load('manettes'); // Charge la relation pour la réponse
     }
 
@@ -177,7 +193,7 @@ class ReservationService{
             ]);
         }
 
-        $days = (int) $startDate->diffInDays($endDate) + 1;
+        $days = $this->countInclusiveDays($startDate, $endDate);
         $totalPrice = $this->calculatePrice($console, $startDate, $endDate);
         
         // --- Ajout du supplément manettes ---
