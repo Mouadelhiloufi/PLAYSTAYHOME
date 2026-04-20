@@ -111,6 +111,10 @@ class AuthController extends Controller
         ]);
     }
 
-
-
+    public function index()
+    {
+        // Retourne tous les utilisateurs récents en premier avec leur date de création
+        $users = User::orderBy('created_at', 'desc')->get();
+        return response()->json($users);
+    }
 }

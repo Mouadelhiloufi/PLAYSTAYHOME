@@ -7,7 +7,6 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Models\Notification;
 use App\Models\Message;
 use Laravel\Sanctum\HasApiTokens;
 
@@ -63,11 +62,6 @@ class User extends Authenticatable
     {
         return $this->hasMany(Reservation::class);
     }
-
-    public function notifications()
-{
-    return $this->hasMany(Notification::class);
-}
 
 public function sentMessages()
 {

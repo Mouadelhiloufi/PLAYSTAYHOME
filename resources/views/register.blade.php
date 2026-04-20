@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up - PLAYSTAIHOME</title>
+    <title>Sign Up - playstayhome</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -61,7 +61,7 @@
     <header class="flex items-center justify-between border-b border-gray-200 bg-white px-10 py-3 sticky top-0 z-50">
         <div class="flex items-center gap-4 text-primary">
             <i class="fab fa-playstation text-4xl"></i>
-            <h2 class="text-gray-900 text-xl font-bold">PLAYSTAIHOME</h2>
+            <h2 class="text-gray-900 text-xl font-bold">PLAYSTAYHOME</h2>
         </div>
         <div class="flex items-center gap-8">
             <nav class="hidden md:flex items-center gap-9">
@@ -107,7 +107,7 @@
             <div class="w-full max-w-[480px]">
                 <div class="mb-10">
                     <h2 class="text-gray-900 text-4xl font-black mb-2">Create Account</h2>
-                    <p class="text-gray-500 text-lg">Join PLAYSTAIHOME today.</p>
+                    <p class="text-gray-500 text-lg">Join playstayhome today.</p>
                 </div>
                 <form class="space-y-5" id="registerForm">
                     <div class="space-y-2">
@@ -175,7 +175,7 @@
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="flex items-center gap-3 text-gray-400">
                 <i class="fab fa-playstation text-2xl opacity-50"></i>
-                <span class="text-sm font-semibold uppercase tracking-widest">PLAYSTAIHOME</span>
+                <span class="text-sm font-semibold uppercase tracking-widest">PLAYSTAYHOME</span>
             </div>
             <div class="flex gap-8">
                 <a class="text-gray-400 hover:text-primary text-sm" href="#">Privacy</a>
@@ -183,7 +183,7 @@
                 <a class="text-gray-400 hover:text-primary text-sm" href="#">Cookies</a>
                 <a class="text-gray-400 hover:text-primary text-sm" href="#">Status</a>
             </div>
-            <p class="text-gray-400 text-sm">© 2026 PLAYSTAIHOME. All rights reserved.</p>
+            <p class="text-gray-400 text-sm">© 2026 <strong>PLAYSTAYHOME</strong>. All rights reserved.</p>
         </div>
     </footer>
 </body>
