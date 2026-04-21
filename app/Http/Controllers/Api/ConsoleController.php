@@ -18,16 +18,25 @@ class ConsoleController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $rules = [
             'name' => 'required|string|max:255',
             'brand' => 'required|string|max:255',
             'daily_price' => 'required|numeric|min:0',
             'ability' => 'nullable|boolean',
-            'image' => 'nullable|image|max:2048',
-        ]);
+        ];
+
+        if ($request->hasFile('image')) {
+            $rules['image'] = 'image|max:2048';
+        } else {
+            $rules['image'] = 'nullable|string|max:255';
+        }
+
+        $validated = $request->validate($rules);
 
         if ($request->hasFile('image')) {
             $validated['image'] = $request->file('image')->store('consoles', 'public');
+        } elseif ($request->filled('image')) {
+            $validated['image'] = $request->input('image');
         }
 
         $validated['ability'] = $validated['ability'] ?? true;
@@ -64,19 +73,28 @@ class ConsoleController extends Controller
 
     public function update(Request $request, Console $console)
     {
-        $validated = $request->validate([
+        $rules = [
             'name' => 'string|max:255',
             'brand' => 'string|max:255',
             'daily_price' => 'numeric|min:0',
             'ability' => 'nullable|boolean',
-            'image' => 'nullable|image|max:2048',
-        ]);
+        ];
+
+        if ($request->hasFile('image')) {
+            $rules['image'] = 'image|max:2048';
+        } elseif ($request->filled('image')) {
+            $rules['image'] = 'string|max:255';
+        }
+
+        $validated = $request->validate($rules);
 
         if ($request->hasFile('image')) {
             if ($console->image) {
                 Storage::disk('public')->delete($console->image);
             }
             $validated['image'] = $request->file('image')->store('consoles', 'public');
+        } elseif ($request->filled('image')) {
+            $validated['image'] = $request->input('image');
         }
 
         $console->update($validated);
@@ -84,6 +102,22 @@ class ConsoleController extends Controller
         return response()->json([
             'message' => 'Console mise à jour avec succès',
             'console' => $console,
+        ]);
+    }
+
+    public function syncGames(Request $request, Console $console)
+    {
+        $validated = $request->validate([
+            'game_ids' => 'array',
+            'game_ids.*' => 'exists:games,id',
+        ]);
+
+        $gameIds = $validated['game_ids'] ?? [];
+        $console->games()->sync($gameIds);
+
+        return response()->json([
+            'message' => 'Jeux associes avec succes',
+            'console' => $console->load('games'),
         ]);
     }
 
