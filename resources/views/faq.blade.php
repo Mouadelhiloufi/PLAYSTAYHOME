@@ -221,30 +221,30 @@
                             <span class="font-bold text-gray-900">PLAYSTAYHOME</span>
                         </div>
                         <p class="text-sm leading-relaxed text-gray-500">
-                            Making homes smarter, safer, and more comfortable with cutting-edge technology.
+                            Rendre les maisons plus intelligentes, plus sûres et plus confortables grâce à une technologie de pointe.
                         </p>
                     </div>
 
                     <div>
-                        <h4 class="mb-4 font-bold text-gray-900">Product</h4>
+                        <h4 class="mb-4 font-bold text-gray-900">Produit</h4>
                         <ul class="space-y-2 text-sm text-gray-500">
-                            <li><a href="#" class="hover:text-primary">Smart Lighting</a></li>
-                            <li><a href="#" class="hover:text-primary">Security Cameras</a></li>
+                            <li><a href="#" class="hover:text-primary">Éclairage intelligent</a></li>
+                            <li><a href="#" class="hover:text-primary">Caméras de sécurité</a></li>
                             <li><a href="#" class="hover:text-primary">Thermostats</a></li>
                         </ul>
                     </div>
 
                     <div>
-                        <h4 class="mb-4 font-bold text-gray-900">Company</h4>
+                        <h4 class="mb-4 font-bold text-gray-900">Entreprise</h4>
                         <ul class="space-y-2 text-sm text-gray-500">
-                            <li><a href="#" class="hover:text-primary">About Us</a></li>
-                            <li><a href="#" class="hover:text-primary">Careers</a></li>
-                            <li><a href="#" class="hover:text-primary">Privacy Policy</a></li>
+                            <li><a href="#" class="hover:text-primary">À propos</a></li>
+                            <li><a href="#" class="hover:text-primary">Carrières</a></li>
+                            <li><a href="#" class="hover:text-primary">Politique de confidentialité</a></li>
                         </ul>
                     </div>
 
                     <div>
-                        <h4 class="mb-4 font-bold text-gray-900">Follow Us</h4>
+                        <h4 class="mb-4 font-bold text-gray-900">Suivez-nous</h4>
                         <div class="flex gap-4">
                             <a href="#" class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 text-gray-600 hover:text-primary">
                                 <i class="fa-solid fa-share-nodes text-sm"></i>
@@ -257,7 +257,7 @@
                 </div>
 
                 <div class="mt-12 border-t border-gray-100 pt-8 text-center text-xs text-gray-400">
-                    © 2026 <strong>PLAYSTAYHOME</strong> Inc. All rights reserved.
+                    © 2026 <strong>PLAYSTAYHOME</strong> Inc. Tous droits réservés.
                 </div>
             </div>
         </footer>
