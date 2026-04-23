@@ -24,7 +24,7 @@
     </script>
     @vite(['resources/js/app.js'])
     <style>
-        body { font-family: 'Inter', sans-serif; background: #f8fafc; color: #111827; overflow: hidden; }
+        body { font-family: 'Inter', sans-serif; background: #d6e2e9; color: #111827; overflow: hidden; }
         #chatMessages::-webkit-scrollbar,
         #usersList::-webkit-scrollbar {
             width: 6px;
@@ -35,12 +35,59 @@
         }
         #chatMessages::-webkit-scrollbar-thumb,
         #usersList::-webkit-scrollbar-thumb {
-            background-color: #cbd5e1;
+            background-color: #9cb3c0;
             border-radius: 20px;
         }
         /* Cache la scrollbar native du textarea */
         textarea::-webkit-scrollbar { display: none; }
         textarea { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .tg-chat-bg { background: #d2dee6; }
+        .tg-header { background: #d2dee6; border-bottom: 1px solid #bfd0d9; }
+        .tg-input-wrap { background: #d2dee6; border-top: 1px solid #bfd0d9; }
+        .tg-date-pill { color: #6d7f8c; }
+        .tg-bubble {
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+            font-size: 14px;
+            line-height: 1.45;
+        }
+        .tg-bubble-out { background: #3f8198; color: #f5fbff; border-top-right-radius: 6px; }
+        .tg-bubble-in { background: #ffffff; color: #253546; border-top-left-radius: 6px; }
+        .tg-time { font-size: 11px; font-weight: 600; opacity: .75; }
+        .tg-message-text { white-space: pre-wrap; word-break: break-word; }
+        .tg-avatar {
+            height: 36px;
+            width: 36px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .tg-avatar-admin {
+            background-image: url('/images/admin-support.svg');
+            background-color: #edf4fa;
+            border-color: #bcd0dc;
+        }
+        .tg-avatar-user {
+            background: #3f8198;
+            color: #e8f7ff;
+        }
+        .tg-input {
+            border-radius: 999px;
+            border: 1px solid #c9d7de;
+            background: #f3f7f9;
+            color: #253546;
+        }
+        .tg-input::placeholder { color: #8a9ba7; }
+        .tg-send {
+            background: #6ea8bd;
+            color: #fff;
+            border-radius: 999px;
+        }
     </style>
 </head>
 <body class="flex h-screen">
@@ -82,16 +129,16 @@
     </aside>
 
     <!-- Contenu Principal (Interface Chat Admin) -->
-    <main class="flex-1 flex bg-white overflow-hidden">
+    <main class="flex-1 flex overflow-hidden">
         
         <!-- Colonne Gauche : Liste des clients -->
-        <div class="w-[350px] border-r border-gray-100 flex flex-col shrink-0 bg-white">
-            <div class="p-6 border-b border-gray-100 shrink-0">
+        <div class="w-[350px] border-r border-[#bfd0d9] flex flex-col shrink-0 bg-[#d2dee6]">
+            <div class="p-6 border-b border-[#bfd0d9] shrink-0">
                 <h2 class="text-xl font-black text-gray-900 tracking-tight mb-4">Messages</h2>
                 <!-- Barre de recherche -->
                 <div class="relative">
-                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                    <input type="text" placeholder="Rechercher un client..." class="w-full bg-gray-50 border border-gray-200 text-gray-900 rounded-xl pl-10 pr-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all">
+                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-[#7b92a2]"></i>
+                    <input type="text" placeholder="Rechercher un client..." class="w-full bg-[#edf3f6] border border-[#bfd0d9] text-gray-900 rounded-xl pl-10 pr-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all">
                 </div>
             </div>
             
@@ -131,34 +178,37 @@
         </div>
 
         <!-- Colonne Droite : Zone de Chat Active -->
-        <div class="flex-1 flex flex-col bg-gray-50/50">
+        <div class="flex-1 flex flex-col tg-chat-bg">
             
             <!-- Header du Chat en cours -->
-            <div class="bg-white border-b border-gray-100 p-6 flex justify-between items-center shrink-0 z-10">
+            <div class="tg-header p-4 md:p-5 flex justify-between items-center shrink-0 z-10">
                 <div class="flex items-center gap-4 hidden" id="chatHeaderInfo">
                     <div class="shrink-0" id="headerAvatarContainer">
                         <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold shadow-inner">M</div>
                     </div>
                     <div>
                         <h2 class="text-base font-black text-gray-900 tracking-tight" id="activeUserName">Chargement...</h2>
-                        <p class="text-xs font-bold text-gray-400" id="activeUserRef">Client #--</p>
+                        <p class="text-xs font-bold text-[#6d7f8c]" id="activeUserRef">Client #--</p>
                     </div>
                 </div>
             </div>
 
             <!-- Messages Dynamiques -->
-            <div id="chatMessages" class="flex-1 overflow-y-auto p-6 flex flex-col gap-6 relative">
+            <div id="chatMessages" class="flex-1 overflow-y-auto px-4 py-5 md:px-6 md:py-6 flex flex-col gap-4 relative">
                 <!-- Les messages seront chargés ici asynchrone par le JS -->
             </div>
 
             <!-- Zone de saisie -->
-            <div class="bg-white border-t border-gray-100 p-6 shrink-0">
-                <form id="chatForm" class="flex items-center gap-3">
+            <div class="tg-input-wrap p-3 md:p-4 shrink-0">
+                <form id="chatForm" class="flex items-end gap-2">
+                    <button type="button" class="h-[44px] w-[44px] rounded-full border border-[#bfd0d9] text-[#7993a3] bg-[#edf3f6] flex items-center justify-center flex-shrink-0">
+                        <i class="fa-regular fa-face-smile text-base"></i>
+                    </button>
                     <div class="relative flex-grow">
-                        <textarea id="messageInput" rows="1" class="w-full bg-gray-50 border border-gray-200 text-gray-900 rounded-2xl pl-4 pr-12 py-3.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/20 focus:bg-white focus:border-primary transition-all placeholder-gray-400 resize-none h-[50px] scrollbar-hide" placeholder="Répondre au client..." style="min-height: 50px; max-height: 120px;"></textarea>
+                        <textarea id="messageInput" rows="1" class="tg-input w-full px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#8fb4c4]/30 focus:border-[#8fb4c4] transition-all resize-none h-[44px]" placeholder="Répondre au client..." style="min-height: 44px; max-height: 120px;"></textarea>
                     </div>
-                    <button type="submit" class="bg-primary hover:bg-blue-600 text-white h-[50px] w-[50px] rounded-2xl flex items-center justify-center shadow-sm transition-transform active:scale-95 shrink-0">
-                        <i class="fa-solid fa-paper-plane"></i>
+                    <button id="sendMessageBtn" type="submit" class="tg-send hover:brightness-95 h-[44px] w-[44px] flex items-center justify-center shadow-sm transition-transform active:scale-95 shrink-0">
+                        <i class="fa-solid fa-paper-plane text-sm"></i>
                     </button>
                 </form>
             </div>
@@ -200,6 +250,19 @@
                 console.error('Erreur websocket admin:', e);
             }
 
+            function escapeHtml(value) {
+                return String(value)
+                    .replaceAll('&', '&amp;')
+                    .replaceAll('<', '&lt;')
+                    .replaceAll('>', '&gt;')
+                    .replaceAll('"', '&quot;')
+                    .replaceAll("'", '&#039;');
+            }
+
+            function formatTelegramLikeText(value) {
+                return escapeHtml(value).split('\n').join('\n');
+            }
+
             // Scroller automatiquement vers le bas de la zone de messages
             const chatMessages = document.getElementById('chatMessages');
             if (chatMessages) chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -228,7 +291,7 @@
                     let cvsHistorique = await res.json();
 
                     if (cvsHistorique.length > 0) {
-                        let chatHtml = '<div class="flex justify-center my-4"><span class="text-[10px] font-black uppercase tracking-widest text-gray-400 bg-white px-4 py-1.5 rounded-full shadow-sm border border-gray-100">Historique de discussion</span></div>';
+                        let chatHtml = '<div class="flex justify-center my-1"><span class="tg-date-pill text-xs font-semibold">Historique de discussion</span></div>';
                         
                         let lastDateStr = "";
                         let today = new Date();
@@ -255,8 +318,8 @@
                                 }
 
                                 chatHtml += `
-                                <div class="flex justify-center my-6">
-                                    <span class="text-[10px] font-black uppercase tracking-widest text-gray-400 bg-white px-4 py-1.5 rounded-full shadow-sm border border-gray-100">${displayText}</span>
+                                <div class="flex justify-center my-3">
+                                    <span class="tg-date-pill text-xs font-semibold">${displayText}</span>
                                 </div>`;
                                 
                                 lastDateStr = msgDateStr; 
@@ -268,13 +331,12 @@
                             // Si c'est l'admin (Moi) qui a envoyé (Bulle Droite Bleue)
                             if (message.sender_id === myAdminId) {
                                 chatHtml += `
-                                <div class="flex items-end gap-3 max-w-[85%] md:max-w-[70%] self-end flex-row-reverse mb-4">
-                                    <div class="bg-primary hover:bg-blue-600 transition-colors p-4 rounded-2xl rounded-br-sm shadow-sm text-sm font-medium text-white leading-relaxed">
-                                        <p>${message.message}</p>
-                                        <div class="text-[10px] font-bold text-blue-200 mt-2 flex items-center justify-end gap-1">
-                                            <p class="time">${time}</p>
-                                        </div>
+                                <div class="flex items-end gap-2 max-w-[92%] md:max-w-[78%] self-end mb-3">
+                                    <div class="tg-bubble tg-bubble-out px-4 py-3">
+                                        <p class="tg-message-text">${formatTelegramLikeText(message.message)}</p>
+                                        <div class="tg-time text-slate-100 mt-2 text-right">${time}</div>
                                     </div>
+                                    <div class="tg-avatar tg-avatar-admin"></div>
                                 </div>`;
                             } 
                             // Si c'est le Client (Bulle Gauche Blanche)
@@ -282,21 +344,21 @@
                                 // On récupère sa photo de profil s'il l'a depuis l'historique API ! 
                                 // (On gère le cas où "sender" n'est pas fourni par l'API pour éviter les erreurs)
                                 let clientPhoto = "";
-                                if (message.sender && message.sender.photo) {
-                                    clientPhoto = `<img src="/storage/${message.sender.photo}" class="w-8 h-8 rounded-full object-cover shrink-0">`;
+                                if (message.sender && message.sender.photo_url) {
+                                    clientPhoto = `<img src="${escapeHtml(message.sender.photo_url)}" class="w-9 h-9 rounded-full object-cover shrink-0 border border-white/50" alt="Client">`;
+                                } else if (message.sender && message.sender.photo) {
+                                    clientPhoto = `<img src="/storage/${escapeHtml(message.sender.photo)}" class="w-9 h-9 rounded-full object-cover shrink-0 border border-white/50" alt="Client">`;
                                 } else {
                                     let initLetter = message.sender && message.sender.name ? message.sender.name.charAt(0).toUpperCase() : 'C';
-                                    clientPhoto = `<div class="w-8 h-8 rounded-full bg-gray-100 text-gray-500 flex items-center justify-center font-bold text-xs shrink-0">${initLetter}</div>`;
+                                    clientPhoto = `<div class="w-9 h-9 rounded-full bg-gray-100 text-gray-500 flex items-center justify-center font-bold text-xs shrink-0">${escapeHtml(initLetter)}</div>`;
                                 }
 
                                 chatHtml += `
-                                <div class="flex items-end gap-3 max-w-[85%] md:max-w-[70%] mb-4">
+                                <div class="flex items-end gap-2 max-w-[92%] md:max-w-[78%] mb-3">
                                     ${clientPhoto}
-                                    <div class="bg-white p-4 rounded-2xl rounded-bl-sm shadow-[0_2px_10px_rgba(15,23,42,0.02)] border border-gray-100 text-sm font-medium text-gray-700 leading-relaxed">
-                                        <p>${message.message}</p>
-                                        <div class="text-[10px] font-bold text-gray-400 mt-2 flex items-center gap-1">
-                                            <p class="time">${time}</p>
-                                        </div>
+                                    <div class="tg-bubble tg-bubble-in px-4 py-3">
+                                        <p class="tg-message-text">${formatTelegramLikeText(message.message)}</p>
+                                        <div class="tg-time text-slate-500 mt-2 text-right">${time}</div>
                                     </div>
                                 </div>`;
                             }
@@ -312,7 +374,7 @@
                         }, 100);
 
                     } else {
-                        document.getElementById('chatMessages').innerHTML = '<div class="text-center text-gray-400 mt-10 text-sm">Le client n\'a pas encore envoyé de message.</div>';
+                        document.getElementById('chatMessages').innerHTML = '<div class="text-center text-[#6d7f8c] mt-10 text-sm">Le client n\'a pas encore envoyé de message.</div>';
                     }
                 } catch(e) {
                     console.error("Erreur:", e);
@@ -325,6 +387,14 @@
             // EVENT LISTENER POUR ENVOYER UN APPEL API (Bouton Submit)
             const chatForm = document.getElementById('chatForm');
             const messageInput = document.getElementById('messageInput');
+            const sendMessageBtn = document.getElementById('sendMessageBtn');
+
+            messageInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    chatForm.requestSubmit(sendMessageBtn);
+                }
+            });
 
             chatForm.addEventListener('submit', async (e) => {
                 e.preventDefault(); 
@@ -368,22 +438,24 @@
                             let isCurrent = (String(user.id) === String(currentUserId));
                             let initial = user.name.charAt(0).toUpperCase();
 
-                            let userAvatar = user.photo 
-                                ? `<img src="/storage/${user.photo}" class="w-12 h-12 rounded-full object-cover">`
-                                : `<div class="w-12 h-12 rounded-full ${isCurrent ? 'bg-blue-200 text-primary' : 'bg-gray-100 text-gray-500'} flex items-center justify-center font-bold text-lg">${initial}</div>`;
+                            let userAvatar = user.photo_url
+                                ? `<img src="${escapeHtml(user.photo_url)}" class="w-12 h-12 rounded-full object-cover">`
+                                : user.photo
+                                    ? `<img src="/storage/${escapeHtml(user.photo)}" class="w-12 h-12 rounded-full object-cover">`
+                                    : `<div class="w-12 h-12 rounded-full ${isCurrent ? 'bg-blue-200 text-primary' : 'bg-gray-100 text-gray-500'} flex items-center justify-center font-bold text-lg">${escapeHtml(initial)}</div>`;
 
                             // On n'utilise plus window.currentClientPhoto, on passe juste currentClientPhoto en variable simple
                             // L'avatar du client actuel sera géré dans l'affichage des messages plus bas
                             
                             // Au lieu d'utiliser JavaScript complexes (pushState, switchUser), on utilise de simples liens HTML
                             clientsListHtml += `
-                            <a href="/admin/chat?user=${user.id}" class="w-full flex items-center gap-3 p-3 rounded-2xl ${isCurrent ? 'bg-blue-50 border border-blue-100' : 'hover:bg-gray-50 border border-transparent'} text-left transition-colors relative mb-1">
+                            <a href="/admin/chat?user=${user.id}" class="w-full flex items-center gap-3 p-3 rounded-2xl ${isCurrent ? 'bg-blue-50 border border-blue-100' : 'hover:bg-[#d9e6ee] border border-transparent'} text-left transition-colors relative mb-1">
                                 <div class="relative shrink-0">
                                     ${userAvatar}
                                 </div>
                                 <div class="flex-1 min-w-0">
                                     <div class="flex justify-between items-baseline mb-0.5">
-                                        <h3 class="font-bold text-gray-900 text-sm truncate">${user.name}</h3>
+                                        <h3 class="font-bold text-gray-900 text-sm truncate">${escapeHtml(user.name)}</h3>
                                         <span class="text-[10px] font-bold ${isCurrent ? 'text-primary' : 'text-gray-400'}">Client</span>
                                     </div>
                                     <p class="text-xs ${isCurrent ? 'text-primary font-semibold' : 'text-gray-500'} truncate">#USR-${String(user.id).padStart(4, '0')}</p>
@@ -397,10 +469,12 @@
                                 // Actualise l'avatar dans l'en-tête
                                 let headerAvatar = document.getElementById('headerAvatarContainer');
                                 if (headerAvatar) {
-                                    if(user.photo) {
-                                        headerAvatar.innerHTML = `<img src="/storage/${user.photo}" class="w-10 h-10 rounded-full object-cover">`;
+                                    if (user.photo_url) {
+                                        headerAvatar.innerHTML = `<img src="${escapeHtml(user.photo_url)}" class="w-10 h-10 rounded-full object-cover border border-white/60" alt="${escapeHtml(user.name)}">`;
+                                    } else if(user.photo) {
+                                        headerAvatar.innerHTML = `<img src="/storage/${escapeHtml(user.photo)}" class="w-10 h-10 rounded-full object-cover border border-white/60" alt="${escapeHtml(user.name)}">`;
                                     } else {
-                                        headerAvatar.innerHTML = `<div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-lg">${initial}</div>`;
+                                        headerAvatar.innerHTML = `<div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-lg">${escapeHtml(initial)}</div>`;
                                     }
                                 }
                             }
