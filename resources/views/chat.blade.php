@@ -204,7 +204,7 @@
                     <div class="relative flex-grow">
                         <textarea id="messageInput" rows="1" class="tg-input w-full px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#8fb4c4]/30 focus:border-[#8fb4c4] transition-all resize-none h-[44px]" placeholder="Write a message..." style="min-height: 44px; max-height: 120px;"></textarea>
                     </div>
-                    <button type="submit" class="tg-send hover:brightness-95 h-[44px] w-[44px] flex items-center justify-center shadow-sm transition-transform active:scale-95 flex-shrink-0">
+                    <button id="sendMessageBtn" type="submit" class="tg-send hover:brightness-95 h-[44px] w-[44px] flex items-center justify-center shadow-sm transition-transform active:scale-95 flex-shrink-0">
                         <i class="fa-solid fa-paper-plane text-sm"></i>
                     </button>
                 </form>
@@ -398,6 +398,16 @@
             // === 2. EVENT LISTENER POUR ENVOYER UN MESSAGE ===
             const chatForm = document.getElementById('chatForm');
             const messageInput = document.getElementById('messageInput');
+            const sendMessageBtn = document.getElementById('sendMessageBtn');
+
+            messageInput.addEventListener('keydown', (e) => {
+                // Entrée envoie le message, sans retour à la ligne.
+                // Shift + Entrée permet de garder un saut de ligne si besoin.
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    chatForm.requestSubmit(sendMessageBtn);
+                }
+            });
 
             chatForm.addEventListener('submit', async (e) => {
                 e.preventDefault(); // Empêche la page de se recharger
