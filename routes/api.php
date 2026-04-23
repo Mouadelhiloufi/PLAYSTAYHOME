@@ -55,8 +55,8 @@ Route::patch('/notifications/{id}/read', [NotificationController::class, 'markAs
     Route::get('/reservations', [ReservationController::class, 'index']);
     Route::post('/reservations', [ReservationController::class, 'store']);
     Route::post('/reservations/calculate', [ReservationController::class, 'calculate']);
-    Route::get('/reservations/{reservation}', [ReservationController::class, 'show'])->whereNumber('reservation');
-    Route::put('/reservations/{reservation}/cancel', [ReservationController::class, 'cancel'])->whereNumber('reservation');
+    Route::get('/reservations/{reservation}', [ReservationController::class, 'show']);
+    Route::put('/reservations/{reservation}/cancel', [ReservationController::class, 'cancel']);
 
     Route::middleware('admin')->group(function () {
         Route::get('/users', [AuthController::class, 'index']);

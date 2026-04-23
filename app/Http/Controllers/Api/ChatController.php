@@ -15,8 +15,7 @@ class ChatController extends Controller
         $user = $request->user();
         $authId = $user->id;
 
-        // B2C LOGIC : Si c'est un client, on force la discussion vers l'admin
-        // Peu importe ce qui est écrit dans le {userId} de l'URL
+        
         if ($user->role === 'client') {
             $admin = User::where('role', 'admin')->first();
             $userId = $admin->id;

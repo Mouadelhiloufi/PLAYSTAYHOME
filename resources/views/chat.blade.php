@@ -25,118 +25,189 @@
     <!-- IMPORTANT: On importe le fichier JS compilé par Vite pour avoir accès à Echo -->
     @vite(['resources/js/app.js'])
     <style>
-        body { font-family: 'Inter', sans-serif; background: #f8fafc; color: #111827; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #d6e2e9;
+            color: #111827;
+        }
+
         .nav-link { position: relative; display: inline-flex; align-items: center; height: 40px; font-size: 0.875rem; font-weight: 600; color: #4b5563; transition: color .2s ease; }
-        .nav-link::after { content: ""; position: absolute; left: 0; bottom: -1px; width: 100%; height: 2px; background: #1978e5; transform: scaleX(0); transform-origin: center; transition: transform .2s ease; }   
+        .nav-link::after { content: ""; position: absolute; left: 0; bottom: -1px; width: 100%; height: 2px; background: #1978e5; transform: scaleX(0); transform-origin: center; transition: transform .2s ease; }
         .nav-link:hover, .nav-link.active { color: #1978e5; }
         .nav-link:hover::after, .nav-link.active::after { transform: scaleX(1); }
 
-        /* Scrollbar custom pour le chat */
-        #chatMessages::-webkit-scrollbar {
-            width: 6px;
+        .tg-shell {
+            border-radius: 0;
+            overflow: hidden;
+            border: 1px solid #c5d3db;
+            box-shadow: none;
+            background: #d2dee6;
         }
-        #chatMessages::-webkit-scrollbar-track {
+
+        .tg-header {
+            background: #d2dee6;
+            color: #1f2a33;
+            border-bottom: 1px solid #bfd0d9;
+        }
+
+        .tg-header-sub {
+            color: rgba(31, 42, 51, 0.6);
+        }
+
+        .tg-chat-bg {
+            background-color: #d2dee6;
+            background-image: none;
+        }
+
+        .tg-date-pill {
             background: transparent;
+            color: #6d7f8c;
+            border: none;
+            padding: 0;
         }
-        #chatMessages::-webkit-scrollbar-thumb {
-            background-color: #cbd5e1;
-            border-radius: 20px;
+
+        .tg-bubble {
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+            font-size: 14px;
+            line-height: 1.45;
+        }
+
+        .tg-bubble-in {
+            background: #ffffff;
+            color: #253546;
+            border-top-left-radius: 6px;
+        }
+
+        .tg-bubble-out {
+            background: #3f8198;
+            color: #f5fbff;
+            border-top-right-radius: 6px;
+        }
+
+        .tg-message-text {
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .tg-command {
+            color: #2a8ed9;
+            font-weight: 700;
+        }
+
+        .tg-time {
+            font-size: 11px;
+            font-weight: 600;
+            opacity: .75;
+        }
+
+        #chatMessages::-webkit-scrollbar { width: 6px; }
+        #chatMessages::-webkit-scrollbar-track { background: transparent; }
+        #chatMessages::-webkit-scrollbar-thumb { background-color: #9cb3c0; border-radius: 20px; }
+
+        .tg-avatar {
+            height: 36px;
+            width: 36px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .tg-avatar-user {
+            background: #3f8198;
+            color: #e8f7ff;
+        }
+
+        .tg-avatar-admin {
+            background-image: url('/images/admin-support.svg');
+            background-color: #edf4fa;
+            border-color: #bcd0dc;
+        }
+
+        .tg-input-wrap {
+            background: #d2dee6;
+            border-top: 1px solid #bfd0d9;
+        }
+
+        .tg-input {
+            border-radius: 999px;
+            border: 1px solid #c9d7de;
+            background: #f3f7f9;
+            color: #253546;
+        }
+
+        .tg-input::placeholder {
+            color: #8a9ba7;
+        }
+
+        .tg-send {
+            background: #6ea8bd;
+            color: #fff;
+            border-radius: 999px;
         }
     </style>
 </head>
 <body class="flex flex-col min-h-screen">
     @include('partials.navbar-main')
 
-    <main class="flex-grow flex flex-col max-w-4xl mx-auto w-full px-4 py-8">
-        
-        <!-- Header de la page -->
-        <div class="mb-6">
-            <h1 class="text-2xl md:text-3xl font-black text-gray-900 tracking-tight">Assistance Client</h1>
-            <p class="text-gray-500 font-medium text-sm mt-2">Discutez en direct avec notre équipe en cas de problème ou de question.</p>
-        </div>
+    <main class="flex-grow flex flex-col w-full px-0 py-0">
 
         <!-- Interface de Chat Complète -->
-        <div class="flex-grow flex flex-col bg-white rounded-3xl border border-gray-100 shadow-[0_4px_20px_rgba(15,23,42,0.03)] overflow-hidden min-h-[500px]">
+        <div class="tg-shell flex-grow flex flex-col min-h-0 h-full w-full">
             
             <!-- En-tête du Chat (La personne en face) -->
-            <div class="border-b border-gray-100 p-4 md:px-8 md:py-6 flex justify-between items-center bg-white z-10 sticky top-0">
-                <div class="flex items-center gap-4">
-                    <div class="relative">
-                        <div class="h-12 w-12 rounded-full bg-blue-50 flex items-center justify-center text-primary border border-blue-100 shadow-inner">
-                            <i class="fa-solid fa-headset text-xl"></i>
-                        </div>
-                        <span class="absolute bottom-0 right-0 h-3.5 w-3.5 rounded-full bg-green-500 border-2 border-white"></span>
-                    </div>
+            <div class="tg-header px-4 py-3 md:px-6 md:py-4 flex justify-between items-center z-10 sticky top-0">
+                <div class="flex items-center gap-3">
+                    <div class="tg-avatar tg-avatar-admin flex-shrink-0"></div>
                     <div>
-                        <h2 class="text-base font-black text-gray-900 tracking-tight">Équipe PLAYSTAYHOME</h2>
-                        <p class="text-xs font-bold text-green-500 flex items-center gap-1">
-                            <span class="inline-block h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse"></span>
-                            En ligne
+                        <h2 class="text-base md:text-lg font-bold tracking-tight">Support</h2>
+                        <p class="text-xs font-semibold tg-header-sub flex items-center gap-1">
+                            1 member
                         </p>
                     </div>
                 </div>
             </div>
 
             <!-- Zone des messages (Historique) -->
-            <div id="chatMessages" class="flex-grow p-4 md:p-8 bg-gray-50/50 flex flex-col gap-6 overflow-y-auto relative">
+            <div id="chatMessages" class="tg-chat-bg flex-grow px-4 py-5 md:px-6 md:py-6 flex flex-col gap-4 overflow-y-auto relative">
                 
                 <!-- Date Separator -->
-                <div class="flex justify-center my-2">
-                    <span class="text-[10px] font-black uppercase tracking-widest text-gray-400 bg-white px-4 py-1.5 rounded-full shadow-sm border border-gray-100">Aujourd'hui</span>
+                <div class="flex justify-start my-1">
+                    <span class="tg-date-pill text-xs font-semibold">Apr 23 · 12:40 PM</span>
                 </div>
 
                 <!-- Bulle de l'Admin (Gauche) -->
-                <div class="flex items-end gap-3 max-w-[85%] md:max-w-[70%]">
-                    <div class="h-8 w-8 rounded-full bg-blue-50 flex items-center justify-center text-primary flex-shrink-0 shadow-sm border border-blue-100">
-                        <i class="fa-solid fa-headset text-xs"></i>
+                <div class="flex items-end gap-2 max-w-[92%] md:max-w-[78%] self-end">
+                    <div class="tg-bubble tg-bubble-out px-4 py-3">
+                        <p class="messageAdmin tg-message-text">Bonjour 👋</p>
+                        <div class="tg-time text-slate-100 mt-2 text-right">12:40 PM</div>
                     </div>
-                    <div class="bg-white p-4 rounded-2xl rounded-bl-sm shadow-[0_2px_10px_rgba(15,23,42,0.02)] border border-gray-100 text-sm font-medium text-gray-700 leading-relaxed relative group">
-                        <p class="messageAdmin">Bonjour ! 👋 Bienvenue sur le chat d'assistance <strong>PLAYSTAYHOME</strong>. Avez-vous une question concernant une réservation de console ou de manettes ?</p>
-                        <div class="text-[10px] font-bold text-gray-400 mt-2 flex items-center gap-1">
-                            <p class="time">10:35</p>
-                        </div>
+                    <div class="tg-avatar tg-avatar-user flex items-center justify-center flex-shrink-0" id="myUserAvatarPreview">
+                        <i class="fa-regular fa-user text-sm"></i>
                     </div>
                 </div>
 
                 <!-- Bulle de l'Utilisateur (Droite) -->
-                <div class="flex items-end gap-3 max-w-[85%] md:max-w-[70%] self-end flex-row-reverse">
-                    <div class="bg-primary hover:bg-blue-600 transition-colors p-4 rounded-2xl rounded-br-sm shadow-sm text-sm font-medium text-white leading-relaxed">
-                        <p class="messageUser">Bonjour, j'aimerais savoir s'il y a des remises si je prolonge ma location d'une semaine supplémentaire ?</p>
-                        <div class="text-[10px] font-bold text-blue-200 mt-2 flex items-center justify-end gap-1">
-                            <p class="time">10:35</p> <i class="fa-solid fa-check-double drop-shadow-sm"></i>
-                        </div>
-                    </div>
-                </div>
+                
 
-                <!-- Bulle de l'Admin en train d'écrire... (Optionnel pour le design) -->
-                <div class="flex items-end gap-3 max-w-[85%] md:max-w-[70%] mt-2">
-                    <div class="h-8 w-8 rounded-full bg-blue-50 flex items-center justify-center text-primary flex-shrink-0 shadow-sm border border-blue-100">
-                        <i class="fa-solid fa-headset text-xs"></i>
-                    </div>
-                    <div class="bg-white px-4 py-3 rounded-2xl rounded-bl-sm shadow-sm border border-gray-100 flex items-center gap-1.5 h-[42px]">
-                        <span class="h-1.5 w-1.5 bg-gray-300 rounded-full animate-bounce"></span>
-                        <span class="h-1.5 w-1.5 bg-gray-300 rounded-full animate-bounce" style="animation-delay: 0.1s"></span>
-                        <span class="h-1.5 w-1.5 bg-gray-300 rounded-full animate-bounce" style="animation-delay: 0.2s"></span>
-                    </div>
-                </div>
+               
             </div>
 
             <!-- Zone de saisie -->
-            <div class="bg-white border-t border-gray-100 p-4 md:p-6 z-10">
-                <form id="chatForm" class="flex items-center gap-3">
-                    <div class="relative flex-grow">
-                        <textarea id="messageInput" rows="1" class="w-full bg-gray-50 border border-gray-200 text-gray-900 rounded-2xl pl-4 pr-12 py-3.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/20 focus:bg-white focus:border-primary transition-all placeholder-gray-400 resize-none h-[50px] scrollbar-hide" placeholder="Écrivez votre message..." style="min-height: 50px; max-height: 120px;"></textarea>
-                    </div>
-                    <button type="button" class="bg-white border border-gray-200 hover:bg-gray-50 text-gray-500 hover:text-primary h-[50px] w-[50px] rounded-2xl flex items-center justify-center shadow-sm transition-colors flex-shrink-0">
-                        <i class="fa-solid fa-paperclip"></i>
+            <div class="tg-input-wrap p-3 md:p-4 z-10">
+                <form id="chatForm" class="flex items-end gap-2">
+                    <button type="button" class="h-[44px] w-[44px] rounded-full border border-[#bfd0d9] text-[#7993a3] bg-[#edf3f6] flex items-center justify-center flex-shrink-0">
+                        <i class="fa-regular fa-face-smile text-base"></i>
                     </button>
-                    <button type="submit" class="bg-primary hover:bg-blue-600 text-white h-[50px] w-[50px] rounded-2xl flex items-center justify-center shadow-sm transition-transform active:scale-95 flex-shrink-0">
-                        <i class="fa-solid fa-paper-plane"></i>
+                    <div class="relative flex-grow">
+                        <textarea id="messageInput" rows="1" class="tg-input w-full px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#8fb4c4]/30 focus:border-[#8fb4c4] transition-all resize-none h-[44px]" placeholder="Write a message..." style="min-height: 44px; max-height: 120px;"></textarea>
+                    </div>
+                    <button type="submit" class="tg-send hover:brightness-95 h-[44px] w-[44px] flex items-center justify-center shadow-sm transition-transform active:scale-95 flex-shrink-0">
+                        <i class="fa-solid fa-paper-plane text-sm"></i>
                     </button>
                 </form>
-                <div class="text-center mt-3 hidden md:block">
-                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Temps de réponse habituel : moins de 5 minutes</p>
-                </div>
             </div>
 
         </div>
@@ -153,6 +224,8 @@
 
             // Variables globales pour le chat
             let myUserId = null;
+            let myUserPhotoUrl = null;
+            let myUserName = 'U';
 
             // 1. Récupérer l'ID de l'utilisateur et démarrer l'écoute temps réel !
             try {
@@ -161,6 +234,15 @@
                 });
                 let currentUser = await userRes.json();
                 myUserId = currentUser.id;
+                myUserPhotoUrl = currentUser.photo_url || null;
+                myUserName = currentUser.name || 'U';
+
+                const myUserAvatarPreview = document.getElementById('myUserAvatarPreview');
+                if (myUserAvatarPreview && myUserPhotoUrl) {
+                    myUserAvatarPreview.innerHTML = `<img src="${escapeHtml(myUserPhotoUrl)}" class="h-full w-full rounded-full object-cover" alt="${escapeHtml(myUserName)}">`;
+                } else if (myUserAvatarPreview) {
+                    myUserAvatarPreview.innerHTML = `<span class="text-sm font-bold uppercase">${escapeHtml(myUserName.charAt(0))}</span>`;
+                }
 
                 // === ÉCOUTE DES WEBSOCKETS (LARAVEL REVERB) ===
                 if(window.Echo) {
@@ -179,6 +261,40 @@
                 console.error("Erreur chargement User :", e);
             }
 
+            function escapeHtml(value) {
+                return String(value)
+                    .replaceAll('&', '&amp;')
+                    .replaceAll('<', '&lt;')
+                    .replaceAll('>', '&gt;')
+                    .replaceAll('"', '&quot;')
+                    .replaceAll("'", '&#039;');
+            }
+
+            function formatTelegramLikeText(value) {
+                return escapeHtml(value)
+                    .split('\n')
+                    .map((line) => {
+                        if (line.trim().startsWith('/')) {
+                            const splitIndex = line.indexOf(' ');
+                            if (splitIndex > 0) {
+                                const command = line.slice(0, splitIndex);
+                                const rest = line.slice(splitIndex);
+                                return `<span class="tg-command">${command}</span>${rest}`;
+                            }
+                            return `<span class="tg-command">${line}</span>`;
+                        }
+                        return line;
+                    })
+                    .join('\n');
+            }
+
+            function renderMyAvatarHtml() {
+                if (myUserPhotoUrl) {
+                    return `<div class="tg-avatar tg-avatar-user flex items-center justify-center flex-shrink-0"><img src="${escapeHtml(myUserPhotoUrl)}" class="h-full w-full rounded-full object-cover" alt="${escapeHtml(myUserName)}"></div>`;
+                }
+                return `<div class="tg-avatar tg-avatar-user flex items-center justify-center flex-shrink-0"><span class="text-sm font-bold uppercase">${escapeHtml(myUserName.charAt(0))}</span></div>`;
+            }
+
             async function loadMessages() {
                 try {
                     let res = await fetch('/api/chat/0', {
@@ -191,7 +307,7 @@
                     
                     let cvsHistorique = await res.json();
                     if(cvsHistorique.length > 0) {
-                        let chatHtml = '<div class="flex justify-center my-4"><span class="text-[10px] font-black uppercase tracking-widest text-gray-400 bg-white px-4 py-1.5 rounded-full shadow-sm border border-gray-100">Historique de discussion</span></div>';
+                        let chatHtml = '<div class="flex justify-start my-1"><span class="tg-date-pill text-xs font-semibold">Historique de discussion</span></div>';
                         
                         let lastDateStr = "";
                         let today = new Date();
@@ -222,8 +338,8 @@
                             }
 
                             chatHtml += `
-                            <div class="flex justify-center my-6">
-                                <span class="text-[10px] font-black uppercase tracking-widest text-gray-400 bg-white px-4 py-1.5 rounded-full shadow-sm border border-gray-100">${displayText}</span>
+                            <div class="flex justify-start my-3">
+                                <span class="tg-date-pill text-xs font-semibold">${displayText}</span>
                             </div>`;
                             
                             lastDateStr = msgDateStr; // On met à jour la dernière date vue
@@ -235,27 +351,22 @@
 
                         if (message.sender_id === myUserId) {
                             chatHtml += `
-                            <div class="flex items-end gap-3 max-w-[85%] md:max-w-[70%] self-end flex-row-reverse mb-4">
-                                <div class="bg-primary hover:bg-blue-600 transition-colors p-4 rounded-2xl rounded-br-sm shadow-sm text-sm font-medium text-white leading-relaxed">
-                                    <p class="messageUser">${message.message}</p>
-                                    <div class="text-[10px] font-bold text-blue-200 mt-2 flex items-center justify-end gap-1">
-                                        <p class="time">${time}</p>
-                                    </div>
+                            <div class="flex items-end gap-2 max-w-[92%] md:max-w-[78%] self-end mb-3">
+                                <div class="tg-bubble tg-bubble-out px-4 py-3">
+                                    <p class="messageUser tg-message-text">${formatTelegramLikeText(message.message)}</p>
+                                    <div class="tg-time text-slate-100 mt-2 text-right">${time}</div>
                                 </div>
+                                ${renderMyAvatarHtml()}
                             </div>`;
                         } 
                         // Si c'est l'admin (Bulle Gauche Blanche)
                         else {
                             chatHtml += `
-                            <div class="flex items-end gap-3 max-w-[85%] md:max-w-[70%] mb-4">
-                                <div class="h-8 w-8 rounded-full bg-blue-50 flex items-center justify-center text-primary flex-shrink-0 shadow-sm border border-blue-100">
-                                    <i class="fa-solid fa-headset text-xs"></i>
-                                </div>
-                                <div class="bg-white p-4 rounded-2xl rounded-bl-sm shadow-[0_2px_10px_rgba(15,23,42,0.02)] border border-gray-100 text-sm font-medium text-gray-700 leading-relaxed relative group">
-                                    <p class="messageAdmin">${message.message}</p>
-                                    <div class="text-[10px] font-bold text-gray-400 mt-2 flex items-center gap-1">
-                                        <p class="time">${time}</p>
-                                    </div>
+                            <div class="flex items-end gap-2 max-w-[92%] md:max-w-[78%] mb-3">
+                                <div class="tg-avatar tg-avatar-admin flex-shrink-0"></div>
+                                <div class="tg-bubble tg-bubble-in px-4 py-3">
+                                    <p class="messageAdmin tg-message-text">${formatTelegramLikeText(message.message)}</p>
+                                    <div class="tg-time text-slate-500 mt-2 text-right">${time}</div>
                                 </div>
                             </div>`;
                         }

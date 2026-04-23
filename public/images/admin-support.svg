@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title">
+  <title>Admin Support Avatar</title>
+  <defs>
+    <linearGradient id="bgGrad" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#62A9F7" />
+      <stop offset="100%" stop-color="#2D7FD7" />
+    </linearGradient>
+    <linearGradient id="personGrad" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0%" stop-color="#68AFFA" />
+      <stop offset="100%" stop-color="#3788D8" />
+    </linearGradient>
+  </defs>
+
+  <circle cx="128" cy="128" r="124" fill="#EAF3FA" />
+  <path d="M48 188c0-28 22-50 50-50h60c28 0 50 22 50 50v18H48v-18z" fill="url(#personGrad)" />
+  <circle cx="128" cy="96" r="40" fill="#F7FBFF" />
+  <path d="M88 96c0-22 18-40 40-40 10 0 19 4 26 9-4 17-20 31-39 31-11 0-20-2-27-7v7z" fill="url(#personGrad)" />
+
+  <path d="M77 108a8 8 0 0 1-8-8V86c0-32 27-58 59-58s59 26 59 58v14a8 8 0 0 1-16 0V86c0-23-19-42-43-42S85 63 85 86v14a8 8 0 0 1-8 8z" fill="url(#bgGrad)" />
+  <rect x="62" y="102" width="20" height="30" rx="8" fill="url(#bgGrad)" />
+  <rect x="174" y="102" width="20" height="30" rx="8" fill="url(#bgGrad)" />
+  <path d="M107 118h42v9a21 21 0 0 1-21 21 21 21 0 0 1-21-21v-9z" fill="#F7FBFF" />
+  <rect x="95" y="116" width="16" height="8" rx="4" fill="url(#bgGrad)" />
+</svg>
