@@ -169,33 +169,32 @@
                             <h2 class="text-xl font-bold text-gray-900">PLAYSTAYHOME</h2>
                         </div>
                         <p class="max-w-sm text-sm leading-relaxed text-gray-500">
-                            Redefining the property experience. We help you find, buy, and manage your dream homes with cutting-edge technology and local expertise.
+                            Louez, jouez, profitez : la référence du jeu vidéo à domicile.
                         </p>
                     </div>
 
                     <div>
-                        <h4 class="mb-6 font-bold text-gray-900">Quick Links</h4>
+                        <h4 class="mb-6 font-bold text-gray-900">Catalogue</h4>
                         <ul class="flex flex-col gap-4 text-sm text-gray-600">
-                            <li><a href="#" class="hover:text-blue-600">Find a Home</a></li>
-                            <li><a href="#" class="hover:text-blue-600">List Your Property</a></li>
-                            <li><a href="#" class="hover:text-blue-600">Market Reports</a></li>
-                            <li><a href="#" class="hover:text-blue-600">Agent Finder</a></li>
+                            <li><a href="#" class="hover:text-blue-600">Jeux PlayStation</a></li>
+                            <li><a href="#" class="hover:text-blue-600">Consoles Xbox</a></li>
+                            <li><a href="#" class="hover:text-blue-600">Exclusivités Nintendo</a></li>
                         </ul>
                     </div>
 
                     <div>
-                        <h4 class="mb-6 font-bold text-gray-900">Company</h4>
+                        <h4 class="mb-6 font-bold text-gray-900">Entreprise</h4>
                         <ul class="flex flex-col gap-4 text-sm text-gray-600">
-                            <li><a href="#" class="hover:text-blue-600">About Us</a></li>
-                            <li><a href="#" class="hover:text-blue-600">Careers</a></li>
-                            <li><a href="#" class="hover:text-blue-600">Privacy Policy</a></li>
-                            <li><a href="#" class="hover:text-blue-600">Terms of Service</a></li>
+                            <li><a href="#" class="hover:text-blue-600">À propos</a></li>
+                            <li><a href="#" class="hover:text-blue-600">Carrières</a></li>
+                            <li><a href="#" class="hover:text-blue-600">Politique de confidentialité</a></li>
+                            <li><a href="#" class="hover:text-blue-600">Conditions d'utilisation</a></li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="mt-12 border-t border-gray-200 pt-8 text-center">
-                    <p class="text-xs text-gray-500">© 2026 <strong>PLAYSTAYHOME</strong> Real Estate. All rights reserved.</p>
+                    <p class="text-xs text-gray-500">© 2026 <strong>PLAYSTAYHOME</strong>. Tous droits réservés.</p>
                 </div>
             </div>
         </footer>
