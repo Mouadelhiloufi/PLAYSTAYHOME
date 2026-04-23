@@ -164,7 +164,7 @@
                     <div>
                         <h2 class="text-base md:text-lg font-bold tracking-tight">Support</h2>
                         <p class="text-xs font-semibold tg-header-sub flex items-center gap-1">
-                            1 member
+                            1 membre
                         </p>
                     </div>
                 </div>
@@ -202,7 +202,7 @@
                         <i class="fa-regular fa-face-smile text-base"></i>
                     </button>
                     <div class="relative flex-grow">
-                        <textarea id="messageInput" rows="1" class="tg-input w-full px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#8fb4c4]/30 focus:border-[#8fb4c4] transition-all resize-none h-[44px]" placeholder="Write a message..." style="min-height: 44px; max-height: 120px;"></textarea>
+                        <textarea id="messageInput" rows="1" class="tg-input w-full px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#8fb4c4]/30 focus:border-[#8fb4c4] transition-all resize-none h-[44px]" placeholder="Ecrire un message..." style="min-height: 44px; max-height: 120px;"></textarea>
                     </div>
                     <button id="sendMessageBtn" type="submit" class="tg-send hover:brightness-95 h-[44px] w-[44px] flex items-center justify-center shadow-sm transition-transform active:scale-95 flex-shrink-0">
                         <i class="fa-solid fa-paper-plane text-sm"></i>
