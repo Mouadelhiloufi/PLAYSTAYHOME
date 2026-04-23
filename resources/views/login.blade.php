@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Log In - playstayhome</title>
+    <title>Connexion - playstayhome</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -65,13 +65,13 @@
         </div>
         <div class="flex items-center gap-8">
             <nav class="hidden md:flex items-center gap-9">
-                <a class="text-gray-600 text-sm font-medium hover:text-primary" href="/">Home</a>
+                <a class="text-gray-600 text-sm font-medium hover:text-primary" href="/">Accueil</a>
                 <a class="text-gray-600 text-sm font-medium hover:text-primary" href="catalogue">Catalogue</a>
-                <a class="text-gray-600 text-sm font-medium hover:text-primary" href="contact">Contact US</a>
+                <a class="text-gray-600 text-sm font-medium hover:text-primary" href="contact">Contact</a>
                 <a class="text-gray-600 text-sm font-medium hover:text-primary" href="faq">FAQ</a>
                 
             </nav>
-            <a href="/register" class="bg-primary text-white px-5 py-2 rounded-lg text-sm font-bold hover:bg-blue-700">Sign Up</a>
+            <a href="/register" class="bg-primary text-white px-5 py-2 rounded-lg text-sm font-bold hover:bg-blue-700">Créer un compte</a>
         </div>
     </header>
 
@@ -106,23 +106,23 @@
         <div class="w-full md:w-1/2 flex items-center justify-center p-12 bg-gray-50">
             <div class="w-full max-w-[480px]">
                 <div class="mb-10">
-                    <h2 class="text-gray-900 text-4xl font-black mb-2">Welcome Back</h2>
-                    <p class="text-gray-500 text-lg">Log in to your playstayhome account.</p>
+                    <h2 class="text-gray-900 text-4xl font-black mb-2">Bienvenue</h2>
+                    <p class="text-gray-500 text-lg">Connectez-vous à votre compte playstayhome.</p>
                 </div>
                 <form class="space-y-5" id="loginForm">
                     <div class="space-y-2">
-                        <label class="block text-gray-700 text-sm font-semibold uppercase tracking-wider">Email Address</label>
+                        <label class="block text-gray-700 text-sm font-semibold uppercase tracking-wider">Adresse e-mail</label>
                         <div class="relative input-wrapper">
                             <svg class="w-5 h-5 absolute left-4 top-10 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                             </svg>
-                            <input id="email" name="email" type="email" data-parsley-type="email" data-parsley-required="true" required placeholder="name@example.com" class="w-full pl-12 pr-4 py-4 rounded-lg border border-gray-200 bg-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none">
+                            <input id="email" name="email" type="email" data-parsley-type="email" data-parsley-required="true" required placeholder="votre@email.com" class="w-full pl-12 pr-4 py-4 rounded-lg border border-gray-200 bg-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none">
                         </div>
                     </div>
                     <div class="space-y-2">
                         <div class="flex items-center justify-between">
-                            <label class="block text-gray-700 text-sm font-semibold uppercase tracking-wider">Password</label>
-                            <a class="text-sm font-medium text-primary hover:underline" href="#">Forgot Password?</a>
+                            <label class="block text-gray-700 text-sm font-semibold uppercase tracking-wider">Mot de passe</label>
+                            <a class="text-sm font-medium text-primary hover:underline" href="#">Mot de passe oublié ?</a>
                         </div>
                         <div class="relative input-wrapper">
                             <svg class="w-5 h-5 absolute left-4 top-10 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -133,14 +133,14 @@
                     </div>
                     <div class="flex items-center gap-3 pt-2">
                         <input type="checkbox" id="remember" class="rounded border-gray-300 text-primary focus:ring-primary">
-                        <label for="remember" class="text-sm text-gray-500">Remember me for 30 days</label>
+                        <label for="remember" class="text-sm text-gray-500">Se souvenir de moi pendant 30 jours</label>
                     </div>
-                    <button type="submit" class="w-full bg-primary hover:bg-blue-700 text-white font-bold py-4 rounded-lg text-lg shadow-lg">Log In</button>
+                    <button type="submit" class="w-full bg-primary hover:bg-blue-700 text-white font-bold py-4 rounded-lg text-lg shadow-lg">Connexion</button>
                 </form>
                 <div class="mt-8 pt-8 border-t border-gray-200 text-center">
                     <p class="text-gray-600">
-                        Don't have an account? 
-                        <a class="text-primary font-bold hover:underline ml-1" href="/register">Sign up here</a>
+                        Pas de compte ?
+                        <a class="text-primary font-bold hover:underline ml-1" href="/register">Créer un compte</a>
                     </p>
                 </div>
             </div>
@@ -155,12 +155,12 @@
                 <span class="text-sm font-semibold uppercase tracking-widest">PLAYSTAYHOME</span>
             </div>
             <div class="flex gap-8">
-                <a class="text-gray-400 hover:text-primary text-sm" href="#">Privacy</a>
-                <a class="text-gray-400 hover:text-primary text-sm" href="#">Terms</a>
+                <a class="text-gray-400 hover:text-primary text-sm" href="#">Confidentialité</a>
+                <a class="text-gray-400 hover:text-primary text-sm" href="#">Conditions</a>
                 <a class="text-gray-400 hover:text-primary text-sm" href="#">Cookies</a>
-                <a class="text-gray-400 hover:text-primary text-sm" href="#">Status</a>
+                <a class="text-gray-400 hover:text-primary text-sm" href="#">Statut</a>
             </div>
-            <p class="text-gray-400 text-sm">© 2026 <strong>PLAYSTAYHOME</strong>. All rights reserved.</p>
+            <p class="text-gray-400 text-sm">© 2026 <strong>PLAYSTAYHOME</strong>. Tous droits réservés.</p>
         </div>
     </footer>
 

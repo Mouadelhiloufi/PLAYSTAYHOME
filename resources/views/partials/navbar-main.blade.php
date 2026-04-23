@@ -9,9 +9,9 @@
 
         <div class="flex flex-1 items-center justify-end gap-8">
             <nav class="hidden items-center gap-9 md:flex">
-                    <a href="/" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">Home</a>
+                    <a href="/" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">Accueil</a>
                     <a href="/catalogue" class="nav-link {{ request()->routeIs('catalogue') ? 'active' : '' }}">Catalogue</a>
-                    <a href="/contact" class="nav-link {{ request()->routeIs('contact') ? 'active' : '' }}">Contact Us</a>
+                    <a href="/contact" class="nav-link {{ request()->routeIs('contact') ? 'active' : '' }}">Contact</a>
                     <a href="/faq" class="nav-link {{ request()->routeIs('faq') ? 'active' : '' }}">FAQ</a>
                 <!-- <a href="/reservation" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">reservation</a>
                 <a href="/profile" class="nav-link {{ request()->routeIs('catalogue') ? 'active' : '' }}">profile</a>
@@ -20,8 +20,8 @@
 
                 <!-- Liens visibles uniquement pour les invités (non connectés) -->
                 <div id="nav-guest-links" class="flex items-center gap-9">
-                    <a href="/register" class="nav-link {{ request()->routeIs('register') ? 'active' : '' }}">Sign Up</a>
-                    <a href="/login" class="nav-link {{ request()->routeIs('login') ? 'active' : '' }}">Sign In</a>
+                    <a href="/register" class="nav-link {{ request()->routeIs('register') ? 'active' : '' }}">Créer un compte</a>
+                    <a href="/login" class="nav-link {{ request()->routeIs('login') ? 'active' : '' }}">Connexion</a>
                 </div>
 
                   <!-- Liens visibles uniquement pour les utilisateurs connectés -->
@@ -50,7 +50,7 @@
                         <div id="navProfileAvatar" class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-primary font-bold overflow-hidden shadow-sm border border-blue-200">
                             <i class="fa-regular fa-user text-sm"></i>
                         </div>
-                        <span id="navProfileName" class="text-sm font-medium">Profile</span>
+                        <span id="navProfileName" class="text-sm font-medium">Profil</span>
                     </a>
                     
                 </div>

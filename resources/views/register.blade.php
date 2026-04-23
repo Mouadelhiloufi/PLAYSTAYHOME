@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up - playstayhome</title>
+    <title>Créer un compte - playstayhome</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -65,13 +65,13 @@
         </div>
         <div class="flex items-center gap-8">
             <nav class="hidden md:flex items-center gap-9">
-                <a class="text-gray-600 text-sm font-medium hover:text-primary" href="/">Home</a>
+                <a class="text-gray-600 text-sm font-medium hover:text-primary" href="/">Accueil</a>
                 <a class="text-gray-600 text-sm font-medium hover:text-primary" href="catalogue">Catalogue</a>
-                <a class="text-gray-600 text-sm font-medium hover:text-primary" href="contact">Contact US</a>
+                <a class="text-gray-600 text-sm font-medium hover:text-primary" href="contact">Contact</a>
                 <a class="text-gray-600 text-sm font-medium hover:text-primary" href="faq">FAQ</a>
                 
             </nav>
-            <a href="/login" class="bg-primary text-white px-5 py-2 rounded-lg text-sm font-bold hover:bg-blue-700">Log In</a>
+            <a href="/login" class="bg-primary text-white px-5 py-2 rounded-lg text-sm font-bold hover:bg-blue-700">Connexion</a>
         </div>
     </header>
 
@@ -106,30 +106,30 @@
         <div class="w-full md:w-1/2 flex items-center justify-center p-12 bg-gray-50">
             <div class="w-full max-w-[480px]">
                 <div class="mb-10">
-                    <h2 class="text-gray-900 text-4xl font-black mb-2">Create Account</h2>
-                    <p class="text-gray-500 text-lg">Join playstayhome today.</p>
+                    <h2 class="text-gray-900 text-4xl font-black mb-2">Créer un compte</h2>
+                    <p class="text-gray-500 text-lg">Rejoignez playstayhome dès aujourd'hui.</p>
                 </div>
                 <form class="space-y-5" id="registerForm">
                     <div class="space-y-2">
-                        <label class="block text-gray-700 text-sm font-semibold uppercase tracking-wider">Full Name</label>
+                        <label class="block text-gray-700 text-sm font-semibold uppercase tracking-wider">Nom complet</label>
                         <div class="relative input-wrapper">
                             <svg class="w-5 h-5 absolute left-4 top-10 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                             </svg>
-                            <input id="fullName" name="fullName" type="text" data-parsley-minlength="4" data-parsley-required="true" placeholder="John Doe" class="w-full pl-12 pr-4 py-4 rounded-lg border border-gray-200 bg-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none">
+                            <input id="fullName" name="fullName" type="text" data-parsley-minlength="4" data-parsley-required="true" placeholder="Jean Dupont" class="w-full pl-12 pr-4 py-4 rounded-lg border border-gray-200 bg-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none">
                         </div>
                     </div>
                     <div class="space-y-2">
-                        <label class="block text-gray-700 text-sm font-semibold uppercase tracking-wider">Email Address</label>
+                        <label class="block text-gray-700 text-sm font-semibold uppercase tracking-wider">Adresse e-mail</label>
                         <div class="relative input-wrapper">
                             <svg class="w-5 h-5 absolute left-4 top-10 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                             </svg>
-                            <input id="email" name="email" type="email" data-parsley-type="email" data-parsley-required="true" placeholder="name@example.com" class="w-full pl-12 pr-4 py-4 rounded-lg border border-gray-200 bg-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none">
+                            <input id="email" name="email" type="email" data-parsley-type="email" data-parsley-required="true" placeholder="votre@email.com" class="w-full pl-12 pr-4 py-4 rounded-lg border border-gray-200 bg-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none">
                         </div>
                     </div>
                     <div class="space-y-2">
-                        <label class="block text-gray-700 text-sm font-semibold uppercase tracking-wider">Password</label>
+                        <label class="block text-gray-700 text-sm font-semibold uppercase tracking-wider">Mot de passe</label>
                         <div class="relative input-wrapper">
                             <svg class="w-5 h-5 absolute left-4 top-10 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
@@ -138,7 +138,7 @@
                         </div>
                     </div>
                     <div class="space-y-2">
-                        <label class="block text-gray-700 text-sm font-semibold uppercase tracking-wider">Confirm Password</label>
+                        <label class="block text-gray-700 text-sm font-semibold uppercase tracking-wider">Confirmer le mot de passe</label>
                         <div class="relative input-wrapper">
                             <svg class="w-5 h-5 absolute left-4 top-10 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
@@ -147,7 +147,7 @@
                         </div>
                     </div>
                     <div class="space-y-2">
-                        <label class="block text-gray-700 text-sm font-semibold uppercase tracking-wider">Profile Photo (Optional)</label>
+                        <label class="block text-gray-700 text-sm font-semibold uppercase tracking-wider">Photo de profil (optionnel)</label>
                         <div class="relative input-wrapper">
                             <input id="photo" name="photo" type="file" accept="image/*" class="w-full px-4 py-3 rounded-lg border border-gray-200 bg-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none">
                         </div>
@@ -155,15 +155,15 @@
                     <div class="flex items-center gap-3 pt-2">
                         <input type="checkbox" id="terms" class="rounded border-gray-300 text-primary focus:ring-primary">
                         <label for="terms" class="text-sm text-gray-500">
-                            I agree to the <a href="#" class="text-primary hover:underline">Terms & Conditions</a>
+                            J'accepte les <a href="#" class="text-primary hover:underline">Conditions générales</a>
                         </label>
                     </div>
-                    <button type="submit" class="w-full bg-primary hover:bg-blue-700 text-white font-bold py-4 rounded-lg text-lg shadow-lg">Sign Up</button>
+                    <button type="submit" class="w-full bg-primary hover:bg-blue-700 text-white font-bold py-4 rounded-lg text-lg shadow-lg">Créer un compte</button>
                 </form>
                 <div class="mt-8 pt-8 border-t border-gray-200 text-center">
                     <p class="text-gray-600">
-                        Already have an account? 
-                        <a class="text-primary font-bold hover:underline ml-1" href="/login">Log in here</a>
+                        Vous avez déjà un compte ?
+                        <a class="text-primary font-bold hover:underline ml-1" href="/login">Connexion</a>
                     </p>
                 </div>
             </div>
@@ -178,12 +178,12 @@
                 <span class="text-sm font-semibold uppercase tracking-widest">PLAYSTAYHOME</span>
             </div>
             <div class="flex gap-8">
-                <a class="text-gray-400 hover:text-primary text-sm" href="#">Privacy</a>
-                <a class="text-gray-400 hover:text-primary text-sm" href="#">Terms</a>
+                <a class="text-gray-400 hover:text-primary text-sm" href="#">Confidentialité</a>
+                <a class="text-gray-400 hover:text-primary text-sm" href="#">Conditions</a>
                 <a class="text-gray-400 hover:text-primary text-sm" href="#">Cookies</a>
-                <a class="text-gray-400 hover:text-primary text-sm" href="#">Status</a>
+                <a class="text-gray-400 hover:text-primary text-sm" href="#">Statut</a>
             </div>
-            <p class="text-gray-400 text-sm">© 2026 <strong>PLAYSTAYHOME</strong>. All rights reserved.</p>
+            <p class="text-gray-400 text-sm">© 2026 <strong>PLAYSTAYHOME</strong>. Tous droits réservés.</p>
         </div>
     </footer>
 </body>
