@@ -174,7 +174,7 @@
             <div id="chatMessages" class="tg-chat-bg flex-grow px-4 py-5 md:px-6 md:py-6 flex flex-col gap-4 overflow-y-auto relative">
                 
                 <!-- Date Separator -->
-                <div class="flex justify-start my-1">
+                <div class="flex justify-center my-1">
                     <span class="tg-date-pill text-xs font-semibold">Apr 23 · 12:40 PM</span>
                 </div>
 
@@ -307,7 +307,7 @@
                     
                     let cvsHistorique = await res.json();
                     if(cvsHistorique.length > 0) {
-                        let chatHtml = '<div class="flex justify-start my-1"><span class="tg-date-pill text-xs font-semibold">Historique de discussion</span></div>';
+                        let chatHtml = '<div class="flex justify-center my-1"><span class="tg-date-pill text-xs font-semibold">Historique de discussion</span></div>';
                         
                         let lastDateStr = "";
                         let today = new Date();
@@ -338,7 +338,7 @@
                             }
 
                             chatHtml += `
-                            <div class="flex justify-start my-3">
+                            <div class="flex justify-center my-3">
                                 <span class="tg-date-pill text-xs font-semibold">${displayText}</span>
                             </div>`;
                             
