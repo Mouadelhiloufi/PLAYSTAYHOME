@@ -162,7 +162,7 @@
                 <div class="flex items-center gap-3">
                     <div class="tg-avatar tg-avatar-admin flex-shrink-0"></div>
                     <div>
-                        <h2 class="text-base md:text-lg font-bold tracking-tight">Support</h2>
+                        <h2 class="text-base md:text-lg font-bold tracking-tight">Soutien</h2>
                         <p class="text-xs font-semibold tg-header-sub flex items-center gap-1">
                             1 membre
                         </p>
