@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -87,9 +87,9 @@
         <main class="mx-auto w-full max-w-4xl flex-1 px-4 py-10 lg:px-0">
             <section class="mb-10">
                 <div class="flex flex-col gap-3">
-                    <h1 class="text-4xl font-black tracking-tight text-gray-900 lg:text-5xl">Frequently Asked Questions</h1>
+                    <h1 class="text-4xl font-black tracking-tight text-gray-900 lg:text-5xl">Foire Aux Questions</h1>
                     <p class="max-w-2xl text-lg text-gray-600">
-                        Everything you need to know about <strong>PLAYSTAYHOME</strong> products and services. Can't find what you're looking for? Reach out to our team.
+                        Tout ce que vous devez savoir sur les produits et services <strong>PLAYSTAYHOME</strong>. Vous ne trouvez pas ce que vous cherchez ? Contactez notre équipe.
                     </p>
                 </div>
             </section>
@@ -97,37 +97,37 @@
             <section class="mb-12">
                 <div class="mb-6 flex items-center gap-3">
                     <i class="fa-solid fa-truck text-primary"></i>
-                    <h2 class="text-2xl font-bold text-gray-900">Delivery &amp; Setup</h2>
+                    <h2 class="text-2xl font-bold text-gray-900">Livraison &amp; Installation</h2>
                 </div>
 
                 <div class="space-y-4">
                     <details open class="overflow-hidden rounded-xl border border-gray-200 bg-white">
                         <summary class="flex cursor-pointer items-center justify-between gap-6 p-5">
-                            <p class="font-semibold text-gray-900">How long does delivery take?</p>
+                            <p class="font-semibold text-gray-900">Combien de temps prend la livraison&nbsp;?</p>
                             <i class="fa-solid fa-chevron-down faq-chevron text-gray-500"></i>
                         </summary>
                         <div class="border-t border-gray-100 px-5 pb-5 pt-4 text-gray-600">
-                            Standard delivery usually takes 3-5 business days depending on your location. Express shipping options are available at checkout for 1-2 day delivery.
+                            La livraison standard prend généralement 3 à 5 jours ouvrés selon votre localisation. Des options de livraison express sont disponibles lors du paiement pour une livraison en 1 à 2 jours.
                         </div>
                     </details>
 
                     <details class="overflow-hidden rounded-xl border border-gray-200 bg-white">
                         <summary class="flex cursor-pointer items-center justify-between gap-6 p-5">
-                            <p class="font-semibold text-gray-900">Do you provide professional installation?</p>
+                            <p class="font-semibold text-gray-900">Proposez-vous une installation professionnelle&nbsp;?</p>
                             <i class="fa-solid fa-chevron-down faq-chevron text-gray-500"></i>
                         </summary>
                         <div class="border-t border-gray-100 px-5 pb-5 pt-4 text-gray-600">
-                            Yes! We offer professional white-glove installation services in most metropolitan areas. You can select "Professional Installation" during the checkout process.
+                            Oui ! Nous proposons des services d'installation professionnelle dans la plupart des grandes villes. Vous pouvez sélectionner "Installation professionnelle" lors du processus de commande.
                         </div>
                     </details>
 
                     <details class="overflow-hidden rounded-xl border border-gray-200 bg-white">
                         <summary class="flex cursor-pointer items-center justify-between gap-6 p-5">
-                            <p class="font-semibold text-gray-900">What happens if my device arrives damaged?</p>
+                            <p class="font-semibold text-gray-900">Que se passe-t-il si mon appareil arrive endommagé&nbsp;?</p>
                             <i class="fa-solid fa-chevron-down faq-chevron text-gray-500"></i>
                         </summary>
                         <div class="border-t border-gray-100 px-5 pb-5 pt-4 text-gray-600">
-                            We offer a 100% replacement guarantee for damaged arrivals. Please report any shipping damage within 48 hours of delivery by contacting our support team with photos of the packaging and item.
+                            Nous offrons une garantie de remplacement à 100% pour les articles endommagés à la livraison. Veuillez signaler tout dommage dans les 48 heures suivant la réception en contactant notre support avec des photos de l'emballage et du produit.
                         </div>
                     </details>
                 </div>
@@ -136,27 +136,27 @@
             <section class="mb-12">
                 <div class="mb-6 flex items-center gap-3">
                     <i class="fa-solid fa-credit-card text-primary"></i>
-                    <h2 class="text-2xl font-bold text-gray-900">Pricing &amp; Payments</h2>
+                    <h2 class="text-2xl font-bold text-gray-900">Tarifs &amp; Paiements</h2>
                 </div>
 
                 <div class="space-y-4">
                     <details class="overflow-hidden rounded-xl border border-gray-200 bg-white">
                         <summary class="flex cursor-pointer items-center justify-between gap-6 p-5">
-                            <p class="font-semibold text-gray-900">What payment methods do you accept?</p>
+                            <p class="font-semibold text-gray-900">Quels moyens de paiement acceptez-vous&nbsp;?</p>
                             <i class="fa-solid fa-chevron-down faq-chevron text-gray-500"></i>
                         </summary>
                         <div class="border-t border-gray-100 px-5 pb-5 pt-4 text-gray-600">
-                            We accept all major credit cards (Visa, Mastercard, Amex), PayPal, and offer financing options through Affirm for qualifying purchases.
+                            Nous acceptons toutes les principales cartes bancaires (Visa, Mastercard, Amex), PayPal, et proposons des options de financement via Affirm pour les achats éligibles.
                         </div>
                     </details>
 
                     <details class="overflow-hidden rounded-xl border border-gray-200 bg-white">
                         <summary class="flex cursor-pointer items-center justify-between gap-6 p-5">
-                            <p class="font-semibold text-gray-900">Are there any monthly subscription fees?</p>
+                            <p class="font-semibold text-gray-900">Y a-t-il des frais d'abonnement mensuels&nbsp;?</p>
                             <i class="fa-solid fa-chevron-down faq-chevron text-gray-500"></i>
                         </summary>
                         <div class="border-t border-gray-100 px-5 pb-5 pt-4 text-gray-600">
-                            While core hardware functionality does not require a subscription, our "Pro Home" cloud storage and advanced automation features are available as a monthly or yearly plan.
+                            Les fonctionnalités de base ne nécessitent pas d'abonnement, mais notre stockage cloud "Pro Home" et les fonctions avancées d'automatisation sont disponibles via un abonnement mensuel ou annuel.
                         </div>
                     </details>
                 </div>
@@ -165,27 +165,27 @@
             <section class="mb-16">
                 <div class="mb-6 flex items-center gap-3">
                     <i class="fa-solid fa-user-gear text-primary"></i>
-                    <h2 class="text-2xl font-bold text-gray-900">Account Management</h2>
+                    <h2 class="text-2xl font-bold text-gray-900">Gestion du Compte</h2>
                 </div>
 
                 <div class="space-y-4">
                     <details class="overflow-hidden rounded-xl border border-gray-200 bg-white">
                         <summary class="flex cursor-pointer items-center justify-between gap-6 p-5">
-                            <p class="font-semibold text-gray-900">How do I reset my password?</p>
+                            <p class="font-semibold text-gray-900">Comment réinitialiser mon mot de passe&nbsp;?</p>
                             <i class="fa-solid fa-chevron-down faq-chevron text-gray-500"></i>
                         </summary>
                         <div class="border-t border-gray-100 px-5 pb-5 pt-4 text-gray-600">
-                            Go to the login page and click "Forgot Password." We will send an authentication link to your registered email address to set a new password.
+                            Rendez-vous sur la page de connexion et cliquez sur "Mot de passe oublié". Nous vous enverrons un lien d'authentification à votre adresse e-mail pour définir un nouveau mot de passe.
                         </div>
                     </details>
 
                     <details class="overflow-hidden rounded-xl border border-gray-200 bg-white">
                         <summary class="flex cursor-pointer items-center justify-between gap-6 p-5">
-                            <p class="font-semibold text-gray-900">Can I add multiple users to my home account?</p>
+                            <p class="font-semibold text-gray-900">Puis-je ajouter plusieurs utilisateurs à mon compte&nbsp;?</p>
                             <i class="fa-solid fa-chevron-down faq-chevron text-gray-500"></i>
                         </summary>
                         <div class="border-t border-gray-100 px-5 pb-5 pt-4 text-gray-600">
-                            Absolutely. Within the <strong>PLAYSTAYHOME</strong> app settings, navigate to "Manage Household" to invite family members using their email addresses.
+                            Absolument. Dans les paramètres de l'application <strong>PLAYSTAYHOME</strong>, allez dans "Gérer le foyer" pour inviter des membres de la famille via leur adresse e-mail.
                         </div>
                     </details>
                 </div>
@@ -194,18 +194,18 @@
             <section class="rounded-2xl border px-8 py-10 text-center" style="background-color: rgba(25, 120, 229, 0.08); border-color: rgba(25, 120, 229, 0.18);">
                 <div class="mx-auto flex max-w-2xl flex-col items-center gap-6">
                     <div>
-                        <h3 class="text-2xl font-bold text-gray-900 lg:text-3xl">Still have questions?</h3>
-                        <p class="mt-2 text-gray-600">Our customer happiness team is available 24/7 to help you out.</p>
+                        <h3 class="text-2xl font-bold text-gray-900 lg:text-3xl">Vous avez encore des questions&nbsp;?</h3>
+                        <p class="mt-2 text-gray-600">Notre équipe de support est disponible 24h/24 et 7j/7 pour vous aider.</p>
                     </div>
 
                     <div class="flex flex-wrap justify-center gap-4">
                         <button class="flex items-center gap-2 rounded-lg px-8 py-3 font-bold text-white bg-primary">
                             <i class="fa-regular fa-comment-dots"></i>
-                            <span>Live Chat</span>
+                            <span>Chat en direct</span>
                         </button>
                         <button class="flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-8 py-3 font-bold text-gray-900">
                             <i class="fa-regular fa-envelope"></i>
-                            <span>Email Support</span>
+                            <span>Support par e-mail</span>
                         </button>
                     </div>
                 </div>
