@@ -59,9 +59,9 @@
         
         <!-- Déconnexion -->
         <div class="border-t border-gray-100 pt-6 mt-10">
-            <a href="#" id="logoutBtn" class="text-red-500 hover:text-red-600 hover:bg-red-50 px-5 py-3.5 rounded-xl font-black text-sm transition-colors flex items-center">
+            <button id="logoutBtn" class="text-red-500 hover:text-red-600 hover:bg-red-50 px-5 py-3.5 rounded-xl font-black text-sm transition-colors flex items-center">
                 Déconnexion
-            </a>
+            </button>
         </div>
     </aside>
 
@@ -118,7 +118,20 @@
         document.addEventListener('DOMContentLoaded', async () => {
             const token = localStorage.getItem('token');
             if(!token) window.location.href = '/login';
-            
+
+            // Logique de déconnexion identique au dashboard
+            let logoutBtn = document.getElementById("logoutBtn");
+            logoutBtn.addEventListener('click', async () => {
+                try {
+                    await fetch('/api/logout', {
+                        method: 'POST',
+                        headers: { 'Authorization': 'Bearer ' + token, 'Accept': 'application/json' }
+                    });
+                } catch (e) {}
+                localStorage.removeItem('token');
+                window.location.href = '/login';
+            });
+
             async function fetchUsers() {
                 try {
                     let response = await fetch('/api/users', {
