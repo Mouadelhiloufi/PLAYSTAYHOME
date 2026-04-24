@@ -9,6 +9,19 @@ use Illuminate\Http\Request;
 class ManetteController extends Controller
 {
     /**
+     * index()
+     */
+    public function index()
+    {
+        $manettes = Manette::orderBy('id', 'desc')->get();
+
+        return response()->json([
+            'count' => $manettes->count(),
+            'manettes' => $manettes
+        ]);
+    }
+
+    /**
      * +addManette()
      */
     public function addManette(Request $request)

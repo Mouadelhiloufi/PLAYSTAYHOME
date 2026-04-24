@@ -19,6 +19,7 @@ Route::get('/consoles/{id}/reserved-dates', [ConsoleController::class, 'reserved
 Route::get('/consoles/{console}', [ConsoleController::class, 'show']);
 
 Route::get('/manettes/available', [ManetteController::class, 'listAvailableManettes']);
+Route::get('/manettes', [ManetteController::class, 'index']);
 Route::post('/manettes', [ManetteController::class, 'addManette']);
 Route::patch('/manettes/{id}/status', [ManetteController::class, 'updateStatus']);
 Route::delete('/manettes/{id}', [ManetteController::class, 'removeController']);

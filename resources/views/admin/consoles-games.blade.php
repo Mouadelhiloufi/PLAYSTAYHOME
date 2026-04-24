@@ -635,12 +635,16 @@
                         "Authorization": "Bearer " + token
                     }
                 });
-                const manettes = await res.json();
+                if (!res.ok) {
+                    throw new Error('Impossible de charger les manettes');
+                }
+                const payload = await res.json();
+                const manettes = Array.isArray(payload) ? payload : (payload.manettes || []);
                 const select = document.getElementById('selectManette');
                 if (select) {
                     let options = '<option value="">Choisir une manette</option>';
-                    (Array.isArray(manettes) ? manettes : manettes.data).forEach((m) => {
-                        options += `<option value="${m.id}">${m.serial_number} (${m.status})</option>`;
+                    manettes.forEach((m) => {
+                        options += `<option value="${m.id}" data-status="${m.status}">${m.serial_number} (${m.status})</option>`;
                     });
                     select.innerHTML = options;
                 }
@@ -666,7 +670,7 @@
                 if (!res.ok) throw new Error('failed');
                 await Swal.fire({ icon: 'success', title: 'Succès', text: 'Manette créée !', timer: 1500, showConfirmButton: false });
                 document.getElementById('serialManette').value = '';
-                getManettes();
+                await getManettes();
             } catch (e) {
                 await Swal.fire({ icon: 'error', title: 'Erreur', text: 'Erreur création manette' });
             }
@@ -688,11 +692,23 @@
                 });
                 if (!res.ok) throw new Error('failed');
                 await Swal.fire({ icon: 'success', title: 'Succès', text: 'Statut mis à jour !', timer: 1500, showConfirmButton: false });
-                getManettes();
+                await getManettes();
             } catch (e) {
                 await Swal.fire({ icon: 'error', title: 'Erreur', text: 'Erreur maj statut' });
             }
         };
+
+        const selectManette = document.getElementById('selectManette');
+        const updateStatusManette = document.getElementById('updateStatusManette');
+        if (selectManette && updateStatusManette) {
+            selectManette.addEventListener('change', () => {
+                const selected = selectManette.options[selectManette.selectedIndex];
+                const currentStatus = selected ? selected.getAttribute('data-status') : null;
+                if (currentStatus) {
+                    updateStatusManette.value = currentStatus;
+                }
+            });
+        }
 
         getManettes();
     </script>
