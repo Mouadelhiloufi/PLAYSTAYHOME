@@ -34,7 +34,7 @@
     <div class="min-h-screen flex flex-col">
         @include('partials.navbar-main')
 
-        <main class="flex-grow mx-auto max-w-4xl px-4 py-8 w-full">
+        <main class="grow mx-auto max-w-4xl px-4 py-8 w-full">
             
             <!-- EN-TÊTE PROFIL -->
             <div class="bg-white rounded-3xl border border-gray-100 shadow-[0_4px_20px_rgba(15,23,42,0.03)] p-8 flex flex-col md:flex-row items-center justify-between mb-8 mt-2 relative overflow-hidden">
