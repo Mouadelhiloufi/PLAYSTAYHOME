@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
         tailwind.config = {
@@ -414,7 +415,7 @@
                 const imageValue = image.value.trim();
 
                 if (!nameValue || !brandValue || !priceValue) {
-                    alert("Remplissez tous les champs obligatoires.");
+                    await Swal.fire({ icon: 'warning', title: 'Attention', text: "Remplissez tous les champs obligatoires." });
                     return;
                 }
 
@@ -445,7 +446,7 @@
                     } else {
                         const error = await res.json();
                         console.error("Erreur creation console", error);
-                        alert("Erreur creation console");
+                        await Swal.fire({ icon: 'error', title: 'Erreur', text: "Erreur creation console" });
                     }
                 } catch (err) {
                     console.error("Erreur creation console", err);
@@ -471,7 +472,7 @@
                 const imageValue = image.value.trim();
 
                 if (!titleValue || !genreValue) {
-                    alert("Remplissez tous les champs obligatoires.");
+                    await Swal.fire({ icon: 'warning', title: 'Attention', text: "Remplissez tous les champs obligatoires." });
                     return;
                 }
 
@@ -496,7 +497,7 @@
                         image.value = '';
                         getGames();
                     } else {
-                        alert("Erreur creation jeu");
+                        await Swal.fire({ icon: 'error', title: 'Erreur', text: "Erreur creation jeu" });
                     }
                 } catch (err) {
                     console.error("Erreur creation jeu", err);
@@ -524,7 +525,7 @@
                 const abilityValue = abilityUpdate.value === 'Disponible';
 
                 if (!consoleId) {
-                    alert("Choisir une console.");
+                    await Swal.fire({ icon: 'warning', title: 'Attention', text: "Choisir une console." });
                     return;
                 }
                 try {
@@ -550,7 +551,7 @@
                     } else {
                         const error = await res.json().catch(() => null);
                         console.error("Erreur update console", error);
-                        alert("Erreur update console");
+                        await Swal.fire({ icon: 'error', title: 'Erreur', text: "Erreur update console" });
                     }
                 } catch (err) {
                     console.error("Erreur update console", err);
@@ -578,7 +579,7 @@
 
                 const consoleId = select.value;
                 if (!consoleId) {
-                    alert("Choisir une console.");
+                    await Swal.fire({ icon: 'warning', title: 'Attention', text: "Choisir une console." });
                     return;
                 }
 
@@ -608,7 +609,7 @@
                     } else {
                         const error = await res.json().catch(() => null);
                         console.error("Erreur association jeux", error);
-                        alert("Erreur association jeux");
+                        await Swal.fire({ icon: 'error', title: 'Erreur', text: "Erreur association jeux" });
                     }
                 } catch (err) {
                     console.error("Erreur association jeux", err);
@@ -642,9 +643,9 @@
         document.getElementById('btnCreateManette').onclick = async function() {
             const serial = document.getElementById('serialManette').value.trim();
             const status = document.getElementById('statusManette').value;
-            if (!serial) return alert('Numéro de série obligatoire');
+            if (!serial) return Swal.fire({ icon: 'warning', title: 'Attention', text: 'Numéro de série obligatoire' });
             try {
-                await fetch('/api/manettes', {
+                const res = await fetch('/api/manettes', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -653,20 +654,21 @@
                     },
                     body: JSON.stringify({ serial_number: serial, status })
                 });
-                alert('Manette créée !');
+                if (!res.ok) throw new Error('failed');
+                await Swal.fire({ icon: 'success', title: 'Succès', text: 'Manette créée !', timer: 1500, showConfirmButton: false });
                 document.getElementById('serialManette').value = '';
                 getManettes();
             } catch (e) {
-                alert('Erreur création manette');
+                await Swal.fire({ icon: 'error', title: 'Erreur', text: 'Erreur création manette' });
             }
         };
 
         document.getElementById('btnUpdateManetteStatus').onclick = async function() {
             const id = document.getElementById('selectManette').value;
             const status = document.getElementById('updateStatusManette').value;
-            if (!id) return alert('Sélectionnez une manette');
+            if (!id) return Swal.fire({ icon: 'warning', title: 'Attention', text: 'Sélectionnez une manette' });
             try {
-                await fetch(`/api/manettes/${id}/status`, {
+                const res = await fetch(`/api/manettes/${id}/status`, {
                     method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json',
@@ -675,10 +677,11 @@
                     },
                     body: JSON.stringify({ status })
                 });
-                alert('Statut mis à jour !');
+                if (!res.ok) throw new Error('failed');
+                await Swal.fire({ icon: 'success', title: 'Succès', text: 'Statut mis à jour !', timer: 1500, showConfirmButton: false });
                 getManettes();
             } catch (e) {
-                alert('Erreur maj statut');
+                await Swal.fire({ icon: 'error', title: 'Erreur', text: 'Erreur maj statut' });
             }
         };
 

@@ -265,13 +265,18 @@
     <!-- Scripts pour le calendrier -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/fr.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <script>
         async function initPage() {
             // Verification si l'user est connecté
             const token = localStorage.getItem('token');
             if (!token) {
-                alert("Vous devez être connecté pour effectuer une réservation.");
+                await Swal.fire({
+                    icon: 'warning',
+                    title: 'Connexion requise',
+                    text: "Vous devez être connecté pour effectuer une réservation."
+                });
                 window.location.href = '/catalogue';
                 return;
             }
@@ -282,7 +287,11 @@
 
             // S'il n'y a pas de paramètre console dans l'URL on retourne au catalogue
             if (!consoleId) {
-                alert("Veuillez sélectionner une console depuis le catalogue.");
+                await Swal.fire({
+                    icon: 'warning',
+                    title: 'Console manquante',
+                    text: "Veuillez sélectionner une console depuis le catalogue."
+                });
                 window.location.href = '/catalogue';
                 return;
             }
@@ -408,7 +417,11 @@
 
             } catch (e) {
                 console.error('Erreur :', e);
-                alert("Impossible de charger les détails de cette console.");
+                await Swal.fire({
+                    icon: 'error',
+                    title: 'Erreur',
+                    text: "Impossible de charger les détails de cette console."
+                });
             }
 
             // 3. demande au backend le calcul 
@@ -459,7 +472,11 @@
 
                     } else {
                         console.error("Erreur API:", response.message || response);
-                        alert("Erreur lors du calcul : " + (response.message || "Non autorisé"));
+                        await Swal.fire({
+                            icon: 'error',
+                            title: 'Erreur de calcul',
+                            text: "Erreur lors du calcul : " + (response.message || "Non autorisé")
+                        });
                     }
                     
                 } catch (e) {
@@ -481,7 +498,11 @@
                     calculateReservationWithApi(dateDebut, dateFin);
                 } else {
                     // Sinon, on affiche un message d'erreur
-                    alert("Sélectionnez d'abord vos dates !");
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Dates manquantes',
+                        text: "Sélectionnez d'abord vos dates !"
+                    });
                 }
             });
 
@@ -489,12 +510,20 @@
             const btnReserve = document.getElementById('btnReserve');
             btnReserve.addEventListener('click', async () => {
                 if (typeof fp === 'undefined' || !fp.selectedDates || fp.selectedDates.length !== 2) {
-                    alert("Veuillez d'abord sélectionner une date de début et de fin sur le calendrier.");
+                    await Swal.fire({
+                        icon: 'warning',
+                        title: 'Dates requises',
+                        text: "Veuillez d'abord sélectionner une date de début et de fin sur le calendrier."
+                    });
                     return;
                 }
                 
                 if (!currentConsoleInfo) {
-                    alert("Les informations de la console ne sont pas encore chargées.");
+                    await Swal.fire({
+                        icon: 'warning',
+                        title: 'Veuillez patienter',
+                        text: "Les informations de la console ne sont pas encore chargées."
+                    });
                     return;
                 }
 
@@ -526,7 +555,11 @@
                     let response = await res.json();
                     
                     if (res.ok && response.data) {
-                        alert("Félicitations, votre réservation est confirmée !");
+                        await Swal.fire({
+                            icon: 'success',
+                            title: 'Réservation confirmée',
+                            text: "Félicitations, votre réservation est confirmée !"
+                        });
                         // Rediriger vers l'historique ou le catalogue
                         window.location.href = '/catalogue';
                     } else {
@@ -537,11 +570,19 @@
                             let validationErrors = Object.values(response.errors).flat().join("\n");
                             errorMsg += "\n" + validationErrors;
                         }
-                        alert(errorMsg);
+                        await Swal.fire({
+                            icon: 'error',
+                            title: 'Réservation échouée',
+                            text: errorMsg
+                        });
                     }
                 } catch (e) {
                     console.error("Erreur réseau pour reserver:", e);
-                    alert("Une erreur de connexion est survenue.");
+                    await Swal.fire({
+                        icon: 'error',
+                        title: 'Erreur réseau',
+                        text: "Une erreur de connexion est survenue."
+                    });
                 } finally {
                     // Remettre le bouton à son état d'origine en cas d'erreur
                     btnReserve.innerText = "Réserver maintenant";
