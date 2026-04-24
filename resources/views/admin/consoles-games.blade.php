@@ -104,10 +104,9 @@
                     <section class="bg-white rounded-3xl shadow-[0_4px_20px_rgba(15,23,42,0.03)] border border-gray-100 p-6">
                         <h3 class="text-lg font-black text-gray-900 mb-4">Modifier le statut d'une manette</h3>
                         <form id="formUpdateManetteStatus" class="space-y-3">
-                            <select id="selectManette" size="6" class="w-full rounded-xl border border-gray-200 px-3 py-2 text-sm bg-white overflow-y-auto">
+                            <select id="selectManette" size="1" class="w-full rounded-xl border border-gray-200 px-3 py-2 text-sm bg-white">
                                 <option value="">Choisir une manette</option>
                             </select>
-                            <p class="text-[11px] text-gray-400 font-medium">Affichage limité avec défilement vertical.</p>
                             <select id="updateStatusManette" class="w-full rounded-xl border border-gray-200 px-4 py-2 text-sm">
                                 <option value="available">Disponible</option>
                                 <option value="louer">Louée</option>
@@ -702,12 +701,20 @@
         const selectManette = document.getElementById('selectManette');
         const updateStatusManette = document.getElementById('updateStatusManette');
         if (selectManette && updateStatusManette) {
+            // Dropdown compact: au clic on ouvre une petite liste scrollable, puis on referme.
+            selectManette.addEventListener('focus', () => {
+                selectManette.size = Math.min(6, Math.max(2, selectManette.options.length));
+            });
+            selectManette.addEventListener('blur', () => {
+                selectManette.size = 1;
+            });
             selectManette.addEventListener('change', () => {
                 const selected = selectManette.options[selectManette.selectedIndex];
                 const currentStatus = selected ? selected.getAttribute('data-status') : null;
                 if (currentStatus) {
                     updateStatusManette.value = currentStatus;
                 }
+                selectManette.size = 1;
             });
         }
 
