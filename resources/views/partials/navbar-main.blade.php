@@ -41,8 +41,6 @@
                       <!-- Bouton Chat (Client) -->
                       <a href="/chat" class="hidden md:flex items-center justify-center h-9 w-9 rounded-full bg-blue-50 text-primary hover:bg-primary hover:text-white transition-colors border border-blue-100 shadow-sm relative group" title="Support Client">
                           <i class="fa-regular fa-comment-dots"></i>
-                          <!-- Notification badge (Optionnel visuellement) -->
-                          <span class="absolute 0 top-0 right-0 h-2.5 w-2.5 bg-red-500 rounded-full border-2 border-white"></span>
                       </a>
 
                     <a href="/mon-compte" class="flex items-center gap-2 nav-link" id="navProfileLink">
