@@ -702,8 +702,12 @@
         const updateStatusManette = document.getElementById('updateStatusManette');
         if (selectManette && updateStatusManette) {
             // Dropdown compact: au clic on ouvre une petite liste scrollable, puis on referme.
-            selectManette.addEventListener('focus', () => {
-                selectManette.size = Math.min(6, Math.max(2, selectManette.options.length));
+            selectManette.addEventListener('mousedown', (e) => {
+                if (selectManette.size === 1) {
+                    e.preventDefault();
+                    selectManette.size = 4; // Toujours une petite partie visible
+                    selectManette.focus();
+                }
             });
             selectManette.addEventListener('blur', () => {
                 selectManette.size = 1;
