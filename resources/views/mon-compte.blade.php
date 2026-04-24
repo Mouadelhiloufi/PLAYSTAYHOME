@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -117,8 +118,15 @@
             const logoutBtn = document.getElementById('pageLogoutBtn');
             if (logoutBtn) {
                 logoutBtn.addEventListener('click', async () => {
-                    const conf = confirm('Voulez-vous vraiment vous déconnecter ?');
-                    if (!conf) return;
+                    const result = await Swal.fire({
+                        icon: 'question',
+                        title: 'Déconnexion',
+                        text: 'Voulez-vous vraiment vous déconnecter ?',
+                        showCancelButton: true,
+                        confirmButtonText: 'Oui, se déconnecter',
+                        cancelButtonText: 'Annuler'
+                    });
+                    if (!result.isConfirmed) return;
 
                     try {
                         await fetch('/api/logout', {
@@ -271,7 +279,7 @@
 
                         if (dStart > now && reservation.status === 'active') {
                             badgeHtml = `<span class="bg-yellow-50 text-yellow-600 px-3 py-1 rounded-full text-[10px] font-black tracking-wider uppercase border border-yellow-100">EN ATTENTE DE VALIDATION</span>`;
-                            rightSideAction = `<button class="text-red-500 text-xs font-bold hover:underline" onclick="alert('L\\'annulation n\\'est pas disponible.')">Annuler la demande</button>`;
+                            rightSideAction = `<button class="text-red-500 text-xs font-bold hover:underline" onclick="Swal.fire({icon:'info',title:'Information',text:'L\\'annulation n\\'est pas disponible.'})">Annuler la demande</button>`;
                         } else if (dStart <= now && dEnd >= now && reservation.status === 'active') {
                             badgeHtml = `<span class="bg-green-50 text-green-600 px-3 py-1 rounded-full text-[10px] font-black tracking-wider uppercase border border-green-100">RÉSERVATION VALIDÉE</span>`;
                             rightSideAction = `<button class="text-primary text-xs font-bold hover:underline">Facture PDF</button>`;
