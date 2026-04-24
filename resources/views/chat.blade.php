@@ -29,6 +29,7 @@
             font-family: 'Inter', sans-serif;
             background: #d6e2e9;
             color: #111827;
+            overflow: hidden;
         }
 
         .nav-link { position: relative; display: inline-flex; align-items: center; height: 40px; font-size: 0.875rem; font-weight: 600; color: #4b5563; transition: color .2s ease; }
@@ -45,9 +46,9 @@
         }
 
         .tg-header {
-            background: #d2dee6;
+            background: #c4d3dd;
             color: #1f2a33;
-            border-bottom: 1px solid #bfd0d9;
+            border-bottom: 1px solid #b5c6d1;
         }
 
         .tg-header-sub {
@@ -149,22 +150,22 @@
         }
     </style>
 </head>
-<body class="flex flex-col min-h-screen">
+<body class="flex flex-col h-screen">
     @include('partials.navbar-main')
 
-    <main class="flex-grow flex flex-col w-full px-0 py-0">
+    <main class="flex-grow min-h-0 flex flex-col w-full px-0 py-0">
 
         <!-- Interface de Chat Complète -->
-        <div class="tg-shell flex-grow flex flex-col min-h-0 h-full w-full">
+        <div class="tg-shell flex-grow min-h-0 flex flex-col h-full w-full">
             
             <!-- En-tête du Chat (La personne en face) -->
-            <div class="tg-header px-4 py-3 md:px-6 md:py-4 flex justify-between items-center z-10 sticky top-0">
+            <div class="tg-header px-4 py-2 md:px-6 md:py-2.5 flex justify-between items-center z-10 sticky top-0">
                 <div class="flex items-center gap-3">
                     <div class="tg-avatar tg-avatar-admin flex-shrink-0"></div>
                     <div>
                         <h2 class="text-base md:text-lg font-bold tracking-tight">Soutien</h2>
                         <p class="text-xs font-semibold tg-header-sub flex items-center gap-1">
-                            1 membre
+                            Réponse en moins de 5 min
                         </p>
                     </div>
                 </div>
