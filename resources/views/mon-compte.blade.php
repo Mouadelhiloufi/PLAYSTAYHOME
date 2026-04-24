@@ -66,7 +66,7 @@
             <div id="countdownContainer" class="hidden mb-12">
                 <h2 class="text-lg font-black text-gray-900 uppercase tracking-tight mb-4">COUNTDOWN RESERVATION</h2>
                 <div class="bg-gray-900 rounded-3xl p-6 md:p-8 text-white shadow-xl shadow-gray-200 flex flex-col items-center justify-between gap-6 md:flex-row md:items-start relative overflow-hidden">
-                    <div class="absolute inset-0 bg-linear-to-r from-primary to-blue-900 opacity-90"></div>
+                    <div class="absolute inset-0 bg-gradient-to-r from-primary to-blue-900 opacity-90"></div>
                     <i class="fa-solid fa-gamepad text-9xl absolute -right-4 -bottom-6 opacity-20 transform -rotate-12"></i>
                     
                     <div class="z-10 relative text-center md:text-left">
