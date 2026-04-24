@@ -77,7 +77,7 @@
     </header>
 
     <!-- Main Content -->
-    <main class="flex-grow flex">
+    <main class="grow flex">
         <!-- Left Side - Blue Section -->
         <div class="hidden md:flex md:w-1/2 bg-primary items-center justify-center p-12 relative overflow-hidden">
             <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 40px 40px;"></div>
@@ -105,7 +105,7 @@
 
         <!-- Right Side - Register Form -->
         <div class="w-full md:w-1/2 flex items-center justify-center p-12 bg-gray-50">
-            <div class="w-full max-w-[480px]">
+            <div class="w-full max-w-120">  
                 <div class="mb-10">
                     <h2 class="text-gray-900 text-4xl font-black mb-2">Créer un compte</h2>
                     <p class="text-gray-500 text-lg">Rejoignez playstayhome dès aujourd'hui.</p>
