@@ -19,6 +19,7 @@
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         input.parsley-success,
         textarea.parsley-success,
@@ -215,7 +216,11 @@
         const termsAccepted = document.getElementById("terms").checked;
 
         if (!termsAccepted) {
-            alert('Please accept the Terms & Conditions.');
+            await Swal.fire({
+                icon: 'warning',
+                title: 'Conditions requises',
+                text: 'Please accept the Terms & Conditions.'
+            });
             return;
         }
 
@@ -238,16 +243,28 @@
 
             console.log(response);
             if (response.ok) {
-                alert('Registration successful! Please log in.');
+                await Swal.fire({
+                    icon: 'success',
+                    title: 'Inscription réussie',
+                    text: 'Registration successful! Please log in.'
+                });
                 window.location.href = '/login';
             } else {
                 const errorData = await response.json();
                 const message = errorData.message || 'Registration failed.';
-                alert('Registration failed: ' + message);
+                await Swal.fire({
+                    icon: 'error',
+                    title: 'Échec inscription',
+                    text: 'Registration failed: ' + message
+                });
             }
         } catch (error) {
             console.error('Error:', error);
-            alert('An error occurred during registration. Please try again later.');
+            await Swal.fire({
+                icon: 'error',
+                title: 'Erreur',
+                text: 'An error occurred during registration. Please try again later.'
+            });
         }
     }
 </script>

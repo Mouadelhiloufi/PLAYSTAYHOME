@@ -19,6 +19,7 @@
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         input.parsley-success,
         textarea.parsley-success,
@@ -206,11 +207,19 @@
                 } else {
                     const errorData = await response.json();
                     const message = errorData.message || 'Login failed. Please check your credentials and try again.';
-                    alert(message);
+                    await Swal.fire({
+                        icon: 'error',
+                        title: 'Connexion échouée',
+                        text: message
+                    });
                 }
             } catch (error) {
                 console.error('Error during login:', error);
-                alert('An error occurred. Please try again later.');
+                await Swal.fire({
+                    icon: 'error',
+                    title: 'Erreur',
+                    text: 'An error occurred. Please try again later.'
+                });
             }
         }
     </script>
