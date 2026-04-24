@@ -39,7 +39,7 @@
             <!-- EN-TÊTE PROFIL -->
             <div class="bg-white rounded-3xl border border-gray-100 shadow-[0_4px_20px_rgba(15,23,42,0.03)] p-8 flex flex-col md:flex-row items-center justify-between mb-8 mt-2 relative overflow-hidden">
                 <div class="flex items-center gap-6 z-10 w-full mb-6 md:mb-0">
-                    <div id="profileBigAvatar" class="h-20 w-20 flex-shrink-0 rounded-full bg-blue-100 flex items-center justify-center text-primary font-black text-2xl shadow-inner border border-blue-200 uppercase">
+                    <div id="profileBigAvatar" class="h-20 w-20 shrink-0 rounded-full bg-blue-100 flex items-center justify-center text-primary font-black text-2xl shadow-inner border border-blue-200 uppercase">
                         <i class="fa-solid fa-user text-xl"></i>
                     </div>
                     <div>
