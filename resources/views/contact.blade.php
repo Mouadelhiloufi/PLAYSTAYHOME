@@ -144,7 +144,7 @@
                             </div>
                         </div>
 
-                        <div class="relative min-h-[320px] overflow-hidden rounded-xl border border-gray-200 shadow-inner">
+                        <div class="relative min-h-80 overflow-hidden rounded-xl border border-gray-200 shadow-inner">
                             <div
                                 class="absolute inset-0 bg-cover bg-center"
                                 style="background-image: linear-gradient(rgba(15, 23, 42, 0.24), rgba(15, 23, 42, 0.24)), url('https://lh3.googleusercontent.com/aida-public/AB6AXuA3sA8GXsoYaa-tEk9ZoOTIQwoo5hgPs3KJ6Tz9PRe_dpoDQ9pvQDQt4i0ZZM8b5PIuoDsifd_6U5-ArympLBqoIYX-qLBp2L7NqLU0UGAPepQ278uiLQ_nXtIzlINqOB7M20wOi7DtsKbNDV8LPOLT8q8yKBYocMXccloASNnkh3XPPvI_GiXtKmd7fQQOIkkMbF9q6MynIyaNyIjSguI0kOX0sfgYC83nnwbtShCtPC1bOVjiAjKshOxg5y2TuyEfsj4RRwZem4Sl');"
