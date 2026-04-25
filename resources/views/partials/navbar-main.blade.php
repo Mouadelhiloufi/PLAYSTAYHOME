@@ -9,7 +9,10 @@
             </a>
         </div>
 
-        <div class="flex flex-1 items-center justify-end gap-8">
+        <div class="flex flex-1 items-center justify-end gap-3 md:gap-8">
+            <button id="mobileMenuBtn" type="button" class="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50" aria-label="Ouvrir le menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
             <nav class="hidden items-center gap-9 md:flex">
                     <a href="/" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">Accueil</a>
                     <a href="/catalogue" class="nav-link {{ request()->routeIs('catalogue') ? 'active' : '' }}">Catalogue</a>
@@ -57,6 +60,26 @@
             </nav>
         </div>
     </div>
+
+    <div id="mobileMenuPanel" class="hidden md:hidden border-t border-gray-200 bg-white px-6 py-4">
+        <nav class="flex flex-col gap-2 text-sm font-semibold text-gray-700">
+            <a href="/" class="rounded-lg px-3 py-2 hover:bg-gray-50">Accueil</a>
+            <a href="/catalogue" class="rounded-lg px-3 py-2 hover:bg-gray-50">Catalogue</a>
+            <a href="/contact" class="rounded-lg px-3 py-2 hover:bg-gray-50">Contact</a>
+            <a href="/faq" class="rounded-lg px-3 py-2 hover:bg-gray-50">FAQ</a>
+        </nav>
+
+        <div id="mobile-guest-links" class="mt-3 flex flex-col gap-2">
+            <a href="/register" class="rounded-lg px-3 py-2 text-sm font-semibold text-primary hover:bg-blue-50">Créer un compte</a>
+            <a href="/login" class="rounded-lg px-3 py-2 text-sm font-semibold text-primary hover:bg-blue-50">Connexion</a>
+        </div>
+
+        <div id="mobile-auth-links" class="hidden mt-3 flex-col gap-2">
+            <a href="/chat" class="rounded-lg px-3 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50">Support Chat</a>
+            <a href="/mon-compte" class="rounded-lg px-3 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50">Mon Compte</a>
+            <button id="mobileLogoutBtn" type="button" class="text-left rounded-lg px-3 py-2 text-sm font-semibold text-red-500 hover:bg-red-50">Déconnexion</button>
+        </div>
+    </div>
 </header>
 
 <script>
@@ -67,6 +90,17 @@
         const guestLinks = document.getElementById('nav-guest-links');
         const authLinks = document.getElementById('nav-auth-links');
         const logoutBtn = document.getElementById('navLogoutBtn');
+        const mobileGuestLinks = document.getElementById('mobile-guest-links');
+        const mobileAuthLinks = document.getElementById('mobile-auth-links');
+        const mobileLogoutBtn = document.getElementById('mobileLogoutBtn');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenuPanel = document.getElementById('mobileMenuPanel');
+
+        if (mobileMenuBtn && mobileMenuPanel) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenuPanel.classList.toggle('hidden');
+            });
+        }
 
 
 
@@ -74,6 +108,8 @@
             // Utilisateur connecté
             guestLinks.style.display = 'none';
             authLinks.style.display = 'flex';
+            if (mobileGuestLinks) mobileGuestLinks.style.display = 'none';
+            if (mobileAuthLinks) mobileAuthLinks.style.display = 'flex';
 
             const notificationsBtn = document.getElementById('navNotificationsBtn');
             const notificationsPanel = document.getElementById('navNotificationsPanel');
@@ -175,6 +211,8 @@
             // Utilisateur déconnecté
             guestLinks.style.display = 'flex';
             authLinks.style.display = 'none';
+            if (mobileGuestLinks) mobileGuestLinks.style.display = 'flex';
+            if (mobileAuthLinks) mobileAuthLinks.style.display = 'none';
         }
 
         // Gérer la déconnexion
@@ -199,6 +237,22 @@
                 localStorage.removeItem('token');
                 
                 // Rediriger vers l'accueil ou le login
+                window.location.href = '/login';
+            });
+        }
+
+        if (mobileLogoutBtn) {
+            mobileLogoutBtn.addEventListener('click', async () => {
+                try {
+                    await fetch('/api/logout', {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': 'Bearer ' + token,
+                            'Accept': 'application/json'
+                        }
+                    });
+                } catch (err) {}
+                localStorage.removeItem('token');
                 window.location.href = '/login';
             });
         }
