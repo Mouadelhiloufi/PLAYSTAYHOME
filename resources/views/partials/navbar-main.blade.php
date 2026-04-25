@@ -2,7 +2,9 @@
     <div class="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-3 md:px-10">
         <div class="flex items-center gap-4 text-primary">
             <a href="/" class="flex items-center gap-3 text-primary" aria-label="PLAYSTAYHOME">
-                <img src="{{ asset('images/stayhome-logo-v2.png') }}" alt="PLAYSTAYHOME" class="h-14 w-auto object-contain">
+                <span class="h-12 flex items-center overflow-visible">
+                    <img src="{{ asset('images/stayhome-logo-transparent-real.png') }}" alt="PLAYSTAYHOME" class="h-16 w-auto object-contain -my-2">
+                </span>
                 <span class="text-xl font-bold tracking-tight text-gray-900">PLAYSTAYHOME</span>
             </a>
         </div>
