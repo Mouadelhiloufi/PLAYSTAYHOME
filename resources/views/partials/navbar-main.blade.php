@@ -63,10 +63,10 @@
 
     <div id="mobileMenuPanel" class="hidden md:hidden border-t border-gray-200 bg-white px-6 py-4">
         <nav class="flex flex-col gap-2 text-sm font-semibold text-gray-700">
-            <a href="/" class="rounded-lg px-3 py-2 hover:bg-gray-50">Accueil</a>
-            <a href="/catalogue" class="rounded-lg px-3 py-2 hover:bg-gray-50">Catalogue</a>
-            <a href="/contact" class="rounded-lg px-3 py-2 hover:bg-gray-50">Contact</a>
-            <a href="/faq" class="rounded-lg px-3 py-2 hover:bg-gray-50">FAQ</a>
+            <a href="/" class="rounded-lg px-3 py-2 hover:bg-blue-50 hover:text-primary transition-colors">Accueil</a>
+            <a href="/catalogue" class="rounded-lg px-3 py-2 hover:bg-blue-50 hover:text-primary transition-colors">Catalogue</a>
+            <a href="/contact" class="rounded-lg px-3 py-2 hover:bg-blue-50 hover:text-primary transition-colors">Contact</a>
+            <a href="/faq" class="rounded-lg px-3 py-2 hover:bg-blue-50 hover:text-primary transition-colors">FAQ</a>
         </nav>
 
         <div id="mobile-guest-links" class="mt-3 flex flex-col gap-2">
@@ -75,8 +75,10 @@
         </div>
 
         <div id="mobile-auth-links" class="hidden mt-3 flex-col gap-2">
-            <a href="/chat" class="rounded-lg px-3 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50">Support Chat</a>
-            <a href="/mon-compte" class="rounded-lg px-3 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50">Mon Compte</a>
+            <button id="mobileNotificationsBtn" type="button" class="text-left rounded-lg px-3 py-2 text-sm font-semibold text-gray-700 hover:bg-blue-50 hover:text-primary transition-colors">Notifications</button>
+            <div id="mobileNotificationsList" class="hidden rounded-xl border border-gray-200 bg-white"></div>
+            <a href="/chat" class="rounded-lg px-3 py-2 text-sm font-semibold text-gray-700 hover:bg-blue-50 hover:text-primary transition-colors">Support Chat</a>
+            <a href="/mon-compte" class="rounded-lg px-3 py-2 text-sm font-semibold text-gray-700 hover:bg-blue-50 hover:text-primary transition-colors">Mon Compte</a>
             <button id="mobileLogoutBtn" type="button" class="text-left rounded-lg px-3 py-2 text-sm font-semibold text-red-500 hover:bg-red-50">Déconnexion</button>
         </div>
     </div>
@@ -95,6 +97,8 @@
         const mobileLogoutBtn = document.getElementById('mobileLogoutBtn');
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const mobileMenuPanel = document.getElementById('mobileMenuPanel');
+        const mobileNotificationsBtn = document.getElementById('mobileNotificationsBtn');
+        const mobileNotificationsList = document.getElementById('mobileNotificationsList');
 
         if (mobileMenuBtn && mobileMenuPanel) {
             mobileMenuBtn.addEventListener('click', () => {
@@ -176,6 +180,35 @@
                         });
                     } catch (err) {
                         console.log('erreur notifications', err);
+                    }
+                });
+            }
+
+            if (mobileNotificationsBtn && mobileNotificationsList) {
+                mobileNotificationsBtn.addEventListener('click', async () => {
+                    mobileNotificationsList.classList.toggle('hidden');
+                    if (mobileNotificationsList.classList.contains('hidden')) return;
+                    mobileNotificationsList.innerHTML = '<div class="px-3 py-2 text-xs text-gray-400">Chargement...</div>';
+                    try {
+                        const res = await fetch('/api/notifications', {
+                            headers: {
+                                'Authorization': 'Bearer ' + token,
+                                'Accept': 'application/json'
+                            }
+                        });
+                        const payload = await res.json();
+                        const items = Array.isArray(payload.data) ? payload.data : [];
+                        if (!items.length) {
+                            mobileNotificationsList.innerHTML = '<div class="px-3 py-2 text-xs text-gray-400">Aucune notification.</div>';
+                            return;
+                        }
+                        mobileNotificationsList.innerHTML = items.slice(0, 5).map((item) => {
+                            const title = item.data?.title || 'Notification';
+                            const message = item.data?.message || '';
+                            return `<div class="px-3 py-2 border-b border-gray-100"><p class="text-xs font-bold text-gray-900">${title}</p><p class="text-[11px] text-gray-500 mt-1">${message}</p></div>`;
+                        }).join('');
+                    } catch (err) {
+                        mobileNotificationsList.innerHTML = '<div class="px-3 py-2 text-xs text-red-400">Erreur chargement notifications.</div>';
                     }
                 });
             }
