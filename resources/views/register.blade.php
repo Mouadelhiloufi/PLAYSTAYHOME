@@ -174,8 +174,8 @@
     <!-- Footer -->
     <footer class="bg-white border-t border-gray-200 px-10 py-10">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="flex items-center gap-3 text-gray-400">
-                <i class="fab fa-playstation text-2xl opacity-50"></i>
+            <div class="flex items-center gap-4 text-gray-400">
+                <img src="{{ asset('images/footer-logo-icon.png') }}" alt="PLAYSTAYHOME" class="h-8 w-auto object-contain opacity-50">
                 <span class="text-sm font-semibold uppercase tracking-widest">PLAYSTAYHOME</span>
             </div>
             <div class="flex gap-8">
