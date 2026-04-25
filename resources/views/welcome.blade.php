@@ -543,7 +543,7 @@
                                 <p class="text-3xl font-black text-primary">${console.daily_price} <span class="text-lg">DH</span><span class="ml-1 text-xs font-medium text-gray-400">/ jour</span></p>
                                 
                                 <div class="relative">
-                                    <button onclick="toggleConsoleMenu(${console.id}); event.stopPropagation();" class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-900 text-white hover:bg-gray-800 transition-colors">
+                                    <button onclick="event.preventDefault(); event.stopPropagation(); toggleConsoleMenu(${console.id});" class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-900 text-white hover:bg-gray-800 transition-colors">
                                         <i class="fa-solid fa-ellipsis-vertical text-xs"></i>
                                     </button>
                                     
