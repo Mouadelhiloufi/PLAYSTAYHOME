@@ -520,7 +520,13 @@
             ? ''
             : '<span class="absolute top-3 right-3 z-20 inline-flex h-10 w-10 items-center justify-center rounded-full bg-red-100 text-red-600 shadow-md pointer-events-none"><i class="fa-solid fa-lock text-base"></i></span>';
         
-        container.innerHTML += `<article class="console-card rounded-3xl p-4 relative${cardClass}">
+        const reserveUrl = `/reservation?console_id=${console.id}`;
+        const openTag = isAvailable
+            ? `<a href="${reserveUrl}" class="block hover:-translate-y-0.5 transition-transform">`
+            : `<div class="block cursor-not-allowed">`;
+        const closeTag = isAvailable ? `</a>` : `</div>`;
+
+        container.innerHTML += `${openTag}<article class="console-card rounded-3xl p-4 relative${cardClass}">
                         ${lockBadge}
                         <div class="console-figure flex items-center justify-center">
                             <img src="${console.image}" alt="${console.name}" class="h-32 object-contain">
@@ -553,7 +559,7 @@
                                 </div>
                             </div>
                         </div>
-                    </article>`
+                    </article>${closeTag}`
                     count++;
     })
     }
