@@ -61,8 +61,12 @@
     <!-- Header -->
     <header class="flex items-center justify-between border-b border-gray-200 bg-white px-10 py-3 sticky top-0 z-50">
         <div class="flex items-center gap-4 text-primary">
-            <i class="fab fa-playstation text-4xl"></i>
-            <h2 class="text-gray-900 text-xl font-bold">PLAYSTAYHOME</h2>
+            <a href="/" class="flex items-center gap-3 text-primary" aria-label="PLAYSTAYHOME">
+                <span class="h-12 flex items-center overflow-visible">
+                    <img src="{{ asset('images/site-logo-navbar.png') }}" alt="PLAYSTAYHOME" class="h-16 w-auto object-contain -my-2">
+                </span>
+                <span class="text-xl font-bold tracking-tight text-gray-900">PLAYSTAYHOME</span>
+            </a>
         </div>
         <div class="flex items-center gap-8">
             <nav class="hidden md:flex items-center gap-9">
@@ -175,7 +179,7 @@
     <footer class="bg-white border-t border-gray-200 px-10 py-10">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="flex items-center gap-4 text-gray-400">
-                <img src="{{ asset('images/footer-logo-icon.png') }}" alt="PLAYSTAYHOME" class="h-8 w-auto object-contain opacity-50">
+                <img src="{{ asset('images/site-logo-navbar.png') }}" alt="PLAYSTAYHOME" class="h-8 w-auto object-contain opacity-50">
                 <span class="text-sm font-semibold uppercase tracking-widest">PLAYSTAYHOME</span>
             </div>
             <div class="flex gap-8">
