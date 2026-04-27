@@ -3,7 +3,7 @@
         <div class="flex items-center gap-4 text-primary">
             <a href="/" class="flex items-center gap-3 text-primary" aria-label="PLAYSTAYHOME">
                 <span class="h-12 flex items-center overflow-visible">
-                    <img src="{{ asset('images/stayhome-logo-transparent-real.png') }}" alt="PLAYSTAYHOME" class="h-16 w-auto object-contain -my-2">
+                    <img src="{{ asset('images/playstayhome Logo (10).png') }}?v={{ @filemtime(public_path('images/playstayhome Logo (10).png')) }}" alt="PLAYSTAYHOME" class="h-16 w-auto object-contain -my-2">
                 </span>
                 <span class="text-xl font-bold tracking-tight text-gray-900">PLAYSTAYHOME</span>
             </a>
