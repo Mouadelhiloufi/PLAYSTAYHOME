@@ -421,7 +421,7 @@
                 <div class="grid grid-cols-1 gap-12 md:grid-cols-4">
                     <div>
                         <div class="flex items-center gap-4 text-primary">
-                            <img src="{{ asset('images/footer-logo-icon.png') }}" alt="PLAYSTAYHOME" class="h-8 w-auto object-contain opacity-50">
+                            <img src="{{ asset('images/site-logo-navbar.png') }}" alt="PLAYSTAYHOME" class="h-8 w-auto object-contain opacity-50">
                             <span class="text-2xl font-extrabold tracking-tight text-gray-900">PLAYSTAYHOME</span>
                         </div>
                         <p class="mt-5 max-w-xs text-sm leading-7 text-gray-400">
