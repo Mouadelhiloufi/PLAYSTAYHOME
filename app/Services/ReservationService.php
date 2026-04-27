@@ -11,8 +11,30 @@ use Carbon\CarbonPeriod;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use App\Notifications\ReservationDay;
+use \App\Jobs\TerminerReservationJob;
 
 class ReservationService{
+    /**
+     * Termine une réservation et remet les manettes à disposition
+     */
+    public function terminerReservation($reservationId)
+    {
+        $reservation = Reservation::find($reservationId);
+        if (!$reservation) {
+            return false;
+        }
+        // Mettre à jour le statut de la réservation
+        $reservation->status = 'completed';
+        $reservation->save();
+
+        // Remettre les manettes associées à 'available'
+        $manettes = $reservation->manettes;
+            foreach ($manettes as $manette) {
+            $manette->status = 'available';
+            $manette->save();
+        }
+        return true;
+    }
 
     private function countInclusiveDays(Carbon $startDate, Carbon $endDate): int
     {
@@ -159,6 +181,9 @@ class ReservationService{
         } else {
             Auth::user()->notify((new ReservationDay($reservation))->delay($reminderTime));
         }
+
+        // Dispatch du job différé pour terminer la réservation à la date de fin
+        TerminerReservationJob::dispatch($reservation->id)->delay($endDate);
 
         return $reservation->load('manettes'); // Charge la relation pour la réponse
     }
