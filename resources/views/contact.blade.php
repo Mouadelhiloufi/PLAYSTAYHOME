@@ -165,7 +165,7 @@
                 <div class="grid grid-cols-1 gap-12 md:grid-cols-4">
                     <div class="md:col-span-2">
                         <div class="mb-6 flex items-center gap-4 text-primary">
-                            <img src="{{ asset('images/footer-logo-icon.png') }}" alt="PLAYSTAYHOME" class="h-12 w-auto object-contain opacity-50">
+                            <img src="{{ asset('images/site-logo-navbar.png') }}" alt="PLAYSTAYHOME" class="h-12 w-auto object-contain opacity-50">
                             <h2 class="text-xl font-bold text-gray-900">PLAYSTAYHOME</h2>
                         </div>
                         <p class="max-w-sm text-sm leading-relaxed text-gray-500">
