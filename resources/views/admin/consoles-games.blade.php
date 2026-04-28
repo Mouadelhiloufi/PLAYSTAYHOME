@@ -194,6 +194,31 @@
                         </form>
                     </section>
 
+                    <section class="bg-white rounded-3xl shadow-[0_4px_20px_rgba(15,23,42,0.03)] border border-gray-100 p-6">
+                        <h3 class="text-lg font-black text-gray-900 mb-4">Ajouter un coupon</h3>
+                        <form id="formCreateCoupon" class="space-y-3">
+                            <input id="couponCode" type="text" placeholder="Code coupon (ex: WELCOME10)" class="w-full rounded-xl border border-gray-200 px-4 py-2 text-sm">
+                            <input id="couponValue" type="number" min="0" step="0.01" placeholder="Valeur réduction (ex: 10)" class="w-full rounded-xl border border-gray-200 px-4 py-2 text-sm">
+                            <input id="couponExpirationDate" type="date" class="w-full rounded-xl border border-gray-200 px-4 py-2 text-sm">
+                            <input id="couponLimit" type="number" min="1" step="1" placeholder="Limite d'utilisation (ex: 100)" class="w-full rounded-xl border border-gray-200 px-4 py-2 text-sm">
+                            <label class="flex items-center gap-2 text-sm text-gray-700 font-medium">
+                                <input id="couponIsActive" type="checkbox" class="rounded border-gray-300" checked>
+                                Coupon actif
+                            </label>
+                            <button id="btnCreateCoupon" type="button" class="w-full bg-primary text-white font-bold py-2.5 rounded-xl">Créer le coupon</button>
+                        </form>
+                    </section>
+
+                    <section class="bg-white rounded-3xl shadow-[0_4px_20px_rgba(15,23,42,0.03)] border border-gray-100 p-6">
+                        <h3 class="text-lg font-black text-gray-900 mb-4">Supprimer un coupon</h3>
+                        <form id="formDeleteCoupon" class="space-y-3">
+                            <select id="deleteCouponSelect" class="w-full rounded-xl border border-gray-200 px-4 py-2 text-sm">
+                                <option value="">Choisir un coupon</option>
+                            </select>
+                            <button id="btnDeleteCoupon" type="button" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 rounded-xl">Supprimer le coupon</button>
+                        </form>
+                    </section>
+
                 </div>
             </div>
         </div>
@@ -358,6 +383,37 @@
             }
         }
 
+        async function getCoupons() {
+            try {
+                const res = await fetch("/api/coupons", {
+                    headers: {
+                        "Accept": "application/json",
+                        "Authorization": "Bearer " + token
+                    }
+                });
+
+                if (!res.ok) {
+                    throw new Error('Erreur chargement coupons');
+                }
+
+                const coupons = await res.json();
+                const select = document.getElementById('deleteCouponSelect');
+                if (!select) return;
+
+                let options = '<option value="">Choisir un coupon</option>';
+                if (Array.isArray(coupons) && coupons.length > 0) {
+                    coupons.forEach((coupon) => {
+                        const code = coupon.code || 'CODE';
+                        const value = coupon.value ?? 0;
+                        options += `<option value="${coupon.id}">${code} (${value})</option>`;
+                    });
+                }
+                select.innerHTML = options;
+            } catch (e) {
+                console.error("erreur de chargement coupons", e);
+            }
+        }
+
         async function loadConsoleGames(consoleId) {
             const container = document.getElementById('consoleGamesCheckboxes');
             if (!container) {
@@ -404,6 +460,7 @@
 
         getConsoles();
         getGames();
+        getCoupons();
 
 
         let btnCreateConsole = document.getElementById("btnCreateConsole");
@@ -630,6 +687,99 @@
             });
         }
 
+        const btnCreateCoupon = document.getElementById('btnCreateCoupon');
+        if (btnCreateCoupon) {
+            btnCreateCoupon.addEventListener('click', async (e) => {
+                e.preventDefault();
+
+                const code = document.getElementById('couponCode')?.value.trim();
+                const value = document.getElementById('couponValue')?.value.trim();
+                const expiration_date = document.getElementById('couponExpirationDate')?.value;
+                const limit = document.getElementById('couponLimit')?.value.trim();
+                const is_active = !!document.getElementById('couponIsActive')?.checked;
+
+                if (!code || !value || !expiration_date || !limit) {
+                    await Swal.fire({ icon: 'warning', title: 'Attention', text: "Remplissez tous les champs du coupon." });
+                    return;
+                }
+
+                try {
+                    const res = await fetch('/api/coupons', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + token
+                        },
+                        body: JSON.stringify({
+                            code,
+                            value: Number(value),
+                            expiration_date,
+                            limit: Number(limit),
+                            is_active
+                        })
+                    });
+
+                    if (!res.ok) {
+                        const err = await res.json().catch(() => null);
+                        throw new Error(err?.message || 'Erreur création coupon');
+                    }
+
+                    await Swal.fire({ icon: 'success', title: 'Succès', text: 'Coupon créé avec succès', timer: 1500, showConfirmButton: false });
+                    document.getElementById('formCreateCoupon')?.reset();
+                    const isActiveEl = document.getElementById('couponIsActive');
+                    if (isActiveEl) isActiveEl.checked = true;
+                    await getCoupons();
+                } catch (err) {
+                    await Swal.fire({ icon: 'error', title: 'Erreur', text: err.message || 'Erreur création coupon' });
+                }
+            });
+        }
+
+        const btnDeleteCoupon = document.getElementById('btnDeleteCoupon');
+        if (btnDeleteCoupon) {
+            btnDeleteCoupon.addEventListener('click', async (e) => {
+                e.preventDefault();
+
+                const couponId = document.getElementById('deleteCouponSelect')?.value;
+                if (!couponId) {
+                    await Swal.fire({ icon: 'warning', title: 'Attention', text: "Choisir un coupon à supprimer." });
+                    return;
+                }
+
+                const confirmDelete = await Swal.fire({
+                    icon: 'warning',
+                    title: 'Confirmer',
+                    text: 'Voulez-vous vraiment supprimer ce coupon ?',
+                    showCancelButton: true,
+                    confirmButtonText: 'Supprimer',
+                    cancelButtonText: 'Annuler'
+                });
+
+                if (!confirmDelete.isConfirmed) return;
+
+                try {
+                    const res = await fetch(`/api/coupons/${couponId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Authorization': 'Bearer ' + token
+                        }
+                    });
+
+                    if (!res.ok) {
+                        const err = await res.json().catch(() => null);
+                        throw new Error(err?.message || 'Erreur suppression coupon');
+                    }
+
+                    await Swal.fire({ icon: 'success', title: 'Succès', text: 'Coupon supprimé', timer: 1400, showConfirmButton: false });
+                    await getCoupons();
+                } catch (err) {
+                    await Swal.fire({ icon: 'error', title: 'Erreur', text: err.message || 'Erreur suppression coupon' });
+                }
+            });
+        }
+
         // --- MANETTES ---
         async function getManettes() {
             try {
@@ -709,7 +859,7 @@
             selectManette.addEventListener('mousedown', (e) => {
                 if (selectManette.size === 1) {
                     e.preventDefault();
-                    selectManette.size = 4; // Toujours une petite partie visible
+                    selectManette.size = 6; // Toujours une petite partie visible
                     selectManette.focus();
                 }
             });
