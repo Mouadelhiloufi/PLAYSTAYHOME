@@ -86,21 +86,21 @@
         <div class="hidden md:flex md:w-1/2 bg-primary items-center justify-center p-12 relative overflow-hidden">
             <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 40px 40px;"></div>
             <div class="relative z-10 max-w-lg text-white">
-                <h1 class="text-5xl font-black leading-tight mb-6">Join the global gaming community.</h1>
-                <p class="text-xl text-white/80 mb-8">Unlock exclusive access to gaming events, connect with pro players, and find your next competitive home.</p>
+                <h1 class="text-5xl font-black leading-tight mb-6">Rejoignez la communauté mondiale du gaming.</h1>
+                <p class="text-xl text-white/80 mb-8">Accédez à des événements exclusifs, connectez-vous avec des joueurs professionnels et trouvez votre prochaine équipe compétitive.</p>
                 <div class="flex gap-4">
                     <div class="bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/20 flex items-center gap-3">
                         <i class="fas fa-gamepad text-3xl"></i>
                         <div>
                             <p class="font-bold text-lg">10M+</p>
-                            <p class="text-xs text-white/60 uppercase tracking-wider">Active Gamers</p>
+                            <p class="text-xs text-white/60 uppercase tracking-wider">Joueurs actifs</p>
                         </div>
                     </div>
                     <div class="bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/20 flex items-center gap-3">
                         <i class="fas fa-trophy text-3xl"></i>
                         <div>
                             <p class="font-bold text-lg">500+</p>
-                            <p class="text-xs text-white/60 uppercase tracking-wider">Daily Tournaments</p>
+                            <p class="text-xs text-white/60 uppercase tracking-wider">Tournois quotidiens</p>
                         </div>
                     </div>
                 </div>

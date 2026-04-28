@@ -33,10 +33,14 @@
     <aside class="w-[260px] bg-white border-r border-gray-100 flex flex-col justify-between py-8 px-6 shrink-0 fixed h-full z-10">
         <div>
             <!-- Logo -->
-            <div class="flex items-center gap-2 px-2 mb-12">
-                <i class="fa-solid fa-gamepad text-primary text-2xl"></i>
+            <div class="flex items-center gap-4 text-primary">
+            <a href="/" class="flex items-center gap-3 text-primary" aria-label="PLAYSTAYHOME">
+                <span class="h-12 flex items-center overflow-visible">
+                    <img src="{{ asset('images/site-logo-navbar.png') }}" alt="PLAYSTAYHOME" class="h-16 w-auto object-contain -my-2">
+                </span>
                 <span class="font-black text-xl tracking-tight">PLAYSTAYHOME</span>
-            </div>
+            </a>
+        </div>
 
             <!-- Navigation -->
             <nav class="flex flex-col gap-2">
