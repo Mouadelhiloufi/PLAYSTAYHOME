@@ -164,8 +164,8 @@ class ReservationService{
         ]);
 
         if ($nombreManettes > 0) {
-            $reservation->manettes()->attach($manettesDisponibles); // Attachement dynamique !
-            // Changer le statut des manettes à "loué"
+            $reservation->manettes()->attach($manettesDisponibles); // attache mannete dispo
+            // changer le statut des manettes à louer
             Manette::whereIn('id', $manettesDisponibles)->update(['status' => 'louer']);
         }
         if ($couponId) {
@@ -175,10 +175,10 @@ class ReservationService{
             }
         }
 
-        // Schedule the notification when reservation is created
+        // - 1 jour depuis endDate
         $reminderTime = $endDate->copy()->subHours(24);
         
-        // If it's already past the 24h mark, send immediately, else schedule for the exact time
+        // si 24h est passé la notif envoyer, else schedule for the exact time
         if (now()->greaterThanOrEqualTo($reminderTime)) {
             Auth::user()->notify(new ReservationDay($reservation));
         } else {
