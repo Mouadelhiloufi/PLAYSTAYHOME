@@ -18,7 +18,6 @@ class CouponController extends Controller
     {
         $validated = $request->validate([
             'code' => 'required|string|unique:coupons,code|max:50',
-            // 'type' => 'required|in:percentage,fixed',
             'value' => 'required|numeric|min:0',
             'expiration_date' => 'required|date|after:today',
             'limit' => 'required|integer|min:1',
@@ -86,7 +85,7 @@ class CouponController extends Controller
         if ($coupon->expiration_date < now()->toDateString()) {
             $reasons[] = 'Le coupon a expiré';
         }
-
+            // combien de fois ce coupon util in res
         if ($coupon->reservations()->count() >= $coupon->limit) {
             $reasons[] = 'Le coupon a atteint sa limite d\'utilisation';
         }
