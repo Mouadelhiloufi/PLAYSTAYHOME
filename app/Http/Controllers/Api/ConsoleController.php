@@ -109,8 +109,10 @@ class ConsoleController extends Controller
     {
         $validated = $request->validate([
             'game_ids' => 'array',
+            // insiste que ces id dans table games
             'game_ids.*' => 'exists:games,id',
         ]);
+        
 
         $gameIds = $validated['game_ids'] ?? [];
         $console->games()->sync($gameIds);

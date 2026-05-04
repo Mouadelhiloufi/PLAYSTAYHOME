@@ -51,7 +51,8 @@ class GameController extends Controller
             'genre' => 'string|max:255',
             'image' => 'nullable|string|max:255',
             'console_ids' => 'array',
-            // 'console_ids.*' => 'exists:consoles,id',
+            // insiste que ces id dans table consoles
+            'console_ids.*' => 'exists:consoles,id',
         ]);
 
         $game->update([
