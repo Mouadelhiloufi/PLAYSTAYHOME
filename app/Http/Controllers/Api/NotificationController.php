@@ -20,15 +20,5 @@ class NotificationController extends Controller
         ], 200);
     }
 
-    // public function markAsRead(Request $request, $id)
-    // {
-    //     $notification = $request->user()->notifications()->findOrFail($id);
-
-    //     $notification->markAsRead();
-
-    //     return response()->json([
-    //         'message' => 'Notification marquée comme lue.',
-    //         'data' => $notification,
-    //     ], 200);
-    // }
+    
 }
