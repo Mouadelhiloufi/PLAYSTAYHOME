@@ -186,7 +186,7 @@ class ReservationService{
         }
 
         // dispatch le job pour quand la reservation termin le status est dispo
-        TerminerReservationJob::dispatch($reservation->id)->delay($endDate);
+        TerminerReservationJob::dispatch($reservation->id)->delay($endDate->copy()->endOfDay());
 
         return $reservation->load('manettes'); 
     }
