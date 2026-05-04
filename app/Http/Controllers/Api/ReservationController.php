@@ -35,6 +35,8 @@ class ReservationController extends Controller
         ], 200);
     }
 
+    
+    // admin
     public function monthlyRevenue()
     {
         $month = now()->month;
@@ -45,7 +47,7 @@ class ReservationController extends Controller
             ->whereMonth('start_date', $month)
             ->sum('total_price');
 
-        // Si le mois courant est vide, on prend le dernier mois dispo.
+        
         if ((float) $revenue === 0.0) {
             $lastStartDate = Reservation::query()->max('start_date');
 
