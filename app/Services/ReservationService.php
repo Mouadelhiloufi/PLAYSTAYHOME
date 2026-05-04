@@ -17,17 +17,19 @@ class ReservationService{
     /**
      * Termine une réservation et remet les manettes à disposition
      */
+
+    // pour jobs
     public function terminerReservation($reservationId)
     {
         $reservation = Reservation::find($reservationId);
         if (!$reservation) {
             return false;
         }
-        // Mettre à jour le statut de la réservation
+       
         $reservation->status = 'completed';
         $reservation->save();
 
-        // Remettre les manettes associées à 'available'
+        
         $manettes = $reservation->manettes;
             foreach ($manettes as $manette) {
             $manette->status = 'available';
@@ -57,6 +59,7 @@ class ReservationService{
             ]);
         }
 
+        // count les jours reserves
         $days = $this->countInclusiveDays($startDate, $endDate);
 
 
@@ -182,10 +185,10 @@ class ReservationService{
             Auth::user()->notify((new ReservationDay($reservation))->delay($reminderTime));
         }
 
-        // Dispatch du job différé pour terminer la réservation à la date de fin
+        // dispatch le job pour quand la reservation termin le status est dispo
         TerminerReservationJob::dispatch($reservation->id)->delay($endDate);
 
-        return $reservation->load('manettes'); // Charge la relation pour la réponse
+        return $reservation->load('manettes'); 
     }
 
     public function calculatePrice(Console $console, Carbon $startDate, Carbon $endDate): float
