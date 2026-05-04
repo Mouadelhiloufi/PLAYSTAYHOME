@@ -40,7 +40,7 @@ class ChatController extends Controller
 
         $user = $request->user();
 
-        // B2C LOGIC : Si c'est un client qui envoie, le message part à l'admin
+        
         if ($user->role === 'client') {
             $admin = User::where('role', 'admin')->first();
             $userId = $admin->id;
