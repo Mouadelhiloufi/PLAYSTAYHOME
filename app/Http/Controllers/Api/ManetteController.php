@@ -8,9 +8,7 @@ use Illuminate\Http\Request;
 
 class ManetteController extends Controller
 {
-    /**
-     * index()
-     */
+    
     public function index()
     {
         $manettes = Manette::orderBy('id', 'desc')->get();
@@ -21,9 +19,7 @@ class ManetteController extends Controller
         ]);
     }
 
-    /**
-     * +addManette()
-     */
+    
     public function addManette(Request $request)
     {
         $validated = $request->validate([
@@ -39,9 +35,7 @@ class ManetteController extends Controller
         ], 201);
     }
 
-    /**
-     * +updateStatus()
-     */
+    
     public function updateStatus(Request $request, $id)
     {
         $validated = $request->validate([
@@ -57,9 +51,7 @@ class ManetteController extends Controller
         ]);
     }
 
-    /**
-     * +removeController()
-     */
+    
     public function removeController($id)
     {
         $manette = Manette::findOrFail($id);
@@ -70,9 +62,7 @@ class ManetteController extends Controller
         ]);
     }
 
-    /**
-     * listAvailableManettes()
-     */
+
     public function listAvailableManettes()
     {
         $manettes = Manette::where('status', 'available')->get();

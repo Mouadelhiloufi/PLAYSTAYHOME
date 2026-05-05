@@ -29,9 +29,7 @@ class GameController extends Controller
             'image' => $validated['image'] ?? null,
         ]);
 
-        // if (isset($validated['console_ids'])) {
-        //     $game->consoles()->attach($validated['console_ids']);
-        // }
+        
 
         return response()->json([
             'message' => 'Jeu créé avec succès',
@@ -61,9 +59,7 @@ class GameController extends Controller
             'image' => $validated['image'] ?? $game->image,
         ]);
 
-        // if (isset($validated['console_ids'])) {
-        //     $game->consoles()->sync($validated['console_ids']);
-        // }
+        
 
         return response()->json([
             'message' => 'Jeu mis à jour avec succès',
