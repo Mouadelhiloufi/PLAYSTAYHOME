@@ -3,7 +3,7 @@
         <div class="flex items-center gap-4 text-primary">
             <a href="/" class="flex items-center gap-3 text-primary" aria-label="PLAYSTAYHOME">
                 <span class="h-12 flex items-center overflow-visible">
-                    <img src="{{ asset('images/site-logo-navbar.png') }}" alt="" class="h-16 w-auto object-contain -my-2">
+                    <img src="{{ asset('images/site-logo-navbar.png') }}" alt="logo playstayhome" class="h-16 w-auto object-contain -my-2">
                 </span>
                 <span class="text-xl font-bold tracking-tight text-gray-900">PLAYSTAYHOME</span>
             </a>
@@ -87,6 +87,13 @@
     // on gère l'affichage de la navbar avec une fonction immédiate.
     function initNavbar() {
         const token = localStorage.getItem('token');
+
+        // Si l'utilisateur connecté est un admin, on le renvoie vers son dashboard
+        // car les pages client ne le concernent pas.
+        if (token && localStorage.getItem('role') === 'admin') {
+            window.location.replace('/admin/dashboard');
+            return;
+        }
         const guestLinks = document.getElementById('nav-guest-links');
         const authLinks = document.getElementById('nav-auth-links');
         const logoutBtn = document.getElementById('navLogoutBtn');
@@ -189,6 +196,16 @@
             })
             .then(res => res.json())
             .then(user => {
+                // Sécurité : si jamais le role en localStorage a été altéré,
+                // on revérifie via le serveur et on redirige si admin.
+                if (user && user.role) {
+                    localStorage.setItem('role', user.role);
+                    if (user.role === 'admin') {
+                        window.location.replace('/admin/dashboard');
+                        return;
+                    }
+                }
+
                 if(user && user.name) {
                     const avatar = document.getElementById('navProfileAvatar');
                     const name = document.getElementById('navProfileName');
@@ -235,6 +252,7 @@
 
                 // Supprimer le token du navigateur
                 localStorage.removeItem('token');
+                localStorage.removeItem('role');
                 
                 // Rediriger vers l'accueil ou le login
                 window.location.href = '/login';
@@ -253,6 +271,7 @@
                     });
                 } catch (err) {}
                 localStorage.removeItem('token');
+                localStorage.removeItem('role');
                 window.location.href = '/login';
             });
         }

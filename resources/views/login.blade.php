@@ -201,12 +201,13 @@
                 if (response.ok) {
                     
                     const data = await response.json();
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('role', data.user?.role || 'client');
+
                     if (data.user && data.user.role === 'admin') {
-                        localStorage.setItem('token', data.token);
                         window.location.href = '/admin/dashboard';
                         return;
                     }
-                    localStorage.setItem('token', data.token);
                     window.location.href = '/';
                 } else {
                     const errorData = await response.json();
