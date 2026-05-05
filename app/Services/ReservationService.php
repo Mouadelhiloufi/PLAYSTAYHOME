@@ -40,7 +40,7 @@ class ReservationService{
 
     private function countInclusiveDays(Carbon $startDate, Carbon $endDate): int
     {
-        // On inclut le jour de début et le jour de fin.
+        // en return les jours entre D et F
         return $startDate->diffInDays($endDate) + 1;
     }
     
@@ -86,10 +86,10 @@ class ReservationService{
 
     }
 
-        // Calcul du prix total
+        // calcul du prix total
         $totalPrice = $this->calculatePrice($console, $startDate, $endDate);
 
-        // --- Ajout du supplément manettes ---
+        // ajout du manettes ---
         $nombreManettes = $data['nombre_manettes'] ?? 0;
         if($nombreManettes == 3) {
             $totalPrice += 25;
@@ -98,7 +98,7 @@ class ReservationService{
         }
         // ------------------------------------
 
-        // Gestion du coupon
+        // gestion du coupon
         $couponId = null;
 
         if (isset($data['coupon_code'])) {
@@ -112,7 +112,7 @@ class ReservationService{
 
             $user = Auth::user();
 
-            // Vérifications simples
+            
             if ($coupon->expiration_date < now()->toDateString()) {
                 throw ValidationException::withMessages([
                     'coupon_code' => 'Le coupon a expiré.',
@@ -131,13 +131,13 @@ class ReservationService{
                 ]);
             }
 
-            // Appliquer la réduction (montant fixe)
+            // faire la reduction
             $discount = min($coupon->value, $totalPrice);
             $totalPrice -= $discount;
             $couponId = $coupon->id;
         }
 
-        // On vérifie s'il demande des manettes
+        // on verifie si il demande des manettes
         $manettesDisponibles = [];
 
         if ($nombreManettes > 0) {
@@ -198,7 +198,7 @@ class ReservationService{
         foreach (CarbonPeriod::create($startDate, $endDate) as $date) {
             $price = $console->daily_price;
 
-            // Tarif majoré le weekend (samedi et dimanche)
+            // tarif majore le weekend
             if ($date->isWeekend()) {
                 $price *= 1.5;
             }
@@ -224,14 +224,14 @@ class ReservationService{
         $days = $this->countInclusiveDays($startDate, $endDate);
         $totalPrice = $this->calculatePrice($console, $startDate, $endDate);
         
-        // --- Ajout du supplément manettes ---
+        // ajout du supplement manettes
         $manettesCount = isset($data['nombre_manettes']) ? (int) $data['nombre_manettes'] : 0;
         if($manettesCount == 3) {
             $totalPrice += 25;
         } else if($manettesCount == 4) {
             $totalPrice += 50;
         }
-        // ------------------------------------
+        
 
         $discount = 0;
         
@@ -239,7 +239,6 @@ class ReservationService{
             $coupon = Coupon::where('code', $data['coupon_code'])->first();
             
             if ($coupon && $coupon->expiration_date >= now()->toDateString() && $coupon->reservations()->count() < $coupon->limit) {
-                // Pas besoin de lever d'exception pour un devis, on applique la réduction si c'est possible
                 $discount = min($coupon->value, $totalPrice);
             }
         }

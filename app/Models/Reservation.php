@@ -53,7 +53,6 @@ class Reservation extends Model
             return 0;
         }
 
-        // On compte les deux dates incluses: du jour de début au jour de fin.
         return $this->start_date->diffInDays($this->end_date) + 1;
     }
 }
