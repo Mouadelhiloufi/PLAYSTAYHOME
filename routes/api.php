@@ -49,7 +49,7 @@ Route::get('/notifications', [NotificationController::class, 'index']);
 // Route::post('/notifications', [NotificationController::class, 'store']);
 Route::patch('/notifications/{id}/read', [NotificationController::class, 'markAsRead']);
     
-    // Routes de reservation
+    // routes de reservation
 
     
 
