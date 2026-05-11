@@ -355,7 +355,7 @@
 
         async function getConsoles() {
             try {
-                let res = await fetch("http://playstayhome.test/api/consoles", {
+                let res = await fetch("/api/consoles", {
                     "headers": { 'Accept': 'application/json' }
                 });
                 consoles = await res.json();

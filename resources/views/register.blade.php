@@ -239,7 +239,7 @@
                 formData.append('photo', photoFile);
             }
 
-            const response = await fetch('http://playstayhome.test/api/register', {
+            const response = await fetch('/api/register', {
                 method: 'POST',
                 // Ne pas mettre de Content-Type ici, le navigateur le met tout seul avec le boundary pour FormData
                 body: formData,
