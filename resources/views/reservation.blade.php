@@ -277,7 +277,7 @@
                     title: 'Connexion requise',
                     text: "Vous devez être connecté pour effectuer une réservation."
                 });
-                window.location.href = '/catalogue';
+                window.location.href = '/register';
                 return;
             }
 
@@ -509,6 +509,16 @@
             // 4. Action du bouton Final : Créer la réservation
             const btnReserve = document.getElementById('btnReserve');
             btnReserve.addEventListener('click', async () => {
+                if (!token) {
+                    await Swal.fire({
+                        icon: 'warning',
+                        title: 'Connexion requise',
+                        text: "Créez d'abord un compte pour finaliser votre réservation."
+                    });
+                    window.location.href = '/register';
+                    return;
+                }
+
                 if (typeof fp === 'undefined' || !fp.selectedDates || fp.selectedDates.length !== 2) {
                     await Swal.fire({
                         icon: 'warning',
