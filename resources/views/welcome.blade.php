@@ -391,24 +391,7 @@
 
                 <div id="containerConsoles" class="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
                     <article class="console-card rounded-3xl p-4">
-                        <div class="console-figure flex items-center justify-center">
-                            <img src="https://gmedia.playstation.com/is/image/SIEPDC/ps5-product-thumbnail-01-en-14sep21?$native$" alt="PS5" class="h-32 object-contain">
-                        </div>
-                        <div class="mt-5">
-                            <div class="flex items-start justify-between gap-4">
-                                <div>
-                                    <h3 class="text-base font-bold text-gray-900">PlayStation 5 Slim</h3>
-                                    <p class="mt-1 text-xs text-gray-400">Etat : Neuf</p>
-                                </div>
-                                <span class="rounded-full bg-green-100 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-green-600">Disponible</span>
-                            </div>
-                            <div class="mt-5 flex items-end justify-between">
-                                <p class="text-3xl font-black text-primary">100 <span class="text-lg">DH</span><span class="ml-1 text-xs font-medium text-gray-400">/ jour</span></p>
-                                <button class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-900 text-white">
-                                    <i class="fa-solid fa-ellipsis-vertical text-xs"></i>
-                                </button>
-                            </div>
-                        </div>
+                        
                     </article>
 
                     
