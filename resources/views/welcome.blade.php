@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>playstayhome</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/site-logo-navbar.png') }}?v=5">
+    <link rel="shortcut icon" type="image/png" href="{{ asset('images/site-logo-navbar.png') }}?v=5">
+    <link rel="apple-touch-icon" href="{{ asset('images/site-logo-navbar.png') }}?v=5">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
