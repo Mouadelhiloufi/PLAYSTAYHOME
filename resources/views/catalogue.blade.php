@@ -5,7 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catalogue - playstayhome</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            safelist: [
+                'min-w-[50px]', 'text-[8px]', 'text-[9px]', 'tracking-widest', 'tracking-wide',
+                'bg-green-100', 'text-green-700', 'bg-red-100', 'text-red-700',
+                'line-clamp-2', 'leading-tight', 'shrink-0', 'flex-wrap', 'max-w-[4.5rem]', 'hidden',
+            ],
+        };
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -70,6 +78,7 @@
             border: 1px solid #edf1f8;
             border-radius: 14px;
             background: #f8fbff;
+            min-width: 0;
         }
 
         .catalog-layout {
@@ -91,6 +100,7 @@
 
         .catalog-card {
             padding: 0.8rem;
+            min-width: 0;
         }
 
         .catalog-card.locked {
@@ -108,10 +118,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            width: 100%;
+            min-width: 0;
         }
 
         .catalog-card-image img {
             height: 6.6rem;
+            max-width: 100%;
             object-fit: contain;
         }
 
@@ -121,6 +134,12 @@
             align-items: flex-start;
             justify-content: space-between;
             gap: 0.7rem;
+            min-width: 0;
+        }
+
+        .catalog-card-head-title {
+            flex: 1;
+            min-width: 0;
         }
 
         .catalog-card-title {
@@ -162,12 +181,15 @@
             }
         }
 
-        @media (min-width: 768px) {
+        /* 2 colonnes seulement quand la zone catalogue est large (évite cartes trop étroites en mode "tablette" PC 768–1023px) */
+        @media (min-width: 1024px) {
             .catalog-products {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
                 gap: 1rem;
             }
+        }
 
+        @media (min-width: 768px) {
             .catalog-card-featured {
                 padding: 0.85rem;
             }
@@ -197,6 +219,8 @@
             padding-bottom: 0.5rem;
             scrollbar-width: thin;
             scrollbar-color: #cbd5e1 transparent;
+            min-width: 0;
+            -webkit-overflow-scrolling: touch;
         }
 
         .games-scroll-container::-webkit-scrollbar {
@@ -266,9 +290,9 @@
                 </aside>
 
                 <div class="catalog-content">
-                    <div class="mb-3 flex items-center justify-between">
-                        <h1 class="text-2xl font-black tracking-tight text-gray-900">Catalogue <span class="text-primary" id="catalog-count">(0)</span></h1>
-                        <button class="rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-500">
+                    <div class="mb-3 flex flex-col gap-3 min-w-0 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+                        <h1 class="min-w-0 text-xl font-black tracking-tight text-gray-900 sm:text-2xl">Catalogue <span class="text-primary" id="catalog-count">(0)</span></h1>
+                        <button type="button" class="shrink-0 self-start rounded-xl border border-gray-200 bg-white px-3 py-2 text-left text-xs font-semibold text-gray-500 sm:px-4 sm:text-sm">
                             Trier par : Nouveautes
                         </button>
                     </div>
@@ -374,14 +398,14 @@
                     if (console.games && console.games.length > 0) {
                         console.games.forEach(game => {
                             gamesHtml += `
-                                <div class="flex flex-col items-center min-w-[50px]">
+                                <div class="flex flex-col items-center min-w-[50px] shrink-0">
                                     <div class="h-12 w-12 rounded-lg border border-gray-200 bg-gray-50 flex items-center justify-center overflow-hidden shadow-sm">
                                         ${game.image 
-                                            ? `<img src="${game.image}" alt="${game.title}" class="h-full w-full object-cover">` 
+                                            ? `<img src="${game.image}" alt="${game.title}" class="h-full w-full object-cover" loading="lazy" onerror="this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')"><i class="fa-solid fa-gamepad text-gray-300 text-lg hidden"></i>` 
                                             : `<i class="fa-solid fa-gamepad text-gray-300 text-lg"></i>`
                                         }
                                     </div>
-                                    <p class="mt-1.5 w-12 text-center text-[8px] font-medium text-gray-500 truncate" title="${game.title}">${game.title}</p>
+                                    <p class="mt-1.5 max-w-[4.5rem] text-center text-[9px] font-medium leading-tight text-gray-500 line-clamp-2" title="${game.title}">${game.title}</p>
                                 </div>
                             `;
                         });
@@ -397,8 +421,8 @@
                         ? ''
                         : '<span class="absolute top-3 right-3 z-20 inline-flex h-10 w-10 items-center justify-center rounded-full bg-red-100 text-red-600 shadow-md pointer-events-none"><i class="fa-solid fa-lock text-base"></i></span>';
                     const buttonClass = isAvailable
-                        ? 'mt-5 w-full rounded-xl bg-primary hover:bg-blue-700 transition-colors duration-300 py-3 text-xs font-bold text-white shadow-lg'
-                        : 'mt-5 w-full rounded-xl bg-gray-200 py-3 text-xs font-bold text-gray-500 cursor-not-allowed';
+                        ? 'mt-5 w-full rounded-xl bg-primary hover:bg-blue-700 transition-colors duration-300 py-3 px-3 text-xs font-bold text-white shadow-lg whitespace-normal text-center leading-tight'
+                        : 'mt-5 w-full rounded-xl bg-gray-200 py-3 px-3 text-xs font-bold text-gray-500 cursor-not-allowed whitespace-normal text-center leading-tight';
                     const buttonLabel = isAvailable ? `Reserver la ${console.brand}` : 'Indisponible';
                     const buttonAction = isAvailable
                         ? `onclick="window.location.href='/reservation?console_id=${console.id}'"`
@@ -416,13 +440,13 @@
                                     </div>
                                 </div>
                                 <div class="catalog-card-head mt-4">
-                                    <div class="w-full flex flex-col">
+                                    <div class="catalog-card-head-title flex flex-col">
                                         <h3 class="catalog-card-title text-lg text-gray-900">${console.name}</h3>
-                                        <div class="mt-1.5 flex items-center gap-2">
+                                        <div class="mt-1.5 flex flex-wrap items-center gap-2">
                                             <span class="inline-block rounded px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide ${statusClass}">${statusLabel}</span>
                                         </div>
                                     </div>
-                                    <div class="text-right flex-shrink-0 ml-3">
+                                    <div class="shrink-0 text-right ml-3">
                                         <p class="catalog-card-price text-2xl font-black text-primary">${console.daily_price} DH</p>
                                         <p class="text-[9px] font-medium text-gray-400 mt-1 uppercase tracking-wide">/ par jour</p>
                                     </div>

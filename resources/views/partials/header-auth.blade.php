@@ -4,70 +4,7 @@
     $isLogin = $variant === 'login';
     $drawerId = 'auth-nav-drawer-' . $variant;
 @endphp
-@once
-<style>
-    .auth-burger-toggle {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 2.75rem;
-        height: 2.75rem;
-        border-radius: 0.5rem;
-        border: 1px solid #e5e7eb;
-        background: #fff;
-        cursor: pointer;
-        transition: background-color 0.15s ease, border-color 0.15s ease;
-    }
-    .auth-burger-toggle:hover,
-    .auth-burger-toggle:focus-visible {
-        background: #f9fafb;
-        border-color: #d1d5db;
-        outline: none;
-    }
-    .auth-burger-toggle .auth-burger-bar {
-        position: absolute;
-        left: 0.55rem;
-        right: 0.55rem;
-        height: 2px;
-        border-radius: 1px;
-        background: #111827;
-        transition: transform 0.25s ease, opacity 0.2s ease, top 0.25s ease, bottom 0.25s ease;
-    }
-    .auth-burger-toggle .auth-burger-top { top: 0.9rem; }
-    .auth-burger-toggle .auth-burger-mid { top: 50%; transform: translateY(-50%); }
-    .auth-burger-toggle .auth-burger-bot { bottom: 0.9rem; }
-
-    .auth-burger-toggle.is-open .auth-burger-top {
-        top: 50%;
-        transform: translateY(-50%) rotate(45deg);
-    }
-    .auth-burger-toggle.is-open .auth-burger-mid {
-        opacity: 0;
-        transform: translateY(-50%) scaleX(0);
-    }
-    .auth-burger-toggle.is-open .auth-burger-bot {
-        bottom: auto;
-        top: 50%;
-        transform: translateY(-50%) rotate(-45deg);
-    }
-    @media (hover: hover) and (pointer: fine) {
-        .auth-burger-toggle:hover .auth-burger-top {
-            top: 50%;
-            transform: translateY(-50%) rotate(45deg);
-        }
-        .auth-burger-toggle:hover .auth-burger-mid {
-            opacity: 0;
-            transform: translateY(-50%) scaleX(0);
-        }
-        .auth-burger-toggle:hover .auth-burger-bot {
-            bottom: auto;
-            top: 50%;
-            transform: translateY(-50%) rotate(-45deg);
-        }
-    }
-</style>
-@endonce
+@include('partials.nav-burger-styles')
 <header id="site-auth-header" class="flex items-center justify-between gap-3 border-b border-gray-200 bg-white px-4 py-3 sm:px-6 lg:px-10 sticky top-0 z-50">
     <div class="flex min-w-0 flex-1 items-center gap-2 text-primary sm:gap-4">
         <a href="/" class="flex min-w-0 items-center gap-2 text-primary sm:gap-3" aria-label="PLAYSTAYHOME">

@@ -148,22 +148,7 @@
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-white border-t border-gray-200 px-10 py-10">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="flex items-center gap-4 text-gray-400">
-                <img src="{{ asset('images/site-logo-navbar.png') }}" alt="PLAYSTAYHOME" class="h-8 w-auto object-contain opacity-50">
-                <span class="text-sm font-semibold uppercase tracking-widest">PLAYSTAYHOME</span>
-            </div>
-            <div class="flex gap-8">
-                <a class="text-gray-400 hover:text-primary text-sm" href="#">Confidentialité</a>
-                <a class="text-gray-400 hover:text-primary text-sm" href="#">Conditions</a>
-                <a class="text-gray-400 hover:text-primary text-sm" href="#">Cookies</a>
-                <a class="text-gray-400 hover:text-primary text-sm" href="#">Statut</a>
-            </div>
-            <p class="text-gray-400 text-sm">© 2026 <strong>PLAYSTAYHOME</strong>. Tous droits réservés.</p>
-        </div>
-    </footer>
+    @include('partials.footer-auth')
 
 
 
