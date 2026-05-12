@@ -18,6 +18,11 @@ class GoogleController extends Controller
             abort(404);
         }
 
+        $redirect = request()->query('redirect');
+        if (is_string($redirect) && $this->isSafeInternalRedirect($redirect)) {
+            session(['auth_post_login_redirect' => $redirect]);
+        }
+
         $provider = Socialite::driver('google');
 
         if (method_exists($provider, 'stateless')) {
@@ -68,12 +73,37 @@ class GoogleController extends Controller
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        $query = http_build_query([
+        $query = [
             'token' => $token,
             'role' => $user->role,
             'google' => 1,
-        ]);
+        ];
 
-        return redirect('/login?' . $query);
+        $intended = session()->pull('auth_post_login_redirect');
+        if (is_string($intended) && $this->isSafeInternalRedirect($intended)) {
+            $query['redirect'] = $intended;
+        }
+
+        return redirect('/login?' . http_build_query($query));
+    }
+
+    /**
+     * Autorise uniquement un chemin relatif interne (évite les redirections ouvertes).
+     */
+    private function isSafeInternalRedirect(string $path): bool
+    {
+        if ($path === '' || ! str_starts_with($path, '/') || str_starts_with($path, '//')) {
+            return false;
+        }
+
+        if (strlen($path) > 2048) {
+            return false;
+        }
+
+        if (preg_match('/^[a-z][a-z0-9+.-]*:/i', ltrim($path, '/'))) {
+            return false;
+        }
+
+        return true;
     }
 }

@@ -128,7 +128,7 @@
                     <span class="text-xs font-semibold uppercase tracking-wider text-gray-400">ou</span>
                     <div class="h-px flex-1 bg-gray-200"></div>
                 </div>
-                <a href="{{ route('auth.google.redirect') }}" class="w-full inline-flex items-center justify-center gap-3 rounded-lg border border-gray-300 bg-white py-3.5 text-sm font-semibold text-gray-700 hover:bg-gray-50">
+                <a href="{{ route('auth.google.redirect') }}{{ request()->filled('redirect') ? '?' . http_build_query(['redirect' => request('redirect')]) : '' }}" class="w-full inline-flex items-center justify-center gap-3 rounded-lg border border-gray-300 bg-white py-3.5 text-sm font-semibold text-gray-700 hover:bg-gray-50">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="h-5 w-5" aria-hidden="true">
                         <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.6 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3 0 5.7 1.1 7.8 2.9l5.7-5.7C33.8 6.1 29.2 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/>
                         <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.2 19 12 24 12c3 0 5.7 1.1 7.8 2.9l5.7-5.7C33.8 6.1 29.2 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/>
@@ -141,7 +141,7 @@
                 <div class="mt-8 pt-8 border-t border-gray-200 text-center">
                     <p class="text-gray-600">
                         Pas de compte ?
-                        <a class="text-primary font-bold hover:underline ml-1" href="/register">Créer un compte</a>
+                        <a class="text-primary font-bold hover:underline ml-1" href="/register{{ request()->getQueryString() ? '?' . request()->getQueryString() : '' }}">Créer un compte</a>
                     </p>
                 </div>
             </div>
@@ -157,12 +157,38 @@
     <script src="https://cdn.jsdelivr.net/npm/parsleyjs"></script>
 
     <script>
+        function getPostLoginRedirect(fallback) {
+            const qs = new URLSearchParams(window.location.search);
+            let raw = qs.get('redirect');
+            if (!raw) {
+                return fallback;
+            }
+            try {
+                raw = decodeURIComponent(raw);
+            } catch (e) {
+                return fallback;
+            }
+            if (!raw.startsWith('/') || raw.startsWith('//')) {
+                return fallback;
+            }
+            try {
+                const u = new URL(raw, window.location.origin);
+                if (u.origin !== window.location.origin) {
+                    return fallback;
+                }
+                return u.pathname + u.search + u.hash;
+            } catch (e2) {
+                return fallback;
+            }
+        }
+
         const params = new URLSearchParams(window.location.search);
         const googleToken = params.get('token');
         const googleRole = params.get('role');
         const googleSuccess = params.get('google');
 
         if (googleToken && googleSuccess === '1') {
+            const postLogin = getPostLoginRedirect('/');
             localStorage.setItem('token', googleToken);
             localStorage.setItem('role', googleRole || 'client');
             const cleanUrl = window.location.origin + window.location.pathname;
@@ -170,7 +196,7 @@
             if ((googleRole || 'client') === 'admin') {
                 window.location.href = '/admin/dashboard';
             } else {
-                window.location.href = '/';
+                window.location.href = postLogin;
             }
         }
 
@@ -218,7 +244,7 @@
                         window.location.href = '/admin/dashboard';
                         return;
                     }
-                    window.location.href = '/';
+                    window.location.href = getPostLoginRedirect('/');
                 } else {
                     const errorData = await response.json();
                     const message = errorData.message || 'Login failed. Please check your credentials and try again.';

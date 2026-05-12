@@ -151,7 +151,7 @@
                     <span class="text-xs font-semibold uppercase tracking-wider text-gray-400">ou</span>
                     <div class="h-px flex-1 bg-gray-200"></div>
                 </div>
-                <a href="{{ route('auth.google.redirect') }}" class="w-full inline-flex items-center justify-center gap-3 rounded-lg border border-gray-300 bg-white py-3.5 text-sm font-semibold text-gray-700 hover:bg-gray-50">
+                <a href="{{ route('auth.google.redirect') }}{{ request()->filled('redirect') ? '?' . http_build_query(['redirect' => request('redirect')]) : '' }}" class="w-full inline-flex items-center justify-center gap-3 rounded-lg border border-gray-300 bg-white py-3.5 text-sm font-semibold text-gray-700 hover:bg-gray-50">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="h-5 w-5" aria-hidden="true">
                         <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.6 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3 0 5.7 1.1 7.8 2.9l5.7-5.7C33.8 6.1 29.2 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/>
                         <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.2 19 12 24 12c3 0 5.7 1.1 7.8 2.9l5.7-5.7C33.8 6.1 29.2 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/>
@@ -164,7 +164,7 @@
                 <div class="mt-8 pt-8 border-t border-gray-200 text-center">
                     <p class="text-gray-600">
                         Vous avez déjà un compte ?
-                        <a class="text-primary font-bold hover:underline ml-1" href="/login">Connexion</a>
+                        <a class="text-primary font-bold hover:underline ml-1" href="/login{{ request()->getQueryString() ? '?' . request()->getQueryString() : '' }}">Connexion</a>
                     </p>
                 </div>
             </div>
@@ -233,7 +233,7 @@
                     title: 'Inscription réussie',
                     text: 'Registration successful! Please log in.'
                 });
-                window.location.href = '/login';
+                window.location.href = '/login' + (window.location.search || '');
             } else {
                 const errorData = await response.json();
                 const message = errorData.message || 'Registration failed.';

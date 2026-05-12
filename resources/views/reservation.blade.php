@@ -268,6 +268,11 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <script>
+        function redirectToLoginWithReturn() {
+            const returnPath = window.location.pathname + window.location.search;
+            window.location.href = '/login?' + new URLSearchParams({ redirect: returnPath }).toString();
+        }
+
         async function initPage() {
             // Verification si l'user est connecté
             const token = localStorage.getItem('token');
@@ -275,9 +280,9 @@
                 await Swal.fire({
                     icon: 'warning',
                     title: 'Connexion requise',
-                    text: "Vous devez être connecté pour effectuer une réservation."
+                    text: "Connectez-vous pour effectuer une réservation. Vous serez renvoyé vers cette page après connexion."
                 });
-                window.location.href = '/register';
+                redirectToLoginWithReturn();
                 return;
             }
 
@@ -513,9 +518,9 @@
                     await Swal.fire({
                         icon: 'warning',
                         title: 'Connexion requise',
-                        text: "Créez d'abord un compte pour finaliser votre réservation."
+                        text: "Votre session a expiré. Connectez-vous pour finaliser la réservation."
                     });
-                    window.location.href = '/register';
+                    redirectToLoginWithReturn();
                     return;
                 }
 
