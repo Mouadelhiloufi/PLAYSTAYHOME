@@ -23,9 +23,10 @@ class ServeWithMigrations extends Command
         }
 
         $this->info('Starting server...');
-        Artisan::call('serve', [
-            '--host' => '0.0.0.0',
-            '--port' => env('PORT', 8000),
-        ]);
+        $port = env('PORT', 8000);
+        $command = "php artisan serve --host=0.0.0.0 --port={$port}";
+        
+        // Replace the current process with the server
+        exec($command);
     }
 }
