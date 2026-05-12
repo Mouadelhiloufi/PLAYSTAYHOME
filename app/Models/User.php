@@ -26,7 +26,6 @@ class User extends Authenticatable
         'password',
         'role',
         'photo',
-        'google_id',
     ];
 
     protected $appends = ['photo_url'];
