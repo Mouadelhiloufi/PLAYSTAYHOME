@@ -58,27 +58,7 @@
     </style>
 </head>
 <body class="bg-gray-50 font-sans min-h-screen flex flex-col">
-    <!-- Header -->
-    <header class="flex items-center justify-between border-b border-gray-200 bg-white px-10 py-3 sticky top-0 z-50">
-        <div class="flex items-center gap-4 text-primary">
-            <a href="/" class="flex items-center gap-3 text-primary" aria-label="PLAYSTAYHOME">
-                <span class="h-12 flex items-center overflow-visible">
-                    <img src="{{ asset('images/site-logo-navbar.png') }}" alt="PLAYSTAYHOME" class="h-16 w-auto object-contain -my-2">
-                </span>
-                <span class="text-xl font-bold tracking-tight text-gray-900">PLAYSTAYHOME</span>
-            </a>
-        </div>
-        <div class="flex items-center gap-8">
-            <nav class="hidden md:flex items-center gap-9">
-                <a class="text-gray-600 text-sm font-medium hover:text-primary" href="/">Accueil</a>
-                <a class="text-gray-600 text-sm font-medium hover:text-primary" href="catalogue">Catalogue</a>
-                <a class="text-gray-600 text-sm font-medium hover:text-primary" href="contact">Contact</a>
-                <a class="text-gray-600 text-sm font-medium hover:text-primary" href="faq">FAQ</a>
-                
-            </nav>
-            <a href="/register" class="bg-primary text-white px-5 py-2 rounded-lg text-sm font-bold hover:bg-blue-700">Créer un compte</a>
-        </div>
-    </header>
+    @include('partials.header-auth', ['variant' => 'login'])
 
     <!-- Main Content -->
     <main class="flex-grow flex">
@@ -108,7 +88,7 @@
         </div>
 
         <!-- Right Side - Login Form -->
-        <div class="w-full md:w-1/2 flex items-center justify-center p-12 bg-gray-50">
+        <div class="w-full md:w-1/2 flex items-center justify-center px-4 py-8 sm:p-8 md:p-12 bg-gray-50">
             <div class="w-full max-w-[480px]">
                 <div class="mb-10">
                     <h2 class="text-gray-900 text-4xl font-black mb-2">Bienvenue</h2>
@@ -142,6 +122,7 @@
                     </div>
                     <button type="submit" class="w-full bg-primary hover:bg-blue-700 text-white font-bold py-4 rounded-lg text-lg shadow-lg">Connexion</button>
                 </form>
+                @if (config('services.google.enabled'))
                 <div class="my-6 flex items-center gap-3">
                     <div class="h-px flex-1 bg-gray-200"></div>
                     <span class="text-xs font-semibold uppercase tracking-wider text-gray-400">ou</span>
@@ -156,6 +137,7 @@
                     </svg>
                     Continuer avec Google
                 </a>
+                @endif
                 <div class="mt-8 pt-8 border-t border-gray-200 text-center">
                     <p class="text-gray-600">
                         Pas de compte ?

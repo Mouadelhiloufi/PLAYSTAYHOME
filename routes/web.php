@@ -42,8 +42,10 @@ Route::get('/chat', function () {
     return view('chat');
 })->name('chat');
 
-Route::get('/auth/google', ['App\\Http\\Controllers\\Auth\\GoogleController', 'redirect'])->name('auth.google.redirect');
-Route::get('/auth/google/callback', ['App\\Http\\Controllers\\Auth\\GoogleController', 'callback'])->name('auth.google.callback');
+if (config('services.google.enabled')) {
+    Route::get('/auth/google', ['App\\Http\\Controllers\\Auth\\GoogleController', 'redirect'])->name('auth.google.redirect');
+    Route::get('/auth/google/callback', ['App\\Http\\Controllers\\Auth\\GoogleController', 'callback'])->name('auth.google.callback');
+}
 
 
 Route::get('/admin/dashboard', function () {

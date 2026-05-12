@@ -14,6 +14,10 @@ class GoogleController extends Controller
 {
     public function redirect(): RedirectResponse
     {
+        if (!config('services.google.enabled')) {
+            abort(404);
+        }
+
         $provider = Socialite::driver('google');
 
         if (method_exists($provider, 'stateless')) {
@@ -25,6 +29,10 @@ class GoogleController extends Controller
 
     public function callback(): RedirectResponse
     {
+        if (!config('services.google.enabled')) {
+            abort(404);
+        }
+
         try {
             $provider = Socialite::driver('google');
 

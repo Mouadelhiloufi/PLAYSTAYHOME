@@ -58,27 +58,7 @@
     </style>
 </head>
 <body class="bg-gray-50 font-sans min-h-screen flex flex-col">
-    <!-- Header -->
-    <header class="flex items-center justify-between border-b border-gray-200 bg-white px-10 py-3 sticky top-0 z-50">
-        <div class="flex items-center gap-4 text-primary">
-            <a href="/" class="flex items-center gap-3 text-primary" aria-label="PLAYSTAYHOME">
-                <span class="h-12 flex items-center overflow-visible">
-                    <img src="{{ asset('images/site-logo-navbar.png') }}" alt="PLAYSTAYHOME" class="h-16 w-auto object-contain -my-2">
-                </span>
-                <span class="text-xl font-bold tracking-tight text-gray-900">PLAYSTAYHOME</span>
-            </a>
-        </div>
-        <div class="flex items-center gap-8">
-            <nav class="hidden md:flex items-center gap-9">
-                <a class="text-gray-600 text-sm font-medium hover:text-primary" href="/">Accueil</a>
-                <a class="text-gray-600 text-sm font-medium hover:text-primary" href="catalogue">Catalogue</a>
-                <a class="text-gray-600 text-sm font-medium hover:text-primary" href="contact">Contact</a>
-                <a class="text-gray-600 text-sm font-medium hover:text-primary" href="faq">FAQ</a>
-                
-            </nav>
-            <a href="/login" class="bg-primary text-white px-5 py-2 rounded-lg text-sm font-bold hover:bg-blue-700">Connexion</a>
-        </div>
-    </header>
+    @include('partials.header-auth', ['variant' => 'register'])
 
     <!-- Main Content -->
     <main class="grow flex">
@@ -108,7 +88,7 @@
         </div>
 
         <!-- Right Side - Register Form -->
-        <div class="w-full md:w-1/2 flex items-center justify-center p-12 bg-gray-50">
+        <div class="w-full md:w-1/2 flex items-center justify-center px-4 py-8 sm:p-8 md:p-12 bg-gray-50">
             <div class="w-full max-w-120">  
                 <div class="mb-10">
                     <h2 class="text-gray-900 text-4xl font-black mb-2">Créer un compte</h2>
