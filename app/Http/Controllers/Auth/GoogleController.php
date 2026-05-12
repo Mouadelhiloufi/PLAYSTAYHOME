@@ -43,22 +43,18 @@ class GoogleController extends Controller
             return redirect()->route('login')->with('google_error', 'Aucun email Google n\'a ete retourne.');
         }
 
-        $user = User::where('google_id', $googleUser->getId())
-            ->orWhere('email', $email)
-            ->first();
+        $user = User::where('email', $email)->first();
 
         if (!$user) {
             $user = User::create([
                 'name' => $googleUser->getName() ?: 'Google User',
                 'email' => $email,
-                'google_id' => $googleUser->getId(),
                 'password' => Hash::make(Str::random(32)),
                 'role' => 'client',
             ]);
-        } else {
+        } elseif (!$user->name && $googleUser->getName()) {
             $user->forceFill([
-                'google_id' => $googleUser->getId(),
-                'name' => $user->name ?: ($googleUser->getName() ?: 'Google User'),
+                'name' => $googleUser->getName(),
             ])->save();
         }
 
