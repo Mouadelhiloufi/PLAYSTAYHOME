@@ -179,6 +179,31 @@
 <script src="https://cdn.jsdelivr.net/npm/parsleyjs"></script>
 
 <script>
+    function getSafeRedirectAfterAuth(fallback) {
+        const qs = new URLSearchParams(window.location.search);
+        let raw = qs.get('redirect');
+        if (!raw) {
+            return fallback;
+        }
+        try {
+            raw = decodeURIComponent(raw);
+        } catch (e) {
+            return fallback;
+        }
+        if (!raw.startsWith('/') || raw.startsWith('//')) {
+            return fallback;
+        }
+        try {
+            const u = new URL(raw, window.location.origin);
+            if (u.origin !== window.location.origin) {
+                return fallback;
+            }
+            return u.pathname + u.search + u.hash;
+        } catch (e2) {
+            return fallback;
+        }
+    }
+
     const parsleyForm = $("#registerForm").parsley({
         errorsContainer: (parsleyField) => parsleyField.$element.closest('.input-wrapper')
     });
@@ -226,23 +251,48 @@
                 body: formData,
             });
 
-            console.log(response);
+            const data = await response.json().catch(() => ({}));
+
+            if (response.ok && data.token) {
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('role', data.user && data.user.role ? data.user.role : 'client');
+
+                if (data.user && data.user.role === 'admin') {
+                    await Swal.fire({
+                        icon: 'success',
+                        title: 'Compte créé',
+                        text: 'Redirection vers l\'administration.'
+                    });
+                    window.location.href = '/admin/dashboard';
+                    return;
+                }
+
+                const next = getSafeRedirectAfterAuth('/');
+                await Swal.fire({
+                    icon: 'success',
+                    title: 'Bienvenue !',
+                    text: next !== '/' ? 'Votre compte est prêt. Redirection vers votre page.' : 'Votre compte est prêt.'
+                });
+                window.location.href = next;
+                return;
+            }
+
             if (response.ok) {
                 await Swal.fire({
                     icon: 'success',
                     title: 'Inscription réussie',
-                    text: 'Registration successful! Please log in.'
+                    text: 'Connectez-vous pour continuer.'
                 });
                 window.location.href = '/login' + (window.location.search || '');
-            } else {
-                const errorData = await response.json();
-                const message = errorData.message || 'Registration failed.';
-                await Swal.fire({
-                    icon: 'error',
-                    title: 'Échec inscription',
-                    text: 'Registration failed: ' + message
-                });
+                return;
             }
+
+            const message = data.message || 'Registration failed.';
+            await Swal.fire({
+                icon: 'error',
+                title: 'Échec inscription',
+                text: message
+            });
         } catch (error) {
             console.error('Error:', error);
             await Swal.fire({
