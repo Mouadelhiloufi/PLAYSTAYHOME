@@ -444,6 +444,63 @@
                 window.scrollTo({top: 0, behavior: 'smooth'});
             });
 
+            // Filters for brand buttons
+            function setActiveFilter(activeBtn) {
+                const bgClasses = ['bg-primary', 'bg-white', 'bg-blue-50', 'bg-green-50'];
+                const textClasses = ['text-white', 'text-gray-700', 'text-blue-700', 'text-green-700'];
+                const borderClasses = ['border-gray-200', 'border-blue-100', 'border-green-100'];
+
+                [btnTous, btnPlayStation, btnXbox].forEach(b => {
+                    if (!b) return;
+                    bgClasses.forEach(c => b.classList.remove(c));
+                    textClasses.forEach(c => b.classList.remove(c));
+                    borderClasses.forEach(c => b.classList.remove(c));
+                    // Remove hover utility that may conflict
+                    b.classList.remove('hover:bg-gray-50', 'hover:bg-blue-50', 'hover:bg-green-50', 'hover:bg-primary');
+                    // add default look
+                    b.classList.add('border-gray-200', 'bg-white', 'text-gray-700', 'hover:bg-gray-50');
+                });
+
+                if (activeBtn) {
+                    activeBtn.classList.remove('border-gray-200', 'bg-white', 'text-gray-700', 'hover:bg-gray-50');
+                    activeBtn.classList.add('bg-primary', 'text-white', 'border-transparent', 'hover:bg-primary');
+                }
+            }
+
+            if (btnTous) {
+                btnTous.addEventListener('click', () => {
+                    displayConsoles(consoles);
+                    setActiveFilter(btnTous);
+                    window.scrollTo({top: 0, behavior: 'smooth'});
+                });
+            }
+
+            if (btnPlayStation) {
+                btnPlayStation.addEventListener('click', () => {
+                    const filtered = consoles.filter(c => {
+                        const name = (c.name || '').toLowerCase();
+                        const brand = (c.brand || '').toLowerCase();
+                        return name.includes('playstation') || brand.includes('sony');
+                    });
+                    displayConsoles(filtered);
+                    setActiveFilter(btnPlayStation);
+                    window.scrollTo({top: 0, behavior: 'smooth'});
+                });
+            }
+
+            if (btnXbox) {
+                btnXbox.addEventListener('click', () => {
+                    const filtered = consoles.filter(c => {
+                        const name = (c.name || '').toLowerCase();
+                        const brand = (c.brand || '').toLowerCase();
+                        return name.includes('xbox') || brand.includes('microsoft');
+                    });
+                    displayConsoles(filtered);
+                    setActiveFilter(btnXbox);
+                    window.scrollTo({top: 0, behavior: 'smooth'});
+                });
+            }
+
             
 
 
