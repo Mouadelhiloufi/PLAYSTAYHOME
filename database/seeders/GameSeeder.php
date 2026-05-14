@@ -30,21 +30,48 @@ class GameSeeder extends Seeder
             );
         }
 
-        // Associer des jeux aux consoles
+        $gameIds = Game::whereIn('title', [
+            'The Last of Us Part II',
+            'God of War Ragnarök',
+            'Spider-Man: Miles Morales',
+            'Halo Infinite',
+            'Forza Horizon 5',
+            'Gears 5',
+            'Mario Kart 8 Deluxe',
+            'Zelda: Breath of the Wild',
+            'Super Mario Odyssey',
+            'FIFA 24',
+        ])->pluck('id', 'title');
+
+        // Associer des jeux aux consoles sans dupliquer le pivot
         $ps5 = Console::where('name', 'PlayStation 5')->first();
         $xbox = Console::where('name', 'Xbox Series X')->first();
         $switch = Console::where('name', 'Nintendo Switch')->first();
 
         if ($ps5) {
-            $ps5->games()->attach([1, 2, 3, 10]);
+            $ps5->games()->sync([
+                $gameIds['The Last of Us Part II'],
+                $gameIds['God of War Ragnarök'],
+                $gameIds['Spider-Man: Miles Morales'],
+                $gameIds['FIFA 24'],
+            ]);
         }
 
         if ($xbox) {
-            $xbox->games()->attach([4, 5, 6, 10]);
+            $xbox->games()->sync([
+                $gameIds['Halo Infinite'],
+                $gameIds['Forza Horizon 5'],
+                $gameIds['Gears 5'],
+                $gameIds['FIFA 24'],
+            ]);
         }
 
         if ($switch) {
-            $switch->games()->attach([7, 8, 9]);
+            $switch->games()->sync([
+                $gameIds['Mario Kart 8 Deluxe'],
+                $gameIds['Zelda: Breath of the Wild'],
+                $gameIds['Super Mario Odyssey'],
+            ]);
         }
     }
 }
