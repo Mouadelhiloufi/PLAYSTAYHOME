@@ -45,27 +45,48 @@
             <!-- Navigation -->
             <nav class="flex flex-col gap-2">
                 <a href="/admin/dashboard" class="text-gray-500 hover:text-gray-900 hover:bg-gray-50 px-5 py-3.5 rounded-xl font-bold text-sm transition-colors">
-                    Dashboard
+                    <span data-i18n="admin.dashboard">Dashboard</span>
                 </a>
                 <a href="/admin/reservations" class="text-gray-500 hover:text-gray-900 hover:bg-gray-50 px-5 py-3.5 rounded-xl font-bold text-sm transition-colors">
-                    Reservations
+                    <span data-i18n="admin.reservations">Réservations</span>
                 </a>
                 <a href="/admin/users" class="text-gray-500 hover:text-gray-900 hover:bg-gray-50 px-5 py-3.5 rounded-xl font-bold text-sm transition-colors">
-                    Utilisateurs
+                    <span data-i18n="admin.users">Utilisateurs</span>
                 </a>
                 <a href="/admin/consoles-games" class="bg-primary text-white px-5 py-3.5 rounded-xl font-bold text-sm flex items-center shadow-[0_4px_15px_rgba(25,120,229,0.2)]">
-                    Consoles & Jeux
+                    <span data-i18n="admin.consolesGames">Consoles & Jeux</span>
                 </a>
                 <a href="/admin/chat" class="text-gray-500 hover:text-gray-900 hover:bg-gray-50 px-5 py-3.5 rounded-xl font-bold text-sm transition-colors">
-                    Support Chat
+                    <span data-i18n="admin.supportChat">Support Chat</span>
                 </a>
             </nav>
+
+            <div class="mt-7 relative">
+                <button
+                    type="button"
+                    class="w-full inline-flex items-center justify-between gap-2 rounded-xl border border-gray-200 bg-white px-4 py-3 text-xs font-black text-gray-700 shadow-sm hover:bg-gray-50"
+                    data-lang-btn
+                    aria-controls="langPanelAdmin"
+                    aria-expanded="false"
+                    data-i18n-aria-label="lang.switch"
+                >
+                    <span data-i18n-lang-label>Français</span>
+                    <span class="inline-flex items-center gap-2 text-gray-400">
+                        <i class="fa-solid fa-globe"></i>
+                        <span>▼</span>
+                    </span>
+                </button>
+                <div id="langPanelAdmin" data-lang-panel class="hidden absolute left-0 right-0 mt-2 rounded-xl border border-gray-200 bg-white shadow-xl overflow-hidden">
+                    <button type="button" class="w-full px-4 py-2.5 text-left text-sm font-semibold text-gray-700 hover:bg-gray-50" data-set-lang="fr" data-i18n="lang.fr">Français</button>
+                    <button type="button" class="w-full px-4 py-2.5 text-left text-sm font-semibold text-gray-700 hover:bg-gray-50" data-set-lang="ar" data-i18n="lang.ar">العربية</button>
+                </div>
+            </div>
         </div>
 
         <!-- Deconnexion -->
         <div class="border-t border-gray-100 pt-6 mt-10">
             <button id="logoutBtn" class="text-red-500 hover:text-red-600 hover:bg-red-50 px-5 py-3.5 rounded-xl font-black text-sm transition-colors flex items-center">
-                Déconnexion
+                <span data-i18n="admin.logout">Déconnexion</span>
             </button>
         </div>
     </aside>

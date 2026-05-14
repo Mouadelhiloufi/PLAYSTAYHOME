@@ -17,6 +17,24 @@
                 <a href="/contact" class="nav-link {{ request()->routeIs('contact') ? 'active' : '' }}">Contact</a>
                 <a href="/faq" class="nav-link {{ request()->routeIs('faq') ? 'active' : '' }}">FAQ</a>
 
+                {{-- Language switcher disabled - French only --}}
+                <div class="relative hidden">
+                    <button
+                        type="button"
+                        class="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-3 py-2 text-xs font-bold text-gray-700 shadow-sm hover:bg-gray-50"
+                        aria-controls="langPanelMain"
+                        aria-expanded="false"
+                    >
+                        <span class="text-gray-500">▼</span>
+                        <span>Français</span>
+                        <i class="fa-solid fa-globe text-gray-400"></i>
+                    </button>
+                    <div id="langPanelMain" class="hidden absolute right-0 mt-2 w-44 rounded-xl border border-gray-200 bg-white shadow-xl overflow-hidden">
+                        <button type="button" class="w-full px-4 py-2.5 text-left text-sm font-semibold text-gray-700 hover:bg-gray-50">Français</button>
+                        <button type="button" class="w-full px-4 py-2.5 text-left text-sm font-semibold text-gray-700 hover:bg-gray-50">العربية</button>
+                    </div>
+                </div>
+
                 <div id="nav-guest-links" class="flex items-center gap-9">
                     <a href="/register" class="nav-link {{ request()->routeIs('register') ? 'active' : '' }}">Créer un compte</a>
                     <a href="/login" class="nav-link {{ request()->routeIs('login') ? 'active' : '' }}">Connexion</a>
@@ -37,7 +55,7 @@
                         <i class="fa-regular fa-comment-dots"></i>
                     </a>
 
-                    <a href="/mon-compte" class="flex items-center gap-2 nav-link" id="navProfileLink">
+                    <a href="/mon-compte" class="flex items-center gap-2 nav-link" id="navProfileLink" title="Profil">
                         <div id="navProfileAvatar" class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-primary font-bold overflow-hidden shadow-sm border border-blue-200">
                             <i class="fa-regular fa-user text-sm"></i>
                         </div>
@@ -46,7 +64,7 @@
                 </div>
             </nav>
 
-            <div class="relative lg:hidden">
+            <div class="flex lg:hidden items-center">
                 <button
                     id="mobileMenuBtn"
                     type="button"
@@ -59,28 +77,39 @@
                     <span class="auth-burger-bar auth-burger-mid" aria-hidden="true"></span>
                     <span class="auth-burger-bar auth-burger-bot" aria-hidden="true"></span>
                 </button>
-                <div
-                    id="mobileMenuPanel"
-                    class="absolute right-0 top-full z-50 mt-2 hidden min-w-[16.5rem] max-w-[calc(100vw-2rem)] rounded-xl border border-gray-200 bg-white py-2 shadow-xl ring-1 ring-black/5"
-                    role="menu"
-                    aria-label="Menu mobile"
-                >
-                    <a role="menuitem" href="/" class="block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-primary {{ request()->routeIs('home') ? 'bg-blue-50 text-primary' : '' }}">Accueil</a>
-                    <a role="menuitem" href="/catalogue" class="block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-primary {{ request()->routeIs('catalogue') ? 'bg-blue-50 text-primary' : '' }}">Catalogue</a>
-                    <a role="menuitem" href="/contact" class="block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-primary {{ request()->routeIs('contact') ? 'bg-blue-50 text-primary' : '' }}">Contact</a>
-                    <a role="menuitem" href="/faq" class="block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-primary {{ request()->routeIs('faq') ? 'bg-blue-50 text-primary' : '' }}">FAQ</a>
+            </div>
+        </div>
+    </div>
 
-                    <div id="mobile-guest-links" class="flex flex-col border-t border-gray-100">
-                        <a role="menuitem" href="/register" class="block px-4 py-2.5 text-sm font-semibold text-primary hover:bg-blue-50">Créer un compte</a>
-                        <a role="menuitem" href="/login" class="block px-4 py-2.5 text-sm font-semibold text-primary hover:bg-blue-50">Connexion</a>
-                    </div>
+    <!-- MOBILE MENU PANEL FULL WIDTH -->
+    <div
+        id="mobileMenuPanel"
+        class="absolute left-0 right-0 top-full z-40 hidden border-t border-b border-gray-100 bg-white shadow-2xl origin-top transition-all duration-200"
+        role="menu"
+        aria-label="Menu mobile"
+    >
+        <div class="flex flex-col px-6 py-6 pb-8 gap-2 max-h-[calc(100vh-70px)] overflow-y-auto">
+            <a role="menuitem" href="/" class="mobile-nav-link text-center block rounded-2xl px-4 py-3.5 text-lg font-bold text-gray-700 hover:bg-blue-50 hover:text-primary transition-colors {{ request()->routeIs('home') ? 'bg-blue-50 text-primary' : '' }}">Accueil</a>
+            <a role="menuitem" href="/catalogue" class="mobile-nav-link text-center block rounded-2xl px-4 py-3.5 text-lg font-bold text-gray-700 hover:bg-blue-50 hover:text-primary transition-colors {{ request()->routeIs('catalogue') ? 'bg-blue-50 text-primary' : '' }}">Catalogue</a>
+            <a role="menuitem" href="/contact" class="mobile-nav-link text-center block rounded-2xl px-4 py-3.5 text-lg font-bold text-gray-700 hover:bg-blue-50 hover:text-primary transition-colors {{ request()->routeIs('contact') ? 'bg-blue-50 text-primary' : '' }}">Contact</a>
+            <a role="menuitem" href="/faq" class="mobile-nav-link text-center block rounded-2xl px-4 py-3.5 text-lg font-bold text-gray-700 hover:bg-blue-50 hover:text-primary transition-colors {{ request()->routeIs('faq') ? 'bg-blue-50 text-primary' : '' }}">FAQ</a>
 
-                    <div id="mobile-auth-links" class="hidden flex-col border-t border-gray-100">
-                        <a role="menuitem" href="/chat" class="block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-primary">Support Chat</a>
-                        <a role="menuitem" href="/mon-compte" class="block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-primary">Mon Compte</a>
-                        <button id="mobileLogoutBtn" type="button" role="menuitem" class="w-full text-left block px-4 py-2.5 text-sm font-semibold text-red-600 hover:bg-red-50">Déconnexion</button>
-                    </div>
-                </div>
+            <div class="my-4 border-t border-gray-100 w-16 mx-auto"></div>
+            
+            <div class="flex justify-center gap-4 mb-4 hidden">
+                <button type="button" role="menuitem" class="mobile-nav-link rounded-xl px-5 py-2.5 text-sm font-bold text-gray-600 bg-gray-50 hover:bg-blue-50 hover:text-primary transition-colors border border-gray-100">Français</button>
+                <button type="button" role="menuitem" class="mobile-nav-link rounded-xl px-5 py-2.5 text-sm font-bold text-gray-600 bg-gray-50 hover:bg-blue-50 hover:text-primary transition-colors border border-gray-100">العربية</button>
+            </div>
+
+            <div id="mobile-guest-links" class="flex flex-col gap-3 mt-2">
+                <a role="menuitem" href="/login" class="mobile-nav-link block w-full rounded-2xl border border-gray-200 bg-white px-4 py-4 text-center text-base font-bold text-gray-800 shadow-sm hover:bg-gray-50">Connexion</a>
+                <a role="menuitem" href="/register" class="mobile-nav-link block w-full rounded-2xl bg-primary px-4 py-4 text-center text-base font-bold text-white shadow-sm hover:bg-blue-600">Créer un compte</a>
+            </div>
+
+            <div id="mobile-auth-links" class="hidden flex-col gap-3 mt-2">
+                <a role="menuitem" href="/chat" class="mobile-nav-link block rounded-2xl bg-blue-50 px-4 py-4 text-center text-base font-bold text-primary hover:bg-blue-100"><i class="fa-regular fa-comment-dots mr-2"></i> Support Chat</a>
+                <a role="menuitem" href="/mon-compte" class="mobile-nav-link block rounded-2xl border border-gray-200 bg-white px-4 py-4 text-center text-base font-bold text-gray-800 shadow-sm hover:bg-gray-50"><i class="fa-regular fa-user mr-2"></i> Profil</a>
+                <button id="mobileLogoutBtn" type="button" role="menuitem" class="mobile-nav-link mt-2 block w-full rounded-2xl px-4 py-4 text-center text-base font-bold text-red-500 hover:bg-red-50 border border-transparent">Déconnexion</button>
             </div>
         </div>
     </div>
@@ -121,6 +150,14 @@
             mobileMenuPanel.addEventListener('click', (e) => e.stopPropagation());
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') setMobileMenuOpen(false);
+            });
+
+            // Close menu when clicking on a link
+            const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    setMobileMenuOpen(false);
+                });
             });
         }
 

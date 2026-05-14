@@ -249,7 +249,7 @@
                         <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400">Plateforme</h3>
                         <div class="mt-4 space-y-3">
                             <button id="btnTous" class="flex w-full items-center justify-between rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors">
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-gamepad"></i> Tous</span>
+                                <span class="flex items-center gap-2"><i class="fa-solid fa-gamepad"></i> <span data-i18n="catalogue.filters.all">Tous</span></span>
                                 
                             </button>
                             <button id="btnPlayStation" class="flex w-full items-center justify-between rounded-xl border border-blue-100 bg-blue-50 px-3 py-2 text-sm font-semibold text-blue-700">
@@ -264,7 +264,7 @@
 
                     <div class="panel p-5">
                         <div class="flex items-center justify-between">
-                            <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400">Prix max / jour</h3>
+                            <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400" data-i18n="catalogue.filters.maxPricePerDay">Prix max / jour</h3>
                             <span id="priceDisplay" class="rounded-lg bg-blue-50 px-2 py-1 text-xs font-bold text-primary">300 DH</span>
                         </div>
                         <div class="mt-5">
@@ -277,11 +277,11 @@
                     </div>
 
                     <div class="panel p-5">
-                        <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400">Jeux inclus</h3>
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400" data-i18n="common.gamesIncluded">Jeux inclus</h3>
                         <div class="mt-4">
                             <div class="relative">
                                 <i class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
-                                <input type="text" id="searchGameInput" placeholder="Rechercher un jeu (ex: FIFA)..." class="w-full rounded-xl border border-gray-200 bg-gray-50 py-2.5 pl-9 pr-3 text-sm text-gray-700 outline-none focus:border-primary focus:bg-white transition-colors">
+                                <input type="text" id="searchGameInput" placeholder="Rechercher un jeu (ex: FIFA)..." data-i18n-placeholder="catalogue.search.placeholder" class="w-full rounded-xl border border-gray-200 bg-gray-50 py-2.5 pl-9 pr-3 text-sm text-gray-700 outline-none focus:border-primary focus:bg-white transition-colors">
                             </div>
                         </div>
                     </div>
@@ -291,9 +291,9 @@
 
                 <div class="catalog-content">
                     <div class="mb-3 flex flex-col gap-3 min-w-0 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
-                        <h1 class="min-w-0 text-xl font-black tracking-tight text-gray-900 sm:text-2xl">Catalogue <span class="text-primary" id="catalog-count">(0)</span></h1>
+                        <h1 class="min-w-0 text-xl font-black tracking-tight text-gray-900 sm:text-2xl"><span data-i18n="common.catalogue">Catalogue</span> <span class="text-primary" id="catalog-count">(0)</span></h1>
                         <button type="button" class="shrink-0 self-start rounded-xl border border-gray-200 bg-white px-3 py-2 text-left text-xs font-semibold text-gray-500 sm:px-4 sm:text-sm">
-                            Trier par : Nouveautes
+                            <span data-i18n="catalogue.sort.default">Trier par : Nouveautes</span>
                         </button>
                     </div>
 
@@ -304,67 +304,19 @@
             </section>
         </main>
 
-        <footer class="border-t border-gray-200 bg-white">
-            <div class="mx-auto max-w-6xl px-6 py-14">
-                <div class="grid grid-cols-1 gap-12 md:grid-cols-4">
-                    <div>
-                        <div class="flex items-center gap-4 text-primary">
-                            <img src="{{ asset('images/site-logo-navbar.png') }}" alt="PLAYSTAYHOME" class="h-8 w-auto object-contain opacity-50">
-                            <span class="text-2xl font-extrabold tracking-tight text-gray-900">PLAYSTAYHOME</span>
-                        </div>
-                        <p class="mt-5 max-w-xs text-sm leading-7 text-gray-400">
-                            Votre destination de choix pour du matériel de jeu haut de gamme et les dernières aventures numériques.
-                        </p>
-                    </div>
-
-                    <div>
-                        <h3 class="text-lg font-bold text-gray-900">Catalogue</h3>
-                        <ul class="mt-5 space-y-3 text-sm text-gray-400">
-                            <li><a href="#" class="hover:text-primary">Jeux PlayStation</a></li>
-                            <li><a href="#" class="hover:text-primary">Consoles Xbox</a></li>
-                            <li><a href="#" class="hover:text-primary">Exclusivités Nintendo</a></li>
-                            <li><a href="#" class="hover:text-primary">Périphériques PC</a></li>
-                        </ul>
-                    </div>
-
-                    <div>
-                        <h3 class="text-lg font-bold text-gray-900">Support</h3>
-                        <ul class="mt-5 space-y-3 text-sm text-gray-400">
-                            <li><a href="#" class="hover:text-primary">Mon Compte</a></li>
-                            <li><a href="#" class="hover:text-primary">Infos Livraison</a></li>
-                            <li><a href="#" class="hover:text-primary">Suivre ma commande</a></li>
-                            <li><a href="#" class="hover:text-primary">Politique de confidentialité</a></li>
-                        </ul>
-                    </div>
-
-                    <div>
-                        <h3 class="text-lg font-bold text-gray-900">Restez informé</h3>
-                        <form class="mt-5 flex items-center gap-3">
-                            <input type="email" placeholder="Email" class="h-11 w-full rounded-xl border border-gray-200 bg-white px-4 text-sm text-gray-700 outline-none">
-                            <button type="submit" class="rounded-xl bg-primary px-5 py-3 text-sm font-bold text-white">
-                                S'inscrire
-                            </button>
-                        </form>
-                        <div class="mt-6 flex items-center gap-5 text-gray-400">
-                            <a href="#" class="hover:text-primary"><i class="fa-solid fa-globe"></i></a>
-                            <a href="#" class="hover:text-primary"><i class="fa-solid fa-at"></i></a>
-                            <a href="#" class="hover:text-primary"><i class="fa-solid fa-share-nodes"></i></a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mt-14 flex flex-col gap-4 border-t border-gray-100 pt-8 text-xs text-gray-300 md:flex-row md:items-center md:justify-between">
-                    <p>&copy; 2026 <strong>PLAYSTAYHOME</strong>. Tous droits réservés.</p>
-                    <div class="flex items-center gap-6">
-                        <span>Français (FR)</span>
-                        <span>MAD</span>
-                    </div>
-                </div>
-            </div>
-        </footer>
+        @include('partials.footer-main')
     </div>
 
     <script>
+        function t(key, fallback, options = {}) {
+            try {
+                if (window.PSH_I18N && typeof window.PSH_I18N.t === 'function') {
+                    return window.PSH_I18N.t(key, { defaultValue: fallback, ...options });
+                }
+            } catch (e) {}
+            return fallback;
+        }
+
         let container = document.getElementById("catalog-products-container");
         let countSpan = document.getElementById("catalog-count");
         let btnTous = document.getElementById("btnTous");
@@ -388,48 +340,48 @@
                 console.error("Erreur lors de la récupération des consoles :", error);
             }
         }
-               function displayConsoles(consoles){
-                container.innerHTML = "";
-                countSpan.innerText = `(${consoles.length})`; // Mise a jour du compteur en haut "Catalogue (X)"
+                function displayConsoles(consoles) {
+                    container.innerHTML = "";
+                    countSpan.innerText = `(${consoles.length})`; // Mise a jour du compteur en haut "Catalogue (X)"
 
-                consoles.forEach(console => {
-                    
-                    let gamesHtml = '';
-                    if (console.games && console.games.length > 0) {
-                        console.games.forEach(game => {
-                            gamesHtml += `
+                    consoles.forEach(console => {
+                        let gamesHtml = '';
+                        if (console.games && console.games.length > 0) {
+                            console.games.forEach(game => {
+                                gamesHtml += `
                                 <div class="flex flex-col items-center min-w-[50px] shrink-0">
                                     <div class="h-12 w-12 rounded-lg border border-gray-200 bg-gray-50 flex items-center justify-center overflow-hidden shadow-sm">
-                                        ${game.image 
-                                            ? `<img src="${game.image}" alt="${game.title}" class="h-full w-full object-cover" loading="lazy" onerror="this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')"><i class="fa-solid fa-gamepad text-gray-300 text-lg hidden"></i>` 
+                                        ${game.image
+                                            ? `<img src="${game.image}" alt="${game.title}" class="h-full w-full object-cover" loading="lazy" onerror="this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')"><i class="fa-solid fa-gamepad text-gray-300 text-lg hidden"></i>`
                                             : `<i class="fa-solid fa-gamepad text-gray-300 text-lg"></i>`
                                         }
                                     </div>
                                     <p class="mt-1.5 max-w-[4.5rem] text-center text-[9px] font-medium leading-tight text-gray-500 line-clamp-2" title="${game.title}">${game.title}</p>
                                 </div>
                             `;
-                        });
-                    } else {
-                        gamesHtml = `<p class="w-full text-center text-[10px] text-gray-400 italic">Aucun jeu inclus pour le moment</p>`;
-                    }
+                            });
+                        } else {
+                            gamesHtml = `<p class="w-full text-center text-[10px] text-gray-400 italic">${t('cataloguePage.noGames', 'Aucun jeu inclus pour le moment')}</p>`;
+                        }
 
-                    const isAvailable = !!console.ability;
-                    const statusLabel = isAvailable ? 'Disponible' : 'Non disponible';
-                    const statusClass = isAvailable ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700';
-                    const cardClass = isAvailable ? '' : ' locked';
-                    const lockBadge = isAvailable
-                        ? ''
-                        : '<span class="absolute top-3 right-3 z-20 inline-flex h-10 w-10 items-center justify-center rounded-full bg-red-100 text-red-600 shadow-md pointer-events-none"><i class="fa-solid fa-lock text-base"></i></span>';
-                    const buttonClass = isAvailable
-                        ? 'mt-5 w-full rounded-xl bg-primary hover:bg-blue-700 transition-colors duration-300 py-3 px-3 text-xs font-bold text-white shadow-lg whitespace-normal text-center leading-tight'
-                        : 'mt-5 w-full rounded-xl bg-gray-200 py-3 px-3 text-xs font-bold text-gray-500 cursor-not-allowed whitespace-normal text-center leading-tight';
-                    const buttonLabel = isAvailable ? `Reserver la ${console.brand}` : 'Indisponible';
-                    const buttonAction = isAvailable
-                        ? `onclick="window.location.href='/reservation?console_id=${console.id}'"`
-                        : 'disabled';
+                        const isAvailable = !!console.ability;
+                        const statusLabel = isAvailable ? t('common.available', 'Disponible') : t('common.unavailable', 'Non disponible');
+                        const statusClass = isAvailable ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700';
+                        const cardClass = isAvailable ? '' : ' locked';
+                        const lockBadge = isAvailable
+                            ? ''
+                            : '<span class="absolute top-3 right-3 z-20 inline-flex h-10 w-10 items-center justify-center rounded-full bg-red-100 text-red-600 shadow-md pointer-events-none"><i class="fa-solid fa-lock text-base"></i></span>';
+                        const buttonClass = isAvailable
+                            ? 'mt-5 w-full rounded-xl bg-primary hover:bg-blue-700 transition-colors duration-300 py-3 px-3 text-xs font-bold text-white shadow-lg whitespace-normal text-center leading-tight'
+                            : 'mt-5 w-full rounded-xl bg-gray-200 py-3 px-3 text-xs font-bold text-gray-500 cursor-not-allowed whitespace-normal text-center leading-tight';
+                        const buttonLabel = isAvailable
+                            ? t('cataloguePage.reserveBrand', `Reserver la ${console.brand}`, { brand: console.brand })
+                            : t('cataloguePage.indisponible', 'Indisponible');
+                        const buttonAction = isAvailable
+                            ? `onclick="window.location.href='/reservation?console_id=${console.id}'"`
+                            : 'disabled';
 
-                    // Construction de la carte complete
-                    container.innerHTML += `
+                        container.innerHTML += `
                         <article class="panel catalog-card catalog-card-featured flex flex-col justify-between relative${cardClass}">
                             ${lockBadge}
                             <div>
@@ -448,15 +400,13 @@
                                     </div>
                                     <div class="shrink-0 text-right ml-3">
                                         <p class="catalog-card-price text-2xl font-black text-primary">${console.daily_price} DH</p>
-                                        <p class="text-[9px] font-medium text-gray-400 mt-1 uppercase tracking-wide">/ par jour</p>
+                                        <p class="text-[9px] font-medium text-gray-400 mt-1 uppercase tracking-wide">${t('cataloguePage.perDay', '/ par jour')}</p>
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="mt-5 border-t border-gray-100 pt-4">
                                 <p class="text-[9px] font-bold uppercase tracking-widest text-gray-400 mb-3"><i class="fa-solid fa-gamepad mr-1"></i> Jeux inclus :</p>
-                                
-                                <!-- LE CONTENEUR DES JEUX AVEC LE SCROLL HORIZONTAL (scroll-x) -->
                                 <div class="games-scroll-container">
                                     ${gamesHtml}
                                 </div>
@@ -467,52 +417,32 @@
                             </div>
                         </article>
                     `;
-                });
-            }
-
-                btnTous.addEventListener('click', () => {
-                    displayConsoles(consoles);
-                    window.scrollTo({top: 0, behavior: 'smooth'});
-                });
-
-                btnPlayStation.addEventListener('click',()=>{
-                    let playConsoles=consoles.filter(c=>c.name.toLowerCase().includes("playstation") || c.brand.toLowerCase().includes("sony"));
-                    displayConsoles(playConsoles);
-                    window.scrollTo({top: 0, behavior: 'smooth'});
-                });
-
-                btnXbox.addEventListener('click', () => {
-                    let xboxConsoles = consoles.filter(c => c.name.toLowerCase().includes("xbox") || c.brand.toLowerCase().includes("microsoft"));
-                    displayConsoles(xboxConsoles);
-                    window.scrollTo({top: 0, behavior: 'smooth'});
-                });
-
-                searchGameInput.addEventListener('input', (e) => {
-                    let searchTerm = e.target.value.toLowerCase();
-                    
-                    let filteredConsoles = consoles.filter(console => {
-                        // On verifie si la console a des jeux
-                        if (!console.games || console.games.length === 0) return false;
-                        
-                        // On regarde si au moins un des jeux continent le texte recherche
-                        return console.games.some(game => game.title.toLowerCase().includes(searchTerm));
                     });
-                    
-                    displayConsoles(filteredConsoles);
-                    window.scrollTo({top: 0, behavior: 'smooth'});
+                }
+
+            searchGameInput.addEventListener('input', (e) => {
+                const searchTerm = e.target.value.toLowerCase();
+
+                let filteredConsoles = consoles.filter(console => {
+                    if (!console.games || console.games.length === 0) return false;
+                    return console.games.some(game => game.title.toLowerCase().includes(searchTerm));
                 });
 
-                priceRange.addEventListener('input', (e) => {
-                    let maxPrice = parseInt(e.target.value);
-                    priceDisplay.innerText = maxPrice + " DH";
-                    
-                    let filteredConsoles = consoles.filter(console => {
-                        return parseFloat(console.daily_price) <= maxPrice;
-                    });
-                    
-                    displayConsoles(filteredConsoles);
-                    window.scrollTo({top: 0, behavior: 'smooth'});
+                displayConsoles(filteredConsoles);
+                window.scrollTo({top: 0, behavior: 'smooth'});
+            });
+
+            priceRange.addEventListener('input', (e) => {
+                let maxPrice = parseInt(e.target.value);
+                priceDisplay.innerText = maxPrice + " DH";
+
+                let filteredConsoles = consoles.filter(console => {
+                    return parseFloat(console.daily_price) <= maxPrice;
                 });
+
+                displayConsoles(filteredConsoles);
+                window.scrollTo({top: 0, behavior: 'smooth'});
+            });
 
             
 

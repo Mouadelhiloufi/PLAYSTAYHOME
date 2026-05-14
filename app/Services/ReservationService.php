@@ -18,6 +18,23 @@ class ReservationService{
      * Termine une réservation et remet les manettes à disposition
      */
 
+    public function releaseReservationResources(Reservation $reservation, bool $restoreCouponLimit = false): void
+    {
+        $manetteIds = $reservation->manettes()->pluck('manettes.id');
+
+        if ($manetteIds->isNotEmpty()) {
+            Manette::whereIn('id', $manetteIds)->update(['status' => 'available']);
+            $reservation->manettes()->detach();
+        }
+
+        if ($restoreCouponLimit && $reservation->coupon_id) {
+            $coupon = Coupon::find($reservation->coupon_id);
+            if ($coupon) {
+                $coupon->increment('limit');
+            }
+        }
+    }
+
     // pour jobs
     public function terminerReservation($reservationId)
     {
@@ -26,15 +43,7 @@ class ReservationService{
             return false;
         }
        
-        $reservation->status = 'completed';
-        $reservation->save();
-
-        
-        $manettes = $reservation->manettes;
-            foreach ($manettes as $manette) {
-            $manette->status = 'available';
-            $manette->save();
-        }
+        $this->releaseReservationResources($reservation, false);
         return true;
     }
 
@@ -72,7 +81,7 @@ class ReservationService{
 
 
         $reservationExists= Reservation::where('console_id',$console->id)
-    ->where('status','active')
+    ->whereIn('status', ['pending', 'accepted', 'active'])
     ->where('start_date', '<=', $endDate)
     ->where('end_date', '>=', $startDate)
     ->exists();
@@ -101,7 +110,13 @@ class ReservationService{
         // gestion du coupon
         $couponId = null;
 
-        if (isset($data['coupon_code'])) {
+        if (isset($data['coupon_code']) && $data['coupon_code'] !== null && $data['coupon_code'] !== '') {
+            if (! Auth::guard('sanctum')->check()) {
+                throw ValidationException::withMessages([
+                    'coupon_code' => 'Connectez-vous pour utiliser un coupon.',
+                ]);
+            }
+
             $coupon = Coupon::where('code', $data['coupon_code'])->first();
 
             if (!$coupon) {
@@ -112,7 +127,6 @@ class ReservationService{
 
             $user = Auth::user();
 
-            
             if ($coupon->expiration_date < now()->toDateString()) {
                 throw ValidationException::withMessages([
                     'coupon_code' => 'Le coupon a expiré.',
@@ -154,13 +168,15 @@ class ReservationService{
         }
 
         $reservation = Reservation::create([
-            'user_id' => Auth::id(),
+            'user_id' => Auth::guard('sanctum')->user()?->id,
             'console_id' => $console->id,
             'coupon_id' => $couponId,
             'start_date' => $startDate->toDateString(),
             'end_date' => $endDate->toDateString(),
             'total_price' => round($totalPrice, 2),
-            'status' => 'active',
+            'status' => 'pending',
+            'phone' => $data['phone'],
+            'address' => $data['address'],
         ]);
 
         if ($nombreManettes > 0) {
@@ -177,12 +193,14 @@ class ReservationService{
 
         // - 1 jour depuis endDate
         $reminderTime = $endDate->copy()->subHours(24);
-        
-        // si 24h est passé la notif envoyer, else schedule for the exact time
-        if (now()->greaterThanOrEqualTo($reminderTime)) {
-            Auth::user()->notify(new ReservationDay($reservation));
-        } else {
-            Auth::user()->notify((new ReservationDay($reservation))->delay($reminderTime));
+
+        $authUser = Auth::guard('sanctum')->user();
+        if ($authUser instanceof \App\Models\User) {
+            if (now()->greaterThanOrEqualTo($reminderTime)) {
+                $authUser->notify(new ReservationDay($reservation));
+            } else {
+                $authUser->notify((new ReservationDay($reservation))->delay($reminderTime));
+            }
         }
 
         // dispatch le job pour quand la reservation termin le status est dispo

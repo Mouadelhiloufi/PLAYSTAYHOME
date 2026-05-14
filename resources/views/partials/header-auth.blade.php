@@ -16,15 +16,34 @@
     </div>
     <div class="flex shrink-0 items-center gap-3 sm:gap-6">
         <nav class="hidden lg:flex items-center gap-9" aria-label="Navigation principale">
-            <a class="text-gray-600 text-sm font-medium hover:text-primary" href="/">Accueil</a>
-            <a class="text-gray-600 text-sm font-medium hover:text-primary" href="/catalogue">Catalogue</a>
-            <a class="text-gray-600 text-sm font-medium hover:text-primary" href="/contact">Contact</a>
-            <a class="text-gray-600 text-sm font-medium hover:text-primary" href="/faq">FAQ</a>
+            <a class="text-gray-600 text-sm font-medium hover:text-primary" href="/" data-i18n="common.home">Accueil</a>
+            <a class="text-gray-600 text-sm font-medium hover:text-primary" href="/catalogue" data-i18n="common.catalogue">Catalogue</a>
+            <a class="text-gray-600 text-sm font-medium hover:text-primary" href="/contact" data-i18n="common.contact">Contact</a>
+            <a class="text-gray-600 text-sm font-medium hover:text-primary" href="/faq" data-i18n="common.faq">FAQ</a>
+
+            <div class="relative">
+                <button
+                    type="button"
+                    class="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-3 py-2 text-xs font-bold text-gray-700 shadow-sm hover:bg-gray-50"
+                    data-lang-btn
+                    aria-controls="langPanelAuth"
+                    aria-expanded="false"
+                    data-i18n-aria-label="lang.switch"
+                >
+                    <span class="text-gray-500">▼</span>
+                    <span data-i18n-lang-label>Français</span>
+                    <i class="fa-solid fa-globe text-gray-400"></i>
+                </button>
+                <div id="langPanelAuth" data-lang-panel class="hidden absolute right-0 mt-2 w-44 rounded-xl border border-gray-200 bg-white shadow-xl overflow-hidden">
+                    <button type="button" class="w-full px-4 py-2.5 text-left text-sm font-semibold text-gray-700 hover:bg-gray-50" data-set-lang="fr" data-i18n="lang.fr">Français</button>
+                    <button type="button" class="w-full px-4 py-2.5 text-left text-sm font-semibold text-gray-700 hover:bg-gray-50" data-set-lang="ar" data-i18n="lang.ar">العربية</button>
+                </div>
+            </div>
         </nav>
         @if($isLogin)
-            <a href="/register" class="hidden lg:inline-flex items-center justify-center bg-primary text-white px-5 py-2 rounded-lg text-sm font-bold hover:bg-blue-700 transition-colors">Créer un compte</a>
+            <a href="/register" class="hidden lg:inline-flex items-center justify-center bg-primary text-white px-5 py-2 rounded-lg text-sm font-bold hover:bg-blue-700 transition-colors" data-i18n="common.register">Créer un compte</a>
         @else
-            <a href="/login" class="hidden lg:inline-flex items-center justify-center bg-primary text-white px-5 py-2 rounded-lg text-sm font-bold hover:bg-blue-700 transition-colors">Connexion</a>
+            <a href="/login" class="hidden lg:inline-flex items-center justify-center bg-primary text-white px-5 py-2 rounded-lg text-sm font-bold hover:bg-blue-700 transition-colors" data-i18n="common.login">Connexion</a>
         @endif
 
         <div class="relative lg:hidden">
@@ -46,13 +65,16 @@
                 role="menu"
                 aria-label="Navigation"
             >
-                <a role="menuitem" class="block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-primary" href="/">Accueil</a>
-                <a role="menuitem" class="block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-primary" href="/catalogue">Catalogue</a>
-                <a role="menuitem" class="block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-primary" href="/contact">Contact</a>
-                <a role="menuitem" class="block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-primary" href="/faq">FAQ</a>
+                <a role="menuitem" class="block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-primary" href="/" data-i18n="common.home">Accueil</a>
+                <a role="menuitem" class="block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-primary" href="/catalogue" data-i18n="common.catalogue">Catalogue</a>
+                <a role="menuitem" class="block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-primary" href="/contact" data-i18n="common.contact">Contact</a>
+                <a role="menuitem" class="block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-primary" href="/faq" data-i18n="common.faq">FAQ</a>
                 <div class="my-2 border-t border-gray-100" role="presentation"></div>
-                <a role="menuitem" class="block px-4 py-2.5 text-sm font-semibold text-primary hover:bg-blue-50" href="/login">Connexion</a>
-                <a role="menuitem" class="block px-4 py-2.5 text-sm font-semibold text-primary hover:bg-blue-50" href="/register">Créer un compte</a>
+                <button type="button" role="menuitem" class="w-full text-left block px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50" data-set-lang="fr" data-i18n="lang.fr">Français</button>
+                <button type="button" role="menuitem" class="w-full text-left block px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50" data-set-lang="ar" data-i18n="lang.ar">العربية</button>
+                <div class="my-2 border-t border-gray-100" role="presentation"></div>
+                <a role="menuitem" class="block px-4 py-2.5 text-sm font-semibold text-primary hover:bg-blue-50" href="/login" data-i18n="common.login">Connexion</a>
+                <a role="menuitem" class="block px-4 py-2.5 text-sm font-semibold text-primary hover:bg-blue-50" href="/register" data-i18n="common.register">Créer un compte</a>
             </div>
         </div>
     </div>

@@ -27,7 +27,8 @@ Route::delete('/manettes/{id}', [ManetteController::class, 'removeController']);
 Route::get('/games', [GameController::class, 'index']);
 Route::get('/games/{game}', [GameController::class, 'show']);
 
-Route::get('/consoles/{id}/reserved-dates', [ConsoleController::class, 'reservedDates']);
+Route::post('/reservations/calculate', [ReservationController::class, 'calculate']);
+Route::post('/reservations', [ReservationController::class, 'store']);
 
 Route::middleware('auth:sanctum')->group(function () {
 Route::post('/logout', [AuthController::class, 'logout']);
@@ -54,14 +55,14 @@ Route::patch('/notifications/{id}/read', [NotificationController::class, 'markAs
     
 
     Route::get('/reservations', [ReservationController::class, 'index']);
-    Route::post('/reservations', [ReservationController::class, 'store']);
-    Route::post('/reservations/calculate', [ReservationController::class, 'calculate']);
     Route::get('/reservations/{reservation}', [ReservationController::class, 'show']);
     Route::put('/reservations/{reservation}/cancel', [ReservationController::class, 'cancel']);
 
     Route::middleware('admin')->group(function () {
         Route::get('/users', [AuthController::class, 'index']);
         Route::get('/admin/stats/monthly-revenue', [ReservationController::class, 'monthlyRevenue']);
+        Route::patch('/admin/reservations/{reservation}/accept', [ReservationController::class, 'accept']);
+        Route::patch('/admin/reservations/{reservation}/refuse', [ReservationController::class, 'refuse']);
         Route::post('/consoles', [ConsoleController::class, 'store']);
         Route::put('/consoles/{console}', [ConsoleController::class, 'update']);
         Route::put('/consoles/{console}/games', [ConsoleController::class, 'syncGames']);

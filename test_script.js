@@ -1,101 +1,6 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Compte - playstayhome</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#1978e5',
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        body { font-family: 'Inter', sans-serif; background: #f8fafc; color: #111827; }
-        .nav-link { position: relative; display: inline-flex; align-items: center; height: 40px; font-size: 0.875rem; font-weight: 600; color: #4b5563; transition: color .2s ease; }
-        .nav-link::after { content: ""; position: absolute; left: 0; bottom: -1px; width: 100%; height: 2px; background: #1978e5; transform: scaleX(0); transform-origin: center; transition: transform .2s ease; }
-        .nav-link:hover, .nav-link.active { color: #1978e5; }
-        .nav-link:hover::after, .nav-link.active::after { transform: scaleX(1); }
-    </style>
-<body>
-    <div class="min-h-screen flex flex-col">
-        @include('partials.navbar-main')
 
-        <main class="grow mx-auto max-w-4xl px-4 py-8 w-full">
-            
-            <!-- EN-TÊTE PROFIL -->
-            <div class="bg-white rounded-3xl border border-gray-100 shadow-[0_4px_20px_rgba(15,23,42,0.03)] p-8 flex flex-col md:flex-row items-center justify-between mb-8 mt-2 relative overflow-hidden">
-                <div class="flex items-center gap-6 z-10 w-full mb-6 md:mb-0">
-                    <div id="profileBigAvatar" class="h-20 w-20 shrink-0 rounded-full bg-blue-100 flex items-center justify-center text-primary font-black text-2xl shadow-inner border border-blue-200 uppercase">
-                        <i class="fa-solid fa-user text-xl"></i>
-                    </div>
-                    <div>
-                        <h1 id="profileNameDisplay" class="text-2xl md:text-3xl font-black text-gray-900 tracking-tight" data-i18n="monCompte.loading">Chargement...</h1>
-                        <p id="profileEmailDisplay" class="text-sm font-medium text-gray-500 mt-1" data-i18n="monCompte.pleaseWait">Veuillez patienter...</p>
-                    </div>
-                </div>
-                <div class="flex flex-col gap-3 items-end z-10 md:w-auto w-full">
-                    <a href="/modifier-profil" class="w-full md:w-auto bg-white hover:bg-gray-50 border border-gray-200 text-gray-900 px-6 py-2.5 rounded-xl text-sm font-bold shadow-sm transition-all duration-200 whitespace-nowrap text-center" data-i18n="monCompte.editProfile">
-                        Modifier le profil
-                    </a>
-                    <button id="pageLogoutBtn" class="pr-6 text-gray-400 hover:text-red-500 text-xs font-bold px-2 py-1 transition-colors flex items-center gap-1">
-                        <i class="fa-solid fa-power-off"></i> <span data-i18n="monCompte.logout">Se déconnecter</span>
-                    </button>
-                </div>
-            </div>
-
-            <!-- TABS -->
-            <div class="flex gap-8 border-b border-gray-200 mb-10 overflow-x-auto pb-1">
-                <button class="pb-3 text-sm font-bold text-primary border-b-2 border-primary whitespace-nowrap" data-i18n="monCompte.myReservations">Mes Réservations</button>
-            </div>
-
-            <!-- COUNTDOWN SI RÉSERVATION IMMINENTE -->
-            <div id="countdownContainer" class="hidden mb-12">
-                <h2 class="text-lg font-black text-gray-900 uppercase tracking-tight mb-4" data-i18n="monCompte.countdownTitle">COUNTDOWN RESERVATION</h2>
-                <div class="bg-gray-900 rounded-3xl p-6 md:p-8 text-white shadow-xl shadow-gray-200 flex flex-col items-center justify-between gap-6 md:flex-row md:items-start relative overflow-hidden">
-                    <div class="absolute inset-0 bg-linear-to-r from-primary to-blue-900 opacity-90"></div>
-                    <i class="fa-solid fa-gamepad text-9xl absolute -right-4 -bottom-6 opacity-20 transform -rotate-12"></i>
-                    
-                    <div class="z-10 relative text-center md:text-left">
-                        <p id="countdownTitle" class="text-2xl font-black mb-1 text-white truncate max-w-full" data-i18n="monCompte.console">Console</p>
-                        <p class="text-blue-200 text-sm font-medium"><i class="fa-regular fa-clock mr-2 animate-pulse"></i> <span data-i18n="monCompte.timeBeforeClosing">Temps restant avant fermeture :</span></p>
-                    </div>
-                    
-                    <div class="flex gap-3 md:gap-4 z-10 relative" id="countdownTimer">
-                        <!-- Chiffres du countdown -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- LISTE DES RÉSERVATIONS -->
-            <div id="reservationsList" class="space-y-5">
-                <div class="text-center py-10 text-gray-400">
-                    <i class="fa-solid fa-spinner fa-spin text-3xl mb-3"></i>
-                    <p class="text-sm" data-i18n="monCompte.loadingReservations">Chargement de vos réservations...</p>
-                </div>
-            </div>
-
-        </main>
-        
-        @include('partials.footer-main')
-    </div>
-
-    <!-- SCRIPT DE LOGIQUE -->
-    <script>
         document.addEventListener('DOMContentLoaded', async () => {
-            const t = (key, defaultStr) => (window.PSH_I18N && typeof window.PSH_I18N.t === 'function') ? window.PSH_I18N.t(key, { defaultValue: defaultStr || key }) : (defaultStr || key);
+            const t = window.t || ((key, defaultStr) => defaultStr || key);
             const token = localStorage.getItem('token');
             if (!token) {
                 window.location.href = '/login';
@@ -139,25 +44,24 @@
                 const user = await userRes.json();
 
                 if (user && user.name) {
-                    const profileNameDisplay = document.getElementById('profileNameDisplay');
-                    const profileEmailDisplay = document.getElementById('profileEmailDisplay');
-                    const profileBigAvatar = document.getElementById('profileBigAvatar');
+                    document.getElementById('profileNameDisplay').innerText = user.name;
 
-                    const memberSinceLabel = user.created_at ? (() => {
+                    let memberSince = '';
+                    if (user.created_at) {
                         const dateObj = new Date(user.created_at);
-                        const locale = window.PSH_I18N?.getLanguage?.() === 'ar' ? 'ar-MA' : 'fr-FR';
-                        const month = dateObj.toLocaleString(locale, { month: 'long' });
-                        return month.charAt(0).toUpperCase() + month.slice(1) + ' ' + dateObj.getFullYear();
-                    })() : '2026';
+                        const mm = dateObj.toLocaleString('fr-FR', { month: 'long' });
+                        memberSince = mm.charAt(0).toUpperCase() + mm.slice(1) + ' ' + dateObj.getFullYear();
+                    } else {
+                        memberSince = '2026';
+                    }
 
-                    if (profileNameDisplay) profileNameDisplay.innerText = user.name;
-                    if (profileEmailDisplay) profileEmailDisplay.innerText = `${user.email} • ${t('monCompte.js.clientSince', 'Client depuis')} ${memberSinceLabel}`;
+                    document.getElementById('profileEmailDisplay').innerText = `${user.email} • ${t('monCompte.js.clientSince', 'Client depuis')} ${memberSince}`;
 
-                    if (profileBigAvatar && user.photo_url) {
-                        profileBigAvatar.innerHTML = `<img src="${user.photo_url}" alt="${user.name}" class="h-full w-full object-cover rounded-full">`;
+                    if (user.photo_url) {
+                        document.getElementById('profileBigAvatar').innerHTML = `<img src="${user.photo_url}" alt="${user.name}" class="h-full w-full object-cover rounded-full">`;
                     } else {
                         const initials = user.name.substring(0, 2).toUpperCase();
-                        if (profileBigAvatar) profileBigAvatar.innerHTML = initials;
+                        document.getElementById('profileBigAvatar').innerHTML = initials;
                     }
                 }
             } catch (e) {
@@ -168,8 +72,7 @@
                 let nextReservation = null;
 
                 reservations.forEach(reservation => {
-                        const normalizedStatus = String(reservation.status || '').toLowerCase();
-                        if (!['active', 'accepted'].includes(normalizedStatus)) {
+                    if (reservation.status !== 'active') {
                         return;
                     }
 
@@ -248,7 +151,7 @@
                 if (safeReservations.length === 0) {
                     listHtml = `
                         <div class="bg-white rounded-3xl border border-gray-100 p-12 text-center shadow-sm">
-                            <p class="text-gray-500 font-medium mb-6">${t('monCompte.js.noReservations', "Vous n'avez effectué aucune réservation pour le moment.")}</p>
+                            <p class="text-gray-500 font-medium mb-6">${t('monCompte.js.noReservations', 'Vous n\\'avez effectué aucune réservation pour le moment.')}</p>
                             <a href="/catalogue" class="inline-block bg-primary text-white px-6 py-3 rounded-xl text-sm font-bold shadow-sm hover:bg-blue-600 transition-colors">${t('monCompte.js.exploreCatalog', 'Explorer le catalogue')}</a>
                         </div>`;
                 } else {
@@ -265,29 +168,16 @@
 
                         let badgeHtml = '';
                         let rightSideAction = '';
-                        const infoTitle = t('monCompte.js.infoTitle', 'Information');
-                        const cancelUnavailableText = t('monCompte.js.cancelNotAvailable', "L'annulation n'est pas disponible.");
 
-                        const rawStatus = String(reservation.status || '').toLowerCase();
-                        let displayStatus = rawStatus;
-
-                        if (rawStatus === 'active') {
-                            displayStatus = dStart > now ? 'pending' : 'accepted';
-                        } else if (rawStatus === 'completed') {
-                            displayStatus = 'accepted';
-                        } else if (rawStatus === 'cancelled') {
-                            displayStatus = 'refused';
-                        }
-
-                        if (displayStatus === 'pending') {
-                            badgeHtml = `<span class="bg-yellow-50 text-yellow-700 px-3 py-1 rounded-full text-[10px] font-black tracking-wider uppercase border border-yellow-100">En attente de confirmation</span>`;
-                                rightSideAction = `<button type="button" class="text-red-500 text-xs font-bold hover:underline" onclick="window.cancelReservation(${reservation.id})">${t('monCompte.js.cancelRequest', 'Annuler la réservation')}</button>`;
-                        } else if (displayStatus === 'accepted') {
-                            badgeHtml = `<span class="bg-green-50 text-green-600 px-3 py-1 rounded-full text-[10px] font-black tracking-wider uppercase border border-green-100">Réservation confirmée</span>`;
+                        if (dStart > now && reservation.status === 'active') {
+                            badgeHtml = `<span class="bg-yellow-50 text-yellow-600 px-3 py-1 rounded-full text-[10px] font-black tracking-wider uppercase border border-yellow-100">${t('monCompte.js.pendingValidation', 'EN ATTENTE DE VALIDATION')}</span>`;
+                            rightSideAction = `<button class="text-red-500 text-xs font-bold hover:underline" onclick="Swal.fire({icon:'info',title:t('monCompte.js.infoTitle', 'Information'),text:t('monCompte.js.cancelNotAvailable', 'L\\'annulation n\\'est pas disponible.')})">${t('monCompte.js.cancelRequest', 'Annuler la demande')}</button>`;
+                        } else if (dStart <= now && dEnd >= now && reservation.status === 'active') {
+                            badgeHtml = `<span class="bg-green-50 text-green-600 px-3 py-1 rounded-full text-[10px] font-black tracking-wider uppercase border border-green-100">${t('monCompte.js.reservationValidated', 'RÉSERVATION VALIDÉE')}</span>`;
                             rightSideAction = `<button class="text-primary text-xs font-bold hover:underline">${t('monCompte.js.invoicePdf', 'Facture PDF')}</button>`;
-                        } else if (displayStatus === 'refused') {
-                            badgeHtml = `<span class="bg-red-50 text-red-600 px-3 py-1 rounded-full text-[10px] font-black tracking-wider uppercase border border-red-100">Réservation refusée</span>`;
-                            rightSideAction = `<span class="text-xs font-bold text-gray-400">${t('monCompte.js.completed', 'TERMINÉE')}</span>`;
+                        } else {
+                            badgeHtml = `<span class="bg-gray-100 text-gray-500 px-3 py-1 rounded-full text-[10px] font-black tracking-wider uppercase border border-gray-200">${t('monCompte.js.completed', 'TERMINÉE')}</span>`;
+                            rightSideAction = `<button class="text-primary text-xs font-bold hover:underline">${t('monCompte.js.invoicePdf', 'Facture PDF')}</button>`;
                         }
 
                         let priceBottomText = t('monCompte.js.totalPaid', 'Total payé');
@@ -328,6 +218,12 @@
                 if (currentSafeReservations) {
                     renderReservations(currentSafeReservations, new Date());
                 }
+                // Update simple texts that needed JS logic
+                if (document.getElementById('profileEmailDisplay').innerText.includes('•')) {
+                    const email = document.getElementById('profileEmailDisplay').innerText.split('•')[0].trim();
+                    const memberSince = document.getElementById('profileEmailDisplay').innerText.split('depuis')[1] || '';
+                    document.getElementById('profileEmailDisplay').innerText = `${email} • ${t('monCompte.js.clientSince', 'Client depuis')} ${memberSince}`;
+                }
             });
 
             try {
@@ -352,6 +248,4 @@
                 document.getElementById('reservationsList').innerHTML = `<p class="text-center text-red-500 py-10 font-bold">${t('monCompte.js.errorLoadingReservations', 'Impossible de charger vos données de réservation.')}</p>`;
             }
         });
-    </script>
-</body>
-</html>
+    

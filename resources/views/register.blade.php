@@ -66,21 +66,21 @@
         <div class="hidden md:flex md:w-1/2 bg-primary items-center justify-center p-12 relative overflow-hidden">
             <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 40px 40px;"></div>
             <div class="relative z-10 max-w-lg text-white">
-                <h1 class="text-5xl font-black leading-tight mb-6">Rejoignez la communauté mondiale du gaming.</h1>
-                <p class="text-xl text-white/80 mb-8">Accédez à des événements exclusifs, connectez-vous avec des joueurs professionnels et trouvez votre prochaine équipe compétitive.</p>
+                <h1 class="text-5xl font-black leading-tight mb-6" data-i18n="login.heroTitle">Rejoignez la communauté mondiale du gaming.</h1>
+                <p class="text-xl text-white/80 mb-8" data-i18n="login.heroSubtitle">Accédez à des événements exclusifs, connectez-vous avec des joueurs professionnels et trouvez votre prochaine équipe compétitive.</p>
                 <div class="flex gap-4">
                     <div class="bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/20 flex items-center gap-3">
                         <i class="fas fa-gamepad text-3xl"></i>
                         <div>
                             <p class="font-bold text-lg">10M+</p>
-                            <p class="text-xs text-white/60 uppercase tracking-wider">Joueurs actifs</p>
+                            <p class="text-xs text-white/60 uppercase tracking-wider" data-i18n="login.activePlayers">Joueurs actifs</p>
                         </div>
                     </div>
                     <div class="bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/20 flex items-center gap-3">
                         <i class="fas fa-trophy text-3xl"></i>
                         <div>
                             <p class="font-bold text-lg">500+</p>
-                            <p class="text-xs text-white/60 uppercase tracking-wider">Tournois quotidiens</p>
+                            <p class="text-xs text-white/60 uppercase tracking-wider" data-i18n="login.dailyTournaments">Tournois quotidiens</p>
                         </div>
                     </div>
                 </div>
@@ -91,30 +91,30 @@
         <div class="w-full md:w-1/2 flex items-center justify-center px-4 py-8 sm:p-8 md:p-12 bg-gray-50">
             <div class="w-full max-w-120">  
                 <div class="mb-10">
-                    <h2 class="text-gray-900 text-4xl font-black mb-2">Créer un compte</h2>
-                    <p class="text-gray-500 text-lg">Rejoignez playstayhome dès aujourd'hui.</p>
+                    <h2 class="text-gray-900 text-4xl font-black mb-2" data-i18n="register.title">Créer un compte</h2>
+                    <p class="text-gray-500 text-lg" data-i18n="register.subtitle">Rejoignez playstayhome dès aujourd'hui.</p>
                 </div>
                 <form class="space-y-5" id="registerForm">
                     <div class="space-y-2">
-                        <label class="block text-gray-700 text-sm font-semibold uppercase tracking-wider">Nom complet</label>
+                        <label class="block text-gray-700 text-sm font-semibold uppercase tracking-wider" data-i18n="register.fullNameLabel">Nom complet</label>
                         <div class="relative input-wrapper">
                             <svg class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                             </svg>
-                            <input id="fullName" name="fullName" type="text" data-parsley-minlength="4" data-parsley-required="true" placeholder="Jean Dupont" class="w-full pl-12 pr-4 py-4 rounded-lg border border-gray-200 bg-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none">
+                            <input id="fullName" name="fullName" type="text" data-parsley-minlength="4" data-parsley-required="true" placeholder="Jean Dupont" data-i18n-placeholder="register.fullNamePlaceholder" class="w-full pl-12 pr-4 py-4 rounded-lg border border-gray-200 bg-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none">
                         </div>
                     </div>
                     <div class="space-y-2">
-                        <label class="block text-gray-700 text-sm font-semibold uppercase tracking-wider">Adresse e-mail</label>
+                        <label class="block text-gray-700 text-sm font-semibold uppercase tracking-wider" data-i18n="login.emailLabel">Adresse e-mail</label>
                         <div class="relative input-wrapper">
                             <svg class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                             </svg>
-                            <input id="email" name="email" type="email" data-parsley-type="email" data-parsley-required="true" placeholder="votre@email.com" class="w-full pl-12 pr-4 py-4 rounded-lg border border-gray-200 bg-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none">
+                            <input id="email" name="email" type="email" data-parsley-type="email" data-parsley-required="true" placeholder="votre@email.com" data-i18n-placeholder="login.emailPlaceholder" class="w-full pl-12 pr-4 py-4 rounded-lg border border-gray-200 bg-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none">
                         </div>
                     </div>
                     <div class="space-y-2">
-                        <label class="block text-gray-700 text-sm font-semibold uppercase tracking-wider">Mot de passe</label>
+                        <label class="block text-gray-700 text-sm font-semibold uppercase tracking-wider" data-i18n="login.passwordLabel">Mot de passe</label>
                         <div class="relative input-wrapper">
                             <svg class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
@@ -123,7 +123,7 @@
                         </div>
                     </div>
                     <div class="space-y-2">
-                        <label class="block text-gray-700 text-sm font-semibold uppercase tracking-wider">Confirmer le mot de passe</label>
+                        <label class="block text-gray-700 text-sm font-semibold uppercase tracking-wider" data-i18n="register.confirmPasswordLabel">Confirmer le mot de passe</label>
                         <div class="relative input-wrapper">
                             <svg class="w-5 h-5 absolute left-4 top-10 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
@@ -132,7 +132,7 @@
                         </div>
                     </div>
                     <div class="space-y-2">
-                        <label class="block text-gray-700 text-sm font-semibold uppercase tracking-wider">Photo de profil (optionnel)</label>
+                        <label class="block text-gray-700 text-sm font-semibold uppercase tracking-wider" data-i18n="register.photoLabel">Photo de profil (optionnel)</label>
                         <div class="relative input-wrapper">
                             <input id="photo" name="photo" type="file" accept="image/*" class="w-full px-4 py-3 rounded-lg border border-gray-200 bg-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none">
                         </div>
@@ -140,15 +140,15 @@
                     <div class="flex items-center gap-3 pt-2">
                         <input type="checkbox" id="terms" class="rounded border-gray-300 text-primary focus:ring-primary">
                         <label for="terms" class="text-sm text-gray-500">
-                            J'accepte les <a href="#" class="text-primary hover:underline">Conditions générales</a>
+                            <span data-i18n="register.accept">J'accepte les</span> <a href="#" class="text-primary hover:underline" data-i18n="register.terms">Conditions générales</a>
                         </label>
                     </div>
-                    <button type="submit" class="w-full bg-primary hover:bg-blue-700 text-white font-bold py-4 rounded-lg text-lg shadow-lg">Créer un compte</button>
+                    <button type="submit" class="w-full bg-primary hover:bg-blue-700 text-white font-bold py-4 rounded-lg text-lg shadow-lg" data-i18n="register.submitBtn">Créer un compte</button>
                 </form>
                 @if (config('services.google.enabled'))
                 <div class="my-6 flex items-center gap-3">
                     <div class="h-px flex-1 bg-gray-200"></div>
-                    <span class="text-xs font-semibold uppercase tracking-wider text-gray-400">ou</span>
+                    <span class="text-xs font-semibold uppercase tracking-wider text-gray-400" data-i18n="login.or">ou</span>
                     <div class="h-px flex-1 bg-gray-200"></div>
                 </div>
                 <a href="{{ route('auth.google.redirect') }}{{ request()->filled('redirect') ? '?' . http_build_query(['redirect' => request('redirect')]) : '' }}" class="w-full inline-flex items-center justify-center gap-3 rounded-lg border border-gray-300 bg-white py-3.5 text-sm font-semibold text-gray-700 hover:bg-gray-50">
@@ -158,13 +158,13 @@
                         <path fill="#4CAF50" d="M24 44c5.1 0 9.8-1.9 13.4-5l-6.2-5.2C29.2 35.2 26.7 36 24 36c-5.2 0-9.6-3.3-11.2-8l-6.5 5C9.6 39.6 16.3 44 24 44z"/>
                         <path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.2 4.2-4.1 5.6l.1-.1 6.2 5.2C37 38.3 44 33 44 24c0-1.3-.1-2.4-.4-3.5z"/>
                     </svg>
-                    Continuer avec Google
+                    <span data-i18n="login.continueWithGoogle">Continuer avec Google</span>
                 </a>
                 @endif
                 <div class="mt-8 pt-8 border-t border-gray-200 text-center">
                     <p class="text-gray-600">
-                        Vous avez déjà un compte ?
-                        <a class="text-primary font-bold hover:underline ml-1" href="/login{{ request()->getQueryString() ? '?' . request()->getQueryString() : '' }}">Connexion</a>
+                        <span data-i18n="register.alreadyAccount">Vous avez déjà un compte ?</span>
+                        <a class="text-primary font-bold hover:underline ml-1" href="/login{{ request()->getQueryString() ? '?' . request()->getQueryString() : '' }}" data-i18n="register.loginLink">Connexion</a>
                     </p>
                 </div>
             </div>
@@ -179,6 +179,7 @@
 <script src="https://cdn.jsdelivr.net/npm/parsleyjs"></script>
 
 <script>
+    const t = window.t || ((key, defaultStr) => defaultStr || key);
     function getSafeRedirectAfterAuth(fallback) {
         const qs = new URLSearchParams(window.location.search);
         let raw = qs.get('redirect');
@@ -228,8 +229,8 @@
         if (!termsAccepted) {
             await Swal.fire({
                 icon: 'warning',
-                title: 'Conditions requises',
-                text: 'Please accept the Terms & Conditions.'
+                title: t('register.js.termsTitle', 'Conditions requises'),
+                text: t('register.js.termsMsg', 'Please accept the Terms & Conditions.')
             });
             return;
         }
@@ -260,8 +261,8 @@
                 if (data.user && data.user.role === 'admin') {
                     await Swal.fire({
                         icon: 'success',
-                        title: 'Compte créé',
-                        text: 'Redirection vers l\'administration.'
+                        title: t('register.js.accountCreated', 'Compte créé'),
+                        text: t('register.js.redirectAdmin', 'Redirection vers l\'administration.')
                     });
                     window.location.href = '/admin/dashboard';
                     return;
@@ -270,8 +271,8 @@
                 const next = getSafeRedirectAfterAuth('/');
                 await Swal.fire({
                     icon: 'success',
-                    title: 'Bienvenue !',
-                    text: next !== '/' ? 'Votre compte est prêt. Redirection vers votre page.' : 'Votre compte est prêt.'
+                    title: t('register.js.welcome', 'Bienvenue !'),
+                    text: next !== '/' ? t('register.js.redirectPage', 'Votre compte est prêt. Redirection vers votre page.') : t('register.js.accountReady', 'Votre compte est prêt.')
                 });
                 window.location.href = next;
                 return;
@@ -280,25 +281,25 @@
             if (response.ok) {
                 await Swal.fire({
                     icon: 'success',
-                    title: 'Inscription réussie',
-                    text: 'Connectez-vous pour continuer.'
+                    title: t('register.js.registerSuccess', 'Inscription réussie'),
+                    text: t('register.js.loginToContinue', 'Connectez-vous pour continuer.')
                 });
                 window.location.href = '/login' + (window.location.search || '');
                 return;
             }
 
-            const message = data.message || 'Registration failed.';
+            const message = data.message || t('register.js.registerFailedMsg', 'Registration failed.');
             await Swal.fire({
                 icon: 'error',
-                title: 'Échec inscription',
+                title: t('register.js.registerFailedTitle', 'Échec inscription'),
                 text: message
             });
         } catch (error) {
             console.error('Error:', error);
             await Swal.fire({
                 icon: 'error',
-                title: 'Erreur',
-                text: 'An error occurred during registration. Please try again later.'
+                title: t('login.js.errorTitle', 'Erreur'),
+                text: t('register.js.errorMsg', 'An error occurred during registration. Please try again later.')
             });
         }
     }

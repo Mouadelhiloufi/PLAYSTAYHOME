@@ -38,9 +38,9 @@
             
             <!-- EN-TÊTE -->
             <div class="mb-8 flex items-center justify-between">
-                <h1 class="text-2xl font-black text-gray-900 tracking-tight">Modifier mon profil</h1>
+                <h1 class="text-2xl font-black text-gray-900 tracking-tight" data-i18n="editProfile.title">Modifier mon profil</h1>
                 <a href="/mon-compte" class="text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors">
-                    <i class="fa-solid fa-arrow-left mr-2"></i> Retour au compte
+                    <i class="fa-solid fa-arrow-left mr-2"></i> <span data-i18n="editProfile.backToAccount">Retour au compte</span>
                 </a>
             </div>
 
@@ -61,43 +61,43 @@
                             <i class="fa-solid fa-user text-xl"></i>
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-gray-900 mb-2">Changer la photo de profil</label>
+                            <label class="block text-sm font-bold text-gray-900 mb-2" data-i18n="editProfile.changePhoto">Changer la photo de profil</label>
                             <input type="file" id="photoInput" name="photo" accept="image/*" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-primary hover:file:bg-blue-100 transition-all">
                         </div>
                     </div>
 
                     <!-- Nom -->
                     <div>
-                        <label class="block text-sm font-bold text-gray-900 mb-2">Nom complet</label>
-                        <input type="text" id="nameInput" name="name" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm font-medium text-gray-900 placeholder-gray-400" placeholder="Votre nom">
+                        <label class="block text-sm font-bold text-gray-900 mb-2" data-i18n="register.fullNameLabel">Nom complet</label>
+                        <input type="text" id="nameInput" name="name" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm font-medium text-gray-900 placeholder-gray-400" placeholder="Votre nom" data-i18n-placeholder="editProfile.namePlaceholder">
                     </div>
 
                     <!-- Email -->
                     <div>
-                        <label class="block text-sm font-bold text-gray-900 mb-2">Adresse E-mail</label>
-                        <input type="email" id="emailInput" name="email" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm font-medium text-gray-900 placeholder-gray-400" placeholder="vous@exemple.com">
+                        <label class="block text-sm font-bold text-gray-900 mb-2" data-i18n="login.emailLabel">Adresse E-mail</label>
+                        <input type="email" id="emailInput" name="email" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm font-medium text-gray-900 placeholder-gray-400" placeholder="vous@exemple.com" data-i18n-placeholder="editProfile.emailPlaceholder">
                     </div>
 
                     <div class="border-t border-gray-100 pt-6 mt-6">
-                        <h2 class="text-sm font-bold text-gray-900 mb-4">Changer le mot de passe (optionnel)</h2>
+                        <h2 class="text-sm font-bold text-gray-900 mb-4" data-i18n="editProfile.changePassword">Changer le mot de passe (optionnel)</h2>
                         
                         <!-- Mot de passe -->
                         <div class="mb-4">
-                            <label class="block text-xs font-bold text-gray-700 mb-2">Nouveau mot de passe</label>
-                            <input type="password" id="passwordInput" name="password" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm font-medium text-gray-900 placeholder-gray-400" placeholder="Laisser vide pour ne pas changer">
+                            <label class="block text-xs font-bold text-gray-700 mb-2" data-i18n="editProfile.newPassword">Nouveau mot de passe</label>
+                            <input type="password" id="passwordInput" name="password" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm font-medium text-gray-900 placeholder-gray-400" placeholder="Laisser vide pour ne pas changer" data-i18n-placeholder="editProfile.leaveEmpty">
                         </div>
 
                         <!-- Confirmation -->
                         <div>
-                            <label class="block text-xs font-bold text-gray-700 mb-2">Confirmer le mot de passe</label>
-                            <input type="password" id="passwordConfirmInput" name="password_confirmation" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm font-medium text-gray-900 placeholder-gray-400" placeholder="Confirmer le nouveau mot de passe">
+                            <label class="block text-xs font-bold text-gray-700 mb-2" data-i18n="register.confirmPasswordLabel">Confirmer le mot de passe</label>
+                            <input type="password" id="passwordConfirmInput" name="password_confirmation" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm font-medium text-gray-900 placeholder-gray-400" placeholder="Confirmer le nouveau mot de passe" data-i18n-placeholder="editProfile.confirmNewPassword">
                         </div>
                     </div>
 
                     <!-- Bouton Submit -->
                     <div class="pt-4">
                         <button type="submit" id="submitBtn" class="w-full bg-primary hover:bg-blue-600 text-white px-6 py-3.5 rounded-xl text-sm font-bold shadow-sm transition-all duration-200 flex items-center justify-center gap-2">
-                            <span>Enregistrer les modifications</span>
+                            <span data-i18n="editProfile.saveChanges">Enregistrer les modifications</span>
                         </button>
                     </div>
                 </form>
@@ -108,6 +108,7 @@
     <!-- Scripts de logique -->
     <script>
         (async function() {
+            const t = window.t || ((key, defaultStr) => defaultStr || key);
             const token = localStorage.getItem('token');
             if(!token) {
                 window.location.href = '/login';
@@ -144,7 +145,7 @@
                 const successBox = document.getElementById('successBox');
                 
                 btn.disabled = true;
-                btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Enregistrement...`;
+                btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> ${t('editProfile.js.saving', 'Enregistrement...')}`;
                 btn.classList.add('opacity-70');
                 errorBox.classList.add('hidden');
                 successBox.classList.add('hidden');
@@ -179,7 +180,7 @@
                     let data = await response.json();
 
                     if (response.ok) {
-                        successBox.innerText = data.message || "Profil mis à jour avec succès !";
+                        successBox.innerText = data.message || t('editProfile.js.successMsg', "Profil mis à jour avec succès !");
                         successBox.classList.remove('hidden');
                         document.getElementById('passwordInput').value = '';
                         document.getElementById('passwordConfirmInput').value = '';
@@ -191,7 +192,7 @@
 
                     } else {
                         // Afficher les erreurs de validation
-                        let errorMsg = data.message || "Une erreur est survenue";
+                        let errorMsg = data.message || t('editProfile.js.errorMsg', "Une erreur est survenue");
                         if(data.errors) {
                             const firstKey = Object.keys(data.errors)[0];
                             errorMsg = data.errors[firstKey][0];
@@ -200,11 +201,11 @@
                         errorBox.classList.remove('hidden');
                     }
                 } catch (error) {
-                    errorBox.innerText = "Erreur de connexion au serveur.";
+                    errorBox.innerText = t('editProfile.js.serverError', "Erreur de connexion au serveur.");
                     errorBox.classList.remove('hidden');
                 } finally {
                     btn.disabled = false;
-                    btn.innerHTML = `<span>Enregistrer les modifications</span>`;
+                    btn.innerHTML = `<span>${t('editProfile.saveChanges', 'Enregistrer les modifications')}</span>`;
                     btn.classList.remove('opacity-70');
                 }
             });

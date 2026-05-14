@@ -7,7 +7,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
     <script>
         tailwind.config = {
             theme: {
@@ -44,27 +43,48 @@
             <!-- Navigation -->
             <nav class="flex flex-col gap-2">
                 <a href="/admin/dashboard" class="bg-primary text-white px-5 py-3.5 rounded-xl font-bold text-sm flex items-center shadow-[0_4px_15px_rgba(25,120,229,0.2)]">
-                    Dashboard
+                    <span data-i18n="admin.dashboard">Dashboard</span>
                 </a>
                 <a href="/admin/reservations" class="text-gray-500 hover:text-gray-900 hover:bg-gray-50 px-5 py-3.5 rounded-xl font-bold text-sm transition-colors">
-                    Réservations
+                    <span data-i18n="admin.reservations">Réservations</span>
                 </a>
                 <a href="/admin/users" class="text-gray-500 hover:text-gray-900 hover:bg-gray-50 px-5 py-3.5 rounded-xl font-bold text-sm transition-colors">
-                    Utilisateurs
+                    <span data-i18n="admin.users">Utilisateurs</span>
                 </a>
                 <a href="/admin/consoles-games" class="text-gray-500 hover:text-gray-900 hover:bg-gray-50 px-5 py-3.5 rounded-xl font-bold text-sm transition-colors">
-                    Consoles & Jeux
+                    <span data-i18n="admin.consolesGames">Consoles & Jeux</span>
                 </a>
                 <a href="/admin/chat" class="text-gray-500 hover:text-gray-900 hover:bg-gray-50 px-5 py-3.5 rounded-xl font-bold text-sm transition-colors">
-                    Support Chat
+                    <span data-i18n="admin.supportChat">Support Chat</span>
                 </a>
             </nav>
+
+            <div class="mt-7 relative">
+                <button
+                    type="button"
+                    class="w-full inline-flex items-center justify-between gap-2 rounded-xl border border-gray-200 bg-white px-4 py-3 text-xs font-black text-gray-700 shadow-sm hover:bg-gray-50"
+                    data-lang-btn
+                    aria-controls="langPanelAdmin"
+                    aria-expanded="false"
+                    data-i18n-aria-label="lang.switch"
+                >
+                    <span data-i18n-lang-label>Français</span>
+                    <span class="inline-flex items-center gap-2 text-gray-400">
+                        <i class="fa-solid fa-globe"></i>
+                        <span>▼</span>
+                    </span>
+                </button>
+                <div id="langPanelAdmin" data-lang-panel class="hidden absolute left-0 right-0 mt-2 rounded-xl border border-gray-200 bg-white shadow-xl overflow-hidden">
+                    <button type="button" class="w-full px-4 py-2.5 text-left text-sm font-semibold text-gray-700 hover:bg-gray-50" data-set-lang="fr" data-i18n="lang.fr">Français</button>
+                    <button type="button" class="w-full px-4 py-2.5 text-left text-sm font-semibold text-gray-700 hover:bg-gray-50" data-set-lang="ar" data-i18n="lang.ar">العربية</button>
+                </div>
+            </div>
         </div>
         
         <!-- Déconnexion -->
         <div class="border-t border-gray-100 pt-6 mt-10">
             <button id="logoutBtn" class="text-red-500 hover:text-red-600 hover:bg-red-50 px-5 py-3.5 rounded-xl font-black text-sm transition-colors flex items-center">
-                Déconnexion
+                <span data-i18n="admin.logout">Déconnexion</span>
 </button>
         </div>
     </aside>
@@ -77,7 +97,7 @@
             <!-- Top Header -->
             <div class="flex justify-between items-start mb-10">
                 <div>
-                    <h1 class="text-3xl md:text-5xl font-black text-gray-900 tracking-tight">Bonjour, Admin !</h1>
+                    <h1 class="text-3xl md:text-5xl font-black text-gray-900 tracking-tight" data-i18n="admin.greeting">Bonjour, Admin !</h1>
                     <p class="text-gray-500 font-medium mt-3">Gérez l'ensemble des locations et le suivi de la plateforme ici.</p>
                 </div>
                 <div class="bg-white border border-gray-100 px-6 py-2.5 rounded-full shadow-sm text-sm font-bold text-primary flex items-center">
@@ -121,11 +141,12 @@
                                 <th class="py-5 px-4">Article</th>
                                 <th class="py-5 px-4">Dates</th>
                                 <th class="py-5 px-4">Montant</th>
+                                <th class="py-5 px-7 text-right">Statut</th>
                             </tr>
                         </thead>
                         <tbody id="historyTbody" class="text-sm font-semibold text-gray-700">
                             <tr>
-                                <td colspan="4" class="py-8 px-7 text-center text-gray-400">Chargement...</td>
+                                <td colspan="5" class="py-8 px-7 text-center text-gray-400">Chargement...</td>
                             </tr>
                         </tbody>
                     </table>
@@ -197,6 +218,27 @@
             const historyTbody = document.getElementById('historyTbody');
             const monthlyRevenue = document.getElementById('monthlyRevenue');
 
+            function normalizeStatus(reservation) {
+                const rawStatus = String(reservation?.status || '').toLowerCase();
+                if (rawStatus === 'active') return 'pending';
+                if (rawStatus === 'completed') return 'accepted';
+                if (rawStatus === 'cancelled') return 'refused';
+                if (['pending', 'accepted', 'refused'].includes(rawStatus)) return rawStatus;
+                return 'pending';
+            }
+
+            function getStatusBadge(status) {
+                if (status === 'accepted') {
+                    return '<span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider border border-green-200 inline-block">Réservation confirmée</span>';
+                }
+
+                if (status === 'refused') {
+                    return '<span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider border border-red-200 inline-block">Réservation refusée</span>';
+                }
+
+                return '<span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider border border-yellow-200 inline-block">En attente de confirmation</span>';
+            }
+
             try {
                 const revenueResponse = await fetch('/api/admin/stats/monthly-revenue', {
                     headers: { 'Authorization': 'Bearer ' + token, 'Accept': 'application/json' }
@@ -218,7 +260,7 @@
                 const reservations = Array.isArray(payload.data) ? payload.data : [];
                 const latest = reservations.slice(0, 6);
                 if (!latest.length) {
-                    historyTbody.innerHTML = '<tr><td colspan="4" class="py-8 px-7 text-center text-gray-400">Aucune reservation trouvee.</td></tr>';
+                    historyTbody.innerHTML = '<tr><td colspan="5" class="py-8 px-7 text-center text-gray-400">Aucune reservation trouvee.</td></tr>';
                     return;
                 }
 
@@ -232,6 +274,7 @@
                     const end = new Date(r.end_date);
                     const startText = Number.isNaN(start.getTime()) ? '--' : start.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' });
                     const endText = Number.isNaN(end.getTime()) ? '--' : end.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' });
+                    const statusBadge = getStatusBadge(normalizeStatus(r));
 
                     rows += `
                         <tr class="border-b border-gray-50 hover:bg-gray-50/30 transition-colors">
@@ -244,6 +287,7 @@
                             <td class="py-5 px-4 text-gray-900 font-bold">${consoleName}</td>
                             <td class="py-5 px-4 text-gray-500">${startText} - ${endText}</td>
                             <td class="py-5 px-4 font-black text-gray-900">${Number(r.total_price || 0).toFixed(2)} DH</td>
+                            <td class="py-5 px-7 text-right">${statusBadge}</td>
                         </tr>
                     `;
                 }
@@ -251,7 +295,7 @@
                 historyTbody.innerHTML = rows;
             } catch (error) {
                 console.error('Erreur chargement dashboard reservations:', error);
-                historyTbody.innerHTML = '<tr><td colspan="4" class="py-8 px-7 text-center text-red-400">Impossible de charger l historique.</td></tr>';
+                historyTbody.innerHTML = '<tr><td colspan="5" class="py-8 px-7 text-center text-red-400">Impossible de charger l historique.</td></tr>';
             }
         });
     </script>

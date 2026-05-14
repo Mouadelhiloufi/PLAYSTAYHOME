@@ -87,8 +87,8 @@
         <main class="mx-auto w-full max-w-4xl flex-1 px-4 py-10 lg:px-0">
             <section class="mb-10">
                 <div class="flex flex-col gap-3">
-                    <h1 class="text-4xl font-black tracking-tight text-gray-900 lg:text-5xl">Foire Aux Questions</h1>
-                    <p class="max-w-2xl text-lg text-gray-600">
+                    <h1 class="text-4xl font-black tracking-tight text-gray-900 lg:text-5xl" data-i18n="faqPage.title">Foire Aux Questions</h1>
+                    <p class="max-w-2xl text-lg text-gray-600" data-i18n="faqPage.subtitle" data-i18n-html="true">
                         Tout ce que vous devez savoir sur les produits et services <strong>PLAYSTAYHOME</strong>. Vous ne trouvez pas ce que vous cherchez ? Contactez notre équipe.
                     </p>
                 </div>
@@ -97,37 +97,37 @@
             <section class="mb-12">
                 <div class="mb-6 flex items-center gap-3">
                     <i class="fa-solid fa-truck text-primary"></i>
-                    <h2 class="text-2xl font-bold text-gray-900">Livraison &amp; Installation</h2>
+                    <h2 class="text-2xl font-bold text-gray-900" data-i18n="faqPage.sections.delivery">Livraison et Installation</h2>
                 </div>
 
                 <div class="space-y-4">
                     <details open class="overflow-hidden rounded-xl border border-gray-200 bg-white">
                         <summary class="flex cursor-pointer items-center justify-between gap-6 p-5">
-                            <p class="font-semibold text-gray-900">Combien de temps prend la livraison&nbsp;?</p>
+                            <p class="font-semibold text-gray-900" data-i18n="faqPage.q.deliveryTime">Combien de temps prend la livraison?</p>
                             <i class="fa-solid fa-chevron-down faq-chevron text-gray-500"></i>
                         </summary>
                         <div class="border-t border-gray-100 px-5 pb-5 pt-4 text-gray-600">
-                            La livraison standard prend généralement 3 à 5 jours ouvrés selon votre localisation. Des options de livraison express sont disponibles lors du paiement pour une livraison en 1 à 2 jours.
+                            <span data-i18n="faqPage.a.deliveryTime">La livraison standard prend généralement 3 à 5 jours ouvrés selon votre localisation. Des options de livraison express sont disponibles lors du paiement pour une livraison en 1 à 2 jours.</span>
                         </div>
                     </details>
 
                     <details class="overflow-hidden rounded-xl border border-gray-200 bg-white">
                         <summary class="flex cursor-pointer items-center justify-between gap-6 p-5">
-                            <p class="font-semibold text-gray-900">Proposez-vous une installation professionnelle&nbsp;?</p>
+                            <p class="font-semibold text-gray-900" data-i18n="faqPage.q.proInstallation">Proposez-vous une installation professionnelle?</p>
                             <i class="fa-solid fa-chevron-down faq-chevron text-gray-500"></i>
                         </summary>
                         <div class="border-t border-gray-100 px-5 pb-5 pt-4 text-gray-600">
-                            Oui ! Nous proposons des services d'installation professionnelle dans la plupart des grandes villes. Vous pouvez sélectionner "Installation professionnelle" lors du processus de commande.
+                            <span data-i18n="faqPage.a.proInstallation">Oui ! Nous proposons des services d'installation professionnelle dans la plupart des grandes villes. Vous pouvez sélectionner "Installation professionnelle" lors du processus de commande.</span>
                         </div>
                     </details>
 
                     <details class="overflow-hidden rounded-xl border border-gray-200 bg-white">
                         <summary class="flex cursor-pointer items-center justify-between gap-6 p-5">
-                            <p class="font-semibold text-gray-900">Que se passe-t-il si mon appareil arrive endommagé&nbsp;?</p>
+                            <p class="font-semibold text-gray-900" data-i18n="faqPage.q.damaged">Que se passe-t-il si mon appareil arrive endommagé?</p>
                             <i class="fa-solid fa-chevron-down faq-chevron text-gray-500"></i>
                         </summary>
                         <div class="border-t border-gray-100 px-5 pb-5 pt-4 text-gray-600">
-                            Nous offrons une garantie de remplacement à 100% pour les articles endommagés à la livraison. Veuillez signaler tout dommage dans les 48 heures suivant la réception en contactant notre support avec des photos de l'emballage et du produit.
+                            <span data-i18n="faqPage.a.damaged">Nous offrons une garantie de remplacement à 100% pour les articles endommagés à la livraison. Veuillez signaler tout dommage dans les 48 heures suivant la réception en contactant notre support avec des photos de l'emballage et du produit.</span>
                         </div>
                     </details>
                 </div>
@@ -136,27 +136,27 @@
             <section class="mb-12">
                 <div class="mb-6 flex items-center gap-3">
                     <i class="fa-solid fa-credit-card text-primary"></i>
-                    <h2 class="text-2xl font-bold text-gray-900">Tarifs &amp; Paiements</h2>
+                    <h2 class="text-2xl font-bold text-gray-900" data-i18n="faqPage.sections.pricing">Tarifs et Paiements</h2>
                 </div>
 
                 <div class="space-y-4">
                     <details class="overflow-hidden rounded-xl border border-gray-200 bg-white">
                         <summary class="flex cursor-pointer items-center justify-between gap-6 p-5">
-                            <p class="font-semibold text-gray-900">Quels moyens de paiement acceptez-vous&nbsp;?</p>
+                            <p class="font-semibold text-gray-900" data-i18n="faqPage.q.payments">Quels moyens de paiement acceptez-vous?</p>
                             <i class="fa-solid fa-chevron-down faq-chevron text-gray-500"></i>
                         </summary>
                         <div class="border-t border-gray-100 px-5 pb-5 pt-4 text-gray-600">
-                            Nous acceptons toutes les principales cartes bancaires (Visa, Mastercard, Amex), PayPal, et proposons des options de financement via Affirm pour les achats éligibles.
+                            <span data-i18n="faqPage.a.payments">Nous acceptons toutes les principales cartes bancaires (Visa, Mastercard, Amex), PayPal, et proposons des options de financement via Affirm pour les achats éligibles.</span>
                         </div>
                     </details>
 
                     <details class="overflow-hidden rounded-xl border border-gray-200 bg-white">
                         <summary class="flex cursor-pointer items-center justify-between gap-6 p-5">
-                            <p class="font-semibold text-gray-900">Y a-t-il des frais d'abonnement mensuels&nbsp;?</p>
+                            <p class="font-semibold text-gray-900" data-i18n="faqPage.q.subscription">Y a-t-il des frais d'abonnement mensuels?</p>
                             <i class="fa-solid fa-chevron-down faq-chevron text-gray-500"></i>
                         </summary>
                         <div class="border-t border-gray-100 px-5 pb-5 pt-4 text-gray-600">
-                            Les fonctionnalités de base ne nécessitent pas d'abonnement, mais notre stockage cloud "Pro Home" et les fonctions avancées d'automatisation sont disponibles via un abonnement mensuel ou annuel.
+                            <span data-i18n="faqPage.a.subscription">Les fonctionnalités de base ne nécessitent pas d'abonnement, mais notre stockage cloud "Pro Home" et les fonctions avancées d'automatisation sont disponibles via un abonnement mensuel ou annuel.</span>
                         </div>
                     </details>
                 </div>
@@ -165,27 +165,27 @@
             <section class="mb-16">
                 <div class="mb-6 flex items-center gap-3">
                     <i class="fa-solid fa-user-gear text-primary"></i>
-                    <h2 class="text-2xl font-bold text-gray-900">Gestion du Compte</h2>
+                    <h2 class="text-2xl font-bold text-gray-900" data-i18n="faqPage.sections.account">Gestion du Compte</h2>
                 </div>
 
                 <div class="space-y-4">
                     <details class="overflow-hidden rounded-xl border border-gray-200 bg-white">
                         <summary class="flex cursor-pointer items-center justify-between gap-6 p-5">
-                            <p class="font-semibold text-gray-900">Comment réinitialiser mon mot de passe&nbsp;?</p>
+                            <p class="font-semibold text-gray-900" data-i18n="faqPage.q.resetPassword">Comment réinitialiser mon mot de passe?</p>
                             <i class="fa-solid fa-chevron-down faq-chevron text-gray-500"></i>
                         </summary>
                         <div class="border-t border-gray-100 px-5 pb-5 pt-4 text-gray-600">
-                            Rendez-vous sur la page de connexion et cliquez sur "Mot de passe oublié". Nous vous enverrons un lien d'authentification à votre adresse e-mail pour définir un nouveau mot de passe.
+                            <span data-i18n="faqPage.a.resetPassword">Rendez-vous sur la page de connexion et cliquez sur "Mot de passe oublié". Nous vous enverrons un lien d'authentification à votre adresse e-mail pour définir un nouveau mot de passe.</span>
                         </div>
                     </details>
 
                     <details class="overflow-hidden rounded-xl border border-gray-200 bg-white">
                         <summary class="flex cursor-pointer items-center justify-between gap-6 p-5">
-                            <p class="font-semibold text-gray-900">Puis-je ajouter plusieurs utilisateurs à mon compte&nbsp;?</p>
+                            <p class="font-semibold text-gray-900" data-i18n="faqPage.q.multiUsers">Puis-je ajouter plusieurs utilisateurs à mon compte?</p>
                             <i class="fa-solid fa-chevron-down faq-chevron text-gray-500"></i>
                         </summary>
                         <div class="border-t border-gray-100 px-5 pb-5 pt-4 text-gray-600">
-                            Absolument. Dans les paramètres de l'application <strong>PLAYSTAYHOME</strong>, allez dans "Gérer le foyer" pour inviter des membres de la famille via leur adresse e-mail.
+                            <span data-i18n="faqPage.a.multiUsers" data-i18n-html="true">Absolument. Dans les paramètres de l'application <strong>PLAYSTAYHOME</strong>, allez dans "Gérer le foyer" pour inviter des membres de la famille via leur adresse e-mail.</span>
                         </div>
                     </details>
                 </div>
@@ -194,73 +194,25 @@
             <section class="rounded-2xl border px-8 py-10 text-center" style="background-color: rgba(25, 120, 229, 0.08); border-color: rgba(25, 120, 229, 0.18);">
                 <div class="mx-auto flex max-w-2xl flex-col items-center gap-6">
                     <div>
-                        <h3 class="text-2xl font-bold text-gray-900 lg:text-3xl">Vous avez encore des questions&nbsp;?</h3>
-                        <p class="mt-2 text-gray-600">Notre équipe de support est disponible 24h/24 et 7j/7 pour vous aider.</p>
+                        <h3 class="text-2xl font-bold text-gray-900 lg:text-3xl" data-i18n="faqPage.cta.title">Vous avez encore des questions?</h3>
+                        <p class="mt-2 text-gray-600" data-i18n="faqPage.cta.subtitle">Notre équipe de support est disponible 24h/24 et 7j/7 pour vous aider.</p>
                     </div>
 
                     <div class="flex flex-wrap justify-center gap-4">
                         <button class="flex items-center gap-2 rounded-lg px-8 py-3 font-bold text-white bg-primary">
                             <i class="fa-regular fa-comment-dots"></i>
-                            <span>Chat en direct</span>
+                            <span data-i18n="faqPage.cta.liveChat">Chat en direct</span>
                         </button>
                         <button class="flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-8 py-3 font-bold text-gray-900">
                             <i class="fa-regular fa-envelope"></i>
-                            <span>Support par e-mail</span>
+                            <span data-i18n="faqPage.cta.emailSupport">Support par e-mail</span>
                         </button>
                     </div>
                 </div>
             </section>
         </main>
 
-        <footer class="border-t border-gray-200 bg-white px-6 py-12 lg:px-8">
-            <div class="mx-auto max-w-6xl">
-                <div class="grid grid-cols-1 gap-12 md:grid-cols-4">
-                    <div>
-                        <div class="mb-4 flex items-center gap-4 text-primary">
-                            <img src="{{ asset('images/site-logo-navbar.png') }}" alt="PLAYSTAYHOME" class="h-8 w-auto object-contain opacity-50">
-                            <span class="font-bold text-gray-900">PLAYSTAYHOME</span>
-                        </div>
-                        <p class="text-sm leading-relaxed text-gray-500">
-                            Rendre les maisons plus intelligentes, plus sûres et plus confortables grâce à une technologie de pointe.
-                        </p>
-                    </div>
-
-                    <div>
-                        <h4 class="mb-4 font-bold text-gray-900">Produit</h4>
-                        <ul class="space-y-2 text-sm text-gray-500">
-                            <li><a href="#" class="hover:text-primary">Éclairage intelligent</a></li>
-                            <li><a href="#" class="hover:text-primary">Caméras de sécurité</a></li>
-                            <li><a href="#" class="hover:text-primary">Thermostats</a></li>
-                        </ul>
-                    </div>
-
-                    <div>
-                        <h4 class="mb-4 font-bold text-gray-900">Entreprise</h4>
-                        <ul class="space-y-2 text-sm text-gray-500">
-                            <li><a href="#" class="hover:text-primary">À propos</a></li>
-                            <li><a href="#" class="hover:text-primary">Carrières</a></li>
-                            <li><a href="#" class="hover:text-primary">Politique de confidentialité</a></li>
-                        </ul>
-                    </div>
-
-                    <div>
-                        <h4 class="mb-4 font-bold text-gray-900">Suivez-nous</h4>
-                        <div class="flex gap-4">
-                            <a href="#" class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 text-gray-600 hover:text-primary">
-                                <i class="fa-solid fa-share-nodes text-sm"></i>
-                            </a>
-                            <a href="#" class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 text-gray-600 hover:text-primary">
-                                <i class="fa-solid fa-globe text-sm"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mt-12 border-t border-gray-100 pt-8 text-center text-xs text-gray-400">
-                    © 2026 <strong>PLAYSTAYHOME</strong> Inc. Tous droits réservés.
-                </div>
-            </div>
-        </footer>
+        @include('partials.footer-main')
     </div>
 </body>
 </html>

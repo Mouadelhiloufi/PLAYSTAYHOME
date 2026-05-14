@@ -114,13 +114,111 @@
             background: #fee2e2 !important; /* fond rouge clair */
             text-decoration: line-through; /* barré */
         }
+
+        .confirm-modal-overlay {
+            background: rgba(15, 23, 42, 0.45);
+            backdrop-filter: blur(4px);
+        }
+        .confirm-modal-card {
+            border-radius: 1.25rem;
+            box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
+            overflow: hidden;
+            max-width: 28rem;
+            width: 100%;
+            border: 1px solid #e2e8f0;
+        }
+        .confirm-modal-header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #1978e5 100%);
+            color: #fff;
+            padding: 1.25rem 1.5rem;
+            font-weight: 800;
+            font-size: 1.125rem;
+            letter-spacing: -0.02em;
+            text-align: center;
+        }
+        .confirm-modal-body {
+            background: #fff;
+            padding: 1.5rem;
+        }
+        .confirm-field-label {
+            font-size: 0.8125rem;
+            font-weight: 700;
+            color: #1978e5;
+            margin-bottom: 0.35rem;
+        }
+        .confirm-input, .confirm-textarea {
+            width: 100%;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.75rem;
+            padding: 0.75rem 1rem;
+            font-size: 0.875rem;
+            transition: border-color 0.15s, box-shadow 0.15s;
+        }
+        .confirm-input:focus, .confirm-textarea:focus {
+            outline: none;
+            border-color: #1978e5;
+            box-shadow: 0 0 0 3px rgba(25, 120, 229, 0.15);
+        }
+        .confirm-phone-row {
+            display: flex;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            background: #fff;
+        }
+        .confirm-phone-prefix {
+            padding: 0.75rem 0.85rem;
+            background: #f8fafc;
+            border-right: 1px solid #e2e8f0;
+            font-size: 0.8125rem;
+            font-weight: 700;
+            color: #64748b;
+            white-space: nowrap;
+        }
+        .confirm-phone-input {
+            flex: 1;
+            border: none;
+            padding: 0.75rem 1rem;
+            font-size: 0.875rem;
+            min-width: 0;
+        }
+        .confirm-phone-input:focus {
+            outline: none;
+        }
+        .confirm-hint {
+            font-size: 0.6875rem;
+            color: #94a3b8;
+            font-style: italic;
+            margin-top: 0.35rem;
+        }
+
+        /* Responsive: éviter le débordement du téléphone sur mobile */
+        @media (max-width: 420px) {
+            .confirm-modal-body {
+                padding: 1.1rem;
+            }
+
+            .confirm-phone-row {
+                flex-direction: column;
+            }
+
+            .confirm-phone-prefix {
+                border-right: none;
+                border-bottom: 1px solid #e2e8f0;
+                width: 100%;
+            }
+
+            .confirm-phone-input {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="min-h-screen flex flex-col">
         @include('partials.navbar-main')
 
-        <main class="flex-grow mx-auto max-w-6xl px-6 py-10 w-full">
+        <main class="grow mx-auto max-w-6xl px-6 py-10 w-full">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 
                 <!-- Colonne de gauche : Choix des dates et Image -->
@@ -203,9 +301,10 @@
                         <div class="mb-6">
                             <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">Coupon de réduction</label>
                             <div class="flex gap-2">
-                                <input type="text" id="couponInput" placeholder="CODE10" class="flex-grow rounded-lg border border-gray-200 px-3 py-1.5 text-xs focus:border-primary focus:outline-none">
+                                <input type="text" id="couponInput" placeholder="CODE10" class="grow rounded-lg border border-gray-200 px-3 py-1.5 text-xs focus:border-primary focus:outline-none">
                                 <button type="button" id="btnApplyCoupon" class="bg-gray-900 hover:bg-gray-800 text-white px-4 py-1.5 rounded-lg text-xs font-bold transition-colors">OK</button>
                             </div>
+                            <p id="couponAuthHint" class="hidden mt-1.5 text-[10px] font-medium text-amber-700">Les coupons nécessitent un compte connecté.</p>
                         </div>
 
                         <!-- Total -->
@@ -215,77 +314,86 @@
                         </div>
 
                         <button id="btnReserve" class="w-full bg-primary hover:bg-blue-600 text-white font-bold py-3 text-sm rounded-xl shadow-lg shadow-blue-200 transition-colors">
-                            Réserver maintenant
+                            <span>Réserver maintenant</span>
                         </button>
                     </div>
                 </div>
             </div>
         </main>
 
-        <footer class="border-t border-gray-200 bg-white mt-12">
-            <div class="mx-auto max-w-6xl px-6 py-12">
-                <div class="grid grid-cols-1 gap-8 md:grid-cols-4">
+        @include('partials.footer-main')
+
+        <!-- Modal confirmation (téléphone + adresse) -->
+        <div id="confirmReservationModal" class="fixed inset-0 z-200 hidden items-center justify-center p-4 confirm-modal-overlay" aria-hidden="true">
+            <div class="confirm-modal-card bg-white" role="dialog" aria-labelledby="confirmModalTitle">
+                <div class="confirm-modal-header" id="confirmModalTitle">Confirmation de réservation</div>
+                <div class="confirm-modal-body space-y-5">
+                    <p class="text-xs text-gray-500 leading-relaxed">Indiquez vos coordonnées pour finaliser la location. Ces informations sont enregistrées avec votre réservation.</p>
                     <div>
-                        <div class="flex items-center gap-2 text-primary font-black text-xl mb-4">
-                            <i class="fab fa-playstation"></i> PLAYSTAYHOME
+                        <label class="confirm-field-label" for="confirmPhone">Numéro de téléphone</label>
+                        <div class="confirm-phone-row">
+                            <span class="confirm-phone-prefix" aria-hidden="true">+212</span>
+                            <input type="tel" id="confirmPhone" class="confirm-phone-input" placeholder="6 12 34 56 78" autocomplete="tel" maxlength="20">
                         </div>
-                        <p class="text-xs text-gray-400">Making homes smarter, safer, and more comfortable with cutting-edge technology.</p>
+                        <p class="confirm-hint">Indicatif Maroc (+212). Saisissez votre numéro sans le préfixe international.</p>
                     </div>
                     <div>
-                        <h4 class="font-bold mb-4 text-sm">Product</h4>
-                        <ul class="space-y-2 text-xs text-gray-500">
-                            <li>Smart Lighting</li>
-                            <li>Security Cameras</li>
-                            <li>Thermostats</li>
-                        </ul>
+                        <label class="confirm-field-label" for="confirmAddress">Adresse de livraison / domicile</label>
+                        <textarea id="confirmAddress" class="confirm-textarea min-h-22 resize-y" rows="3" placeholder="Rue, quartier, ville..." maxlength="5000"></textarea>
+                        <p class="confirm-hint">Adresse complète pour la livraison ou la prise en charge.</p>
                     </div>
-                    <div>
-                        <h4 class="font-bold mb-4 text-sm">Company</h4>
-                        <ul class="space-y-2 text-xs text-gray-500">
-                            <li>About Us</li>
-                            <li>Careers</li>
-                            <li>Privacy Policy</li>
-                        </ul>
+                    <div class="flex flex-col-reverse sm:flex-row gap-2 pt-1">
+                        <button type="button" id="btnConfirmReservationCancel" class="w-full sm:flex-1 rounded-xl border border-gray-200 py-3 text-sm font-bold text-gray-600 hover:bg-gray-50 transition-colors">Annuler</button>
+                        <button type="button" id="btnConfirmReservationSubmit" class="w-full sm:flex-1 rounded-xl bg-primary py-3 text-sm font-bold text-white shadow-lg shadow-blue-200 hover:bg-blue-600 transition-colors">Confirmer la réservation</button>
                     </div>
-                    <div>
-                        <h4 class="font-bold mb-4 text-sm">Follow Us</h4>
-                        <div class="flex gap-3">
-                            <div class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-600"><i class="fa-solid fa-share-nodes"></i></div>
-                            <div class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-600"><i class="fa-solid fa-globe"></i></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="text-center text-xs text-gray-400 mt-12 pt-8 border-t border-gray-100">
-                    © 2026 <strong>PLAYSTAYHOME</strong>. All rights reserved.
                 </div>
             </div>
-        </footer>
+        </div>
     </div>
 
     <!-- Scripts pour le calendrier -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/fr.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <script>
-        function redirectToLoginWithReturn() {
-            const returnPath = window.location.pathname + window.location.search;
-            window.location.href = '/login?' + new URLSearchParams({ redirect: returnPath }).toString();
+        function t(key, fallback, options = {}) {
+            return fallback;
+        }
+
+        function getCurrentLng() {
+            return 'fr';
+        }
+
+        function getDateLocale(lng) {
+            return 'fr-FR';
+        }
+
+        function formatDuration(days, lng) {
+            if (lng === 'ar') {
+                return `${days} ${t('reservation.duration.dayAr', 'يوم')}`;
+            }
+            const label = days === 1 ? t('reservation.duration.dayOne', 'jour') : t('reservation.duration.dayMany', 'jours');
+            return `${days} ${label}`;
+        }
+
+        function getExtraControllerPrice(count) {
+            if (count === 3) return 25;
+            if (count === 4) return 50;
+            return 0;
+        }
+
+        function buildAuthJsonHeaders() {
+            const h = { 'Content-Type': 'application/json', 'Accept': 'application/json' };
+            const t = localStorage.getItem('token');
+            if (t) {
+                h['Authorization'] = 'Bearer ' + t;
+            }
+            return h;
         }
 
         async function initPage() {
-            // Verification si l'user est connecté
-            const token = localStorage.getItem('token');
-            if (!token) {
-                await Swal.fire({
-                    icon: 'warning',
-                    title: 'Connexion requise',
-                    text: "Connectez-vous pour effectuer une réservation. Vous serez renvoyé vers cette page après connexion."
-                });
-                redirectToLoginWithReturn();
-                return;
-            }
-
             // Recuperer l'ID de la console depuis l'URL
             const urlParams = new URLSearchParams(window.location.search);
             const consoleId = urlParams.get('console_id');
@@ -294,11 +402,28 @@
             if (!consoleId) {
                 await Swal.fire({
                     icon: 'warning',
-                    title: 'Console manquante',
-                    text: "Veuillez sélectionner une console depuis le catalogue."
+                    title: t('reservation.validation.missingConsole.title', 'Console manquante'),
+                    text: t('reservation.validation.missingConsole.text', 'Veuillez sélectionner une console depuis le catalogue.')
                 });
                 window.location.href = '/catalogue';
                 return;
+            }
+
+            if (!localStorage.getItem('token')) {
+                const hint = document.getElementById('couponAuthHint');
+                const ci = document.getElementById('couponInput');
+                const ba = document.getElementById('btnApplyCoupon');
+                if (hint) {
+                    hint.classList.remove('hidden');
+                }
+                if (ci) {
+                    ci.disabled = true;
+                    ci.classList.add('bg-gray-100', 'text-gray-400');
+                }
+                if (ba) {
+                    ba.disabled = true;
+                    ba.classList.add('opacity-50', 'cursor-not-allowed');
+                }
             }
 
             let currentConsoleInfo = null;
@@ -353,12 +478,13 @@
                 }
                 
                 // Mettre à jour l'affichage du prix de la manette
-                if(manettesCount < 3){
-                    manettePrix.innerHTML = "Manettes (+0 DH)";
-                } else if(manettesCount == 3){
-                    manettePrix.innerHTML = "Manettes (+25 DH)";
-                } else if(manettesCount == 4){
-                    manettePrix.innerHTML = "Manettes (+50 DH)";
+                if (manettePrix) {
+                    const extra = getExtraControllerPrice(manettesCount);
+                    manettePrix.innerHTML = t(
+                        'reservation.controllers.priceWithExtraHtml',
+                        `Manettes (+${extra} DH)`,
+                        { extra }
+                    );
                 }
                 
                 // Recalculer le devis si on a déjà 2 dates choisies
@@ -382,10 +508,11 @@
             // ----------------------------
 
             // caledrier creation
+            const currentLng = getCurrentLng();
             fp = flatpickr("#datePicker", {
                 inline: true,
                 mode: "range",
-                locale: "fr",
+                locale: currentLng === 'ar' ? flatpickr.l10ns.ar : flatpickr.l10ns.fr,
                 minDate: "today",
                 showMonths: 1,
                 disable: reservedDatesArray, // <--- C'est ICI qu'on donne le tableau [ {from, to}, ... ] au calendrier !
@@ -393,11 +520,21 @@
                     if (selectedDates.length === 2 && currentConsoleInfo) {
                         calculateReservationWithApi(selectedDates[0], selectedDates[1]);
                     } else if(selectedDates.length === 1) {
-                         document.getElementById('durationDisplay').innerText = "0 jour";
-                         document.getElementById('datesDisplay').innerText = "Sélection en cours...";
+                         document.getElementById('durationDisplay').innerText = formatDuration(0, getCurrentLng());
+                         document.getElementById('datesDisplay').innerText = t('reservation.summary.selecting', 'Sélection en cours...');
                          document.getElementById('totalDisplay').innerText = "0 DH";
                     }
                 }
+            });
+
+            window.addEventListener('psh:i18n:changed', () => {
+                try {
+                    const lng = getCurrentLng();
+                    if (fp) {
+                        fp.set('locale', lng === 'ar' ? flatpickr.l10ns.ar : flatpickr.l10ns.fr);
+                    }
+                    updateManettesCounter();
+                } catch (e) {}
             });
 
             
@@ -414,7 +551,7 @@
                     
                     if(document.getElementById('consoleImage')) document.getElementById('consoleImage').src = currentConsoleInfo.image;
                     if(document.getElementById('recapImage')) document.getElementById('recapImage').src = currentConsoleInfo.image;
-                    if(document.getElementById('brand')) document.getElementById('brand').innerText =`brand : ${currentConsoleInfo.brand}`
+                    if(document.getElementById('brand')) document.getElementById('brand').innerText = `${t('common.brand', 'Marque')} : ${currentConsoleInfo.brand}`;
                     
                     if(document.getElementById('recapTitle')) document.getElementById('recapTitle').innerText = currentConsoleInfo.name;
                     if(document.getElementById('dailyPriceDisplay')) document.getElementById('dailyPriceDisplay').innerText = `${currentConsoleInfo.daily_price} DH / jour`;
@@ -424,26 +561,24 @@
                 console.error('Erreur :', e);
                 await Swal.fire({
                     icon: 'error',
-                    title: 'Erreur',
-                    text: "Impossible de charger les détails de cette console."
+                    title: t('common.error', 'Erreur'),
+                    text: t('reservation.validation.loadConsoleError', 'Impossible de charger les détails de cette console.')
                 });
             }
 
             // 3. demande au backend le calcul 
             async function calculateReservationWithApi(start, end) {
                 const options = { day: 'numeric', month: 'short' };
-                document.getElementById('datesDisplay').innerText = `${start.toLocaleDateString('fr-FR', options)} - ${end.toLocaleDateString('fr-FR', options)}`;
+                const lng = getCurrentLng();
+                const dateLocale = getDateLocale(lng);
+                document.getElementById('datesDisplay').innerText = `${start.toLocaleDateString(dateLocale, options)} - ${end.toLocaleDateString(dateLocale, options)}`;
                 
                 const couponCode = document.getElementById('couponInput').value.trim();
 
                 try {
                     let res = await fetch("/api/reservations/calculate", {
                         method: "POST",
-                        headers: { 
-                            "Content-Type": "application/json",
-                            "Accept": "application/json",
-                            "Authorization": "Bearer " + token
-                        },
+                        headers: buildAuthJsonHeaders(),
                         body: JSON.stringify({
                             console_id: currentConsoleInfo.id,
                             start_date: `${start.getFullYear()}-${String(start.getMonth() + 1).padStart(2, '0')}-${String(start.getDate()).padStart(2, '0')}`,
@@ -457,12 +592,10 @@
                     
                     if (res.ok && response.data) {
                         let info = response.data;
-                        document.getElementById('durationDisplay').innerText = `${info.days} jour(s)`;
+                        document.getElementById('durationDisplay').innerText = formatDuration(info.days, lng);
                         
                         // 1. On calcule le prix supplémentaire des manettes
-                        let prixManettes = 0;
-                        if (manettesCount === 3) prixManettes = 25;
-                        if (manettesCount === 4) prixManettes = 50;
+                        let prixManettes = getExtraControllerPrice(manettesCount);
 
                         // 2. On ajoute ce prix au total renvoyé par l'API
                         let finalTotal = parseFloat(info.total) + prixManettes;
@@ -479,8 +612,8 @@
                         console.error("Erreur API:", response.message || response);
                         await Swal.fire({
                             icon: 'error',
-                            title: 'Erreur de calcul',
-                            text: "Erreur lors du calcul : " + (response.message || "Non autorisé")
+                            title: t('reservation.calculation.errorTitle', 'Erreur de calcul'),
+                            text: t('reservation.calculation.errorText', 'Erreur lors du calcul : ') + (response.message || t('common.unauthorized', 'Non autorisé'))
                         });
                     }
                     
@@ -505,89 +638,131 @@
                     // Sinon, on affiche un message d'erreur
                     Swal.fire({
                         icon: 'warning',
-                        title: 'Dates manquantes',
-                        text: "Sélectionnez d'abord vos dates !"
+                        title: t('reservation.validation.missingDates.title', 'Dates manquantes'),
+                        text: t('reservation.validation.missingDates.text', "Sélectionnez d'abord vos dates !")
                     });
                 }
             });
 
-            // 4. Action du bouton Final : Créer la réservation
+            const confirmModal = document.getElementById('confirmReservationModal');
+            const confirmPhone = document.getElementById('confirmPhone');
+            const confirmAddress = document.getElementById('confirmAddress');
+            const btnConfirmCancel = document.getElementById('btnConfirmReservationCancel');
+            const btnConfirmSubmit = document.getElementById('btnConfirmReservationSubmit');
+
+            function openConfirmModal() {
+                confirmModal.classList.remove('hidden');
+                confirmModal.classList.add('flex');
+                confirmModal.setAttribute('aria-hidden', 'false');
+                confirmPhone.focus();
+            }
+
+            function closeConfirmModal() {
+                confirmModal.classList.remove('flex');
+                confirmModal.classList.add('hidden');
+                confirmModal.setAttribute('aria-hidden', 'true');
+            }
+
+            btnConfirmCancel.addEventListener('click', () => {
+                closeConfirmModal();
+            });
+
+            confirmModal.addEventListener('click', (e) => {
+                if (e.target === confirmModal) {
+                    closeConfirmModal();
+                }
+            });
+
+            // 4. Bouton Réserver : ouvre le formulaire de confirmation
             const btnReserve = document.getElementById('btnReserve');
             btnReserve.addEventListener('click', async () => {
-                if (!token) {
-                    await Swal.fire({
-                        icon: 'warning',
-                        title: 'Connexion requise',
-                        text: "Votre session a expiré. Connectez-vous pour finaliser la réservation."
-                    });
-                    redirectToLoginWithReturn();
-                    return;
-                }
-
                 if (typeof fp === 'undefined' || !fp.selectedDates || fp.selectedDates.length !== 2) {
                     await Swal.fire({
                         icon: 'warning',
-                        title: 'Dates requises',
-                        text: "Veuillez d'abord sélectionner une date de début et de fin sur le calendrier."
+                        title: t('reservation.validation.datesRequired.title', 'Dates requises'),
+                        text: t('reservation.validation.datesRequired.text', "Veuillez d'abord sélectionner une date de début et de fin sur le calendrier.")
                     });
                     return;
                 }
-                
+
                 if (!currentConsoleInfo) {
                     await Swal.fire({
                         icon: 'warning',
-                        title: 'Veuillez patienter',
-                        text: "Les informations de la console ne sont pas encore chargées."
+                        title: t('reservation.validation.pleaseWait.title', 'Veuillez patienter'),
+                        text: t('reservation.validation.pleaseWait.text', "Les informations de la console ne sont pas encore chargées.")
                     });
                     return;
                 }
 
-                btnReserve.innerText = "Création en cours...";
-                btnReserve.disabled = true;
-                btnReserve.classList.add("opacity-70", "cursor-not-allowed");
+                confirmPhone.value = '';
+                confirmAddress.value = '';
+                openConfirmModal();
+            });
 
+            btnConfirmSubmit.addEventListener('click', async () => {
+                const phoneDigits = confirmPhone.value.replace(/\D/g, '');
+                const addressVal = confirmAddress.value.trim();
+
+                if (phoneDigits.length < 9) {
+                    await Swal.fire({
+                        icon: 'warning',
+                        title: t('reservation.validation.phoneInvalid.title', 'Téléphone invalide'),
+                        text: t('reservation.validation.phoneInvalid.text', 'Entrez un numéro valide (au moins 9 chiffres après +212).')
+                    });
+                    return;
+                }
+
+                if (addressVal.length < 10) {
+                    await Swal.fire({
+                        icon: 'warning',
+                        title: t('reservation.validation.addressTooShort.title', 'Adresse trop courte'),
+                        text: t('reservation.validation.addressTooShort.text', 'Indiquez une adresse complète (au moins 10 caractères).')
+                    });
+                    return;
+                }
+
+                const phoneStored = '+212' + phoneDigits;
                 const start = fp.selectedDates[0];
                 const end = fp.selectedDates[1];
                 const couponCode = document.getElementById('couponInput').value.trim();
 
+                btnConfirmSubmit.disabled = true;
+                btnConfirmSubmit.textContent = t('common.sending', 'Envoi...');
+
                 try {
-                    let res = await fetch("/api/reservations", {
+                    const res = await fetch("/api/reservations", {
                         method: "POST",
-                        headers: { 
-                            "Content-Type": "application/json",
-                            "Accept": "application/json",
-                            "Authorization": "Bearer " + token
-                        },
+                        headers: buildAuthJsonHeaders(),
                         body: JSON.stringify({
                             console_id: currentConsoleInfo.id,
                             start_date: `${start.getFullYear()}-${String(start.getMonth() + 1).padStart(2, '0')}-${String(start.getDate()).padStart(2, '0')}`,
                             end_date: `${end.getFullYear()}-${String(end.getMonth() + 1).padStart(2, '0')}-${String(end.getDate()).padStart(2, '0')}`,
                             nombre_manettes: manettesCount,
-                            coupon_code: couponCode !== "" ? couponCode : null // Envoi du coupon
+                            coupon_code: couponCode !== "" ? couponCode : null,
+                            phone: phoneStored,
+                            address: addressVal
                         })
                     });
-                    
-                    let response = await res.json();
-                    
+
+                    const response = await res.json();
+
                     if (res.ok && response.data) {
+                        closeConfirmModal();
                         await Swal.fire({
                             icon: 'success',
-                            title: 'Réservation confirmée',
-                            text: "Félicitations, votre réservation est confirmée !"
+                            title: t('reservation.success.title', 'Réservation confirmée'),
+                            text: t('reservation.success.text', "Félicitations, votre réservation est enregistrée !")
                         });
-                        // Rediriger vers l'historique ou le catalogue
                         window.location.href = '/catalogue';
                     } else {
-                        // En cas de validation failed coté serveur
                         let errorMsg = response.message || "Erreur lors de la réservation.";
                         if (response.errors) {
-                            // Concaténer toutes les alertes de validation
-                            let validationErrors = Object.values(response.errors).flat().join("\n");
+                            const validationErrors = Object.values(response.errors).flat().join("\n");
                             errorMsg += "\n" + validationErrors;
                         }
                         await Swal.fire({
                             icon: 'error',
-                            title: 'Réservation échouée',
+                            title: t('reservation.failure.title', 'Réservation échouée'),
                             text: errorMsg
                         });
                     }
@@ -595,15 +770,12 @@
                     console.error("Erreur réseau pour reserver:", e);
                     await Swal.fire({
                         icon: 'error',
-                        title: 'Erreur réseau',
-                        text: "Une erreur de connexion est survenue."
+                        title: t('common.networkError', 'Erreur réseau'),
+                        text: t('common.networkErrorText', "Une erreur de connexion est survenue.")
                     });
                 } finally {
-                    // Remettre le bouton à son état d'origine en cas d'erreur
-                    btnReserve.innerText = "Réserver maintenant";
-                    btnReserve.disabled = false;
-                    btnReserve.classList.remove("opacity-70", "cursor-not-allowed");
-                    updateManettesCounter();
+                    btnConfirmSubmit.disabled = false;
+                    btnConfirmSubmit.textContent = t('reservation.confirm.submit', 'Confirmer la réservation');
                 }
             });
 

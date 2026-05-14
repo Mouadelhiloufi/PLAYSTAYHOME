@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contactez-nous - playstayhome</title>
+    <title data-i18n="contactPage.meta.title">Contactez-nous - playstayhome</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -67,8 +67,8 @@
         <main class="flex-1">
             <section class="mx-auto max-w-6xl px-6 py-12 md:py-20">
                 <div class="mb-12">
-                    <h1 class="mb-4 text-4xl font-black tracking-tight text-gray-900 md:text-5xl">Contactez-nous</h1>
-                    <p class="max-w-2xl text-lg text-gray-600">
+                    <h1 class="mb-4 text-4xl font-black tracking-tight text-gray-900 md:text-5xl" data-i18n="contactPage.title">Contactez-nous</h1>
+                    <p class="max-w-2xl text-lg text-gray-600" data-i18n="contactPage.subtitle">
                         Nous sommes là pour vous aider à trouver la console idéale ou répondre à toutes vos questions sur nos services.
                     </p>
                 </div>
@@ -77,28 +77,28 @@
                     <div class="rounded-xl border border-gray-200 bg-white p-8 shadow-sm">
                         <form class="flex flex-col gap-6">
                             <div class="flex flex-col gap-2">
-                                <label class="text-sm font-semibold text-gray-900">Nom complet</label>
-                                <input type="text" placeholder="Jean Dupont" class="h-12 w-full rounded-lg border border-gray-300 bg-white px-4 text-gray-900 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100">
+                                <label class="text-sm font-semibold text-gray-900" data-i18n="contactPage.form.fullName">Nom complet</label>
+                                <input type="text" placeholder="Jean Dupont" data-i18n-placeholder="contactPage.form.fullNamePlaceholder" class="h-12 w-full rounded-lg border border-gray-300 bg-white px-4 text-gray-900 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100">
                             </div>
 
                             <div class="flex flex-col gap-2">
-                                <label class="text-sm font-semibold text-gray-900">E-mail</label>
-                                <input type="email" placeholder="jean@example.com" class="h-12 w-full rounded-lg border border-gray-300 bg-white px-4 text-gray-900 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100">
+                                <label class="text-sm font-semibold text-gray-900" data-i18n="contactPage.form.email">E-mail</label>
+                                <input type="email" placeholder="jean@example.com" data-i18n-placeholder="contactPage.form.emailPlaceholder" class="h-12 w-full rounded-lg border border-gray-300 bg-white px-4 text-gray-900 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100">
                             </div>
 
                             <div class="flex flex-col gap-2">
-                                <label class="text-sm font-semibold text-gray-900">Sujet</label>
-                                <input type="text" placeholder="Comment pouvons-nous vous aider ?" class="h-12 w-full rounded-lg border border-gray-300 bg-white px-4 text-gray-900 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100">
+                                <label class="text-sm font-semibold text-gray-900" data-i18n="contactPage.form.subject">Sujet</label>
+                                <input type="text" placeholder="Comment pouvons-nous vous aider ?" data-i18n-placeholder="contactPage.form.subjectPlaceholder" class="h-12 w-full rounded-lg border border-gray-300 bg-white px-4 text-gray-900 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100">
                             </div>
 
                             <div class="flex flex-col gap-2">
-                                <label class="text-sm font-semibold text-gray-900">Message</label>
-                                <textarea rows="4" placeholder="Votre message ici..." class="w-full rounded-lg border border-gray-300 bg-white p-4 text-gray-900 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"></textarea>
+                                <label class="text-sm font-semibold text-gray-900" data-i18n="contactPage.form.message">Message</label>
+                                <textarea rows="4" placeholder="Votre message ici..." data-i18n-placeholder="contactPage.form.messagePlaceholder" class="w-full rounded-lg border border-gray-300 bg-white p-4 text-gray-900 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"></textarea>
                             </div>
 
                             <button class="flex w-full items-center justify-center gap-2 rounded-lg py-4 font-bold text-white shadow-lg" style="background-color: #1978e5;">
                                 <i class="fa-regular fa-paper-plane"></i>
-                                <span>Envoyer le message</span>
+                                <span data-i18n="contactPage.form.submit">Envoyer le message</span>
                             </button>
                         </form>
                     </div>
@@ -109,25 +109,25 @@
                                 <div class="flex h-10 w-10 items-center justify-center rounded-full text-primary" style="background-color: rgba(25, 120, 229, 0.1);">
                                     <i class="fa-solid fa-phone"></i>
                                 </div>
-                                <h3 class="font-bold text-gray-900">Appelez-nous</h3>
+                                <h3 class="font-bold text-gray-900" data-i18n="contactPage.cards.callUs">Appelez-nous</h3>
                                 <p class="text-sm text-gray-600">+212 (0) 600-000000</p>
-                                <p class="text-xs text-gray-500">Lun-Ven : 9h - 18h</p>
+                                <p class="text-xs text-gray-500" data-i18n="contactPage.cards.callHours">Lun-Ven : 9h - 18h</p>
                             </div>
 
                             <div class="flex flex-col gap-3 rounded-xl border border-gray-200 bg-white p-6">
                                 <div class="flex h-10 w-10 items-center justify-center rounded-full text-primary" style="background-color: rgba(25, 120, 229, 0.1);">
                                     <i class="fa-regular fa-envelope"></i>
                                 </div>
-                                <h3 class="font-bold text-gray-900">E-mail</h3>
+                                <h3 class="font-bold text-gray-900" data-i18n="contactPage.cards.email">E-mail</h3>
                                 <p class="text-sm text-gray-600">support@playstayhome.com</p>
-                                <p class="text-xs text-gray-500">Réponse rapide sous 24h</p>
+                                <p class="text-xs text-gray-500" data-i18n="contactPage.cards.emailHint">Réponse rapide sous 24h</p>
                             </div>
 
                             <div class="flex flex-col gap-3 rounded-xl border border-gray-200 bg-white p-6">
                                 <div class="flex h-10 w-10 items-center justify-center rounded-full text-primary" style="background-color: rgba(25, 120, 229, 0.1);">
                                     <i class="fa-solid fa-location-dot"></i>
                                 </div>
-                                <h3 class="font-bold text-gray-900">Visitez-nous</h3>
+                                <h3 class="font-bold text-gray-900" data-i18n="contactPage.cards.visit">Visitez-nous</h3>
                                 <p class="text-sm leading-relaxed text-gray-600">123 Rue Principale,<br>Casablanca, Maroc</p>
                             </div>
 
@@ -135,7 +135,7 @@
                                 <div class="flex h-10 w-10 items-center justify-center rounded-full text-primary" style="background-color: rgba(25, 120, 229, 0.1);">
                                     <i class="fa-solid fa-share-nodes"></i>
                                 </div>
-                                <h3 class="font-bold text-gray-900">Réseaux sociaux</h3>
+                                <h3 class="font-bold text-gray-900" data-i18n="contactPage.cards.social">Réseaux sociaux</h3>
                                 <div class="flex gap-4 text-gray-500">
                                     <a href="#" class="hover:text-blue-600"><i class="fa-solid fa-globe"></i></a>
                                     <a href="#" class="hover:text-blue-600"><i class="fa-solid fa-users"></i></a>
@@ -160,44 +160,7 @@
             </section>
         </main>
 
-        <footer class="border-t border-gray-200 bg-white px-6 py-12 md:px-10">
-            <div class="mx-auto max-w-6xl">
-                <div class="grid grid-cols-1 gap-12 md:grid-cols-4">
-                    <div class="md:col-span-2">
-                        <div class="mb-6 flex items-center gap-4 text-primary">
-                            <img src="{{ asset('images/site-logo-navbar.png') }}" alt="PLAYSTAYHOME" class="h-12 w-auto object-contain opacity-50">
-                            <h2 class="text-xl font-bold text-gray-900">PLAYSTAYHOME</h2>
-                        </div>
-                        <p class="max-w-sm text-sm leading-relaxed text-gray-500">
-                            Louez, jouez, profitez : la référence du jeu vidéo à domicile.
-                        </p>
-                    </div>
-
-                    <div>
-                        <h4 class="mb-6 font-bold text-gray-900">Catalogue</h4>
-                        <ul class="flex flex-col gap-4 text-sm text-gray-600">
-                            <li><a href="#" class="hover:text-blue-600">Jeux PlayStation</a></li>
-                            <li><a href="#" class="hover:text-blue-600">Consoles Xbox</a></li>
-                            <li><a href="#" class="hover:text-blue-600">Exclusivités Nintendo</a></li>
-                        </ul>
-                    </div>
-
-                    <div>
-                        <h4 class="mb-6 font-bold text-gray-900">Entreprise</h4>
-                        <ul class="flex flex-col gap-4 text-sm text-gray-600">
-                            <li><a href="#" class="hover:text-blue-600">À propos</a></li>
-                            <li><a href="#" class="hover:text-blue-600">Carrières</a></li>
-                            <li><a href="#" class="hover:text-blue-600">Politique de confidentialité</a></li>
-                            <li><a href="#" class="hover:text-blue-600">Conditions d'utilisation</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="mt-12 border-t border-gray-200 pt-8 text-center">
-                    <p class="text-xs text-gray-500">© 2026 <strong>PLAYSTAYHOME</strong>. Tous droits réservés.</p>
-                </div>
-            </div>
-        </footer>
+        @include('partials.footer-main')
     </div>
 </body>
 </html>

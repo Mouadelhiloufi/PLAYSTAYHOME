@@ -153,18 +153,18 @@
 <body class="flex flex-col h-screen">
     @include('partials.navbar-main')
 
-    <main class="flex-grow min-h-0 flex flex-col w-full px-0 py-0">
+    <main class="grow min-h-0 flex flex-col w-full px-0 py-0">
 
         <!-- Interface de Chat Complète -->
-        <div class="tg-shell flex-grow min-h-0 flex flex-col h-full w-full">
+        <div class="tg-shell grow min-h-0 flex flex-col h-full w-full">
             
             <!-- En-tête du Chat (La personne en face) -->
             <div class="tg-header px-4 py-2 md:px-6 md:py-2.5 flex justify-between items-center z-10 sticky top-0">
                 <div class="flex items-center gap-3">
-                    <div class="tg-avatar tg-avatar-admin flex-shrink-0"></div>
+                    <div class="tg-avatar tg-avatar-admin shrink-0"></div>
                     <div>
-                        <h2 class="text-base md:text-lg font-bold tracking-tight">Support client</h2>
-                        <p class="text-xs font-semibold tg-header-sub flex items-center gap-1">
+                        <h2 class="text-base md:text-lg font-bold tracking-tight" data-i18n="chat.supportTitle">Support client</h2>
+                        <p class="text-xs font-semibold tg-header-sub flex items-center gap-1" data-i18n="chat.replyTime">
                             Réponse en moins de 5 min
                         </p>
                     </div>
@@ -172,7 +172,7 @@
             </div>
 
             <!-- Zone des messages (Historique) -->
-            <div id="chatMessages" class="tg-chat-bg flex-grow px-4 py-5 md:px-6 md:py-6 flex flex-col gap-4 overflow-y-auto relative">
+            <div id="chatMessages" class="tg-chat-bg grow px-4 py-5 md:px-6 md:py-6 flex flex-col gap-4 overflow-y-auto relative">
                 
                 <!-- Date Separator -->
                 <div class="flex justify-center my-1">
@@ -185,7 +185,7 @@
                         <p class="messageAdmin tg-message-text">Bonjour 👋</p>
                         <div class="tg-time text-slate-100 mt-2 text-right">12:40 PM</div>
                     </div>
-                    <div class="tg-avatar tg-avatar-user flex items-center justify-center flex-shrink-0" id="myUserAvatarPreview">
+                    <div class="tg-avatar tg-avatar-user flex items-center justify-center shrink-0" id="myUserAvatarPreview">
                         <i class="fa-regular fa-user text-sm"></i>
                     </div>
                 </div>
@@ -199,13 +199,13 @@
             <!-- Zone de saisie -->
             <div class="tg-input-wrap p-3 md:p-4 z-10">
                 <form id="chatForm" class="flex items-end gap-2">
-                    <button type="button" class="h-[44px] w-[44px] rounded-full border border-[#bfd0d9] text-[#7993a3] bg-[#edf3f6] flex items-center justify-center flex-shrink-0">
+                    <button type="button" class="h-11 w-11 rounded-full border border-[#bfd0d9] text-[#7993a3] bg-[#edf3f6] flex items-center justify-center shrink-0">
                         <i class="fa-regular fa-face-smile text-base"></i>
                     </button>
-                    <div class="relative flex-grow">
-                        <textarea id="messageInput" rows="1" class="tg-input w-full px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#8fb4c4]/30 focus:border-[#8fb4c4] transition-all resize-none h-[44px]" placeholder="Ecrire un message..." style="min-height: 44px; max-height: 120px;"></textarea>
+                    <div class="relative grow">
+                        <textarea id="messageInput" rows="1" class="tg-input w-full px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#8fb4c4]/30 focus:border-[#8fb4c4] transition-all resize-none h-11" placeholder="Ecrire un message..." data-i18n-placeholder="chat.writeMessage" style="min-height: 44px; max-height: 120px;"></textarea>
                     </div>
-                    <button id="sendMessageBtn" type="submit" class="tg-send hover:brightness-95 h-[44px] w-[44px] flex items-center justify-center shadow-sm transition-transform active:scale-95 flex-shrink-0">
+                    <button id="sendMessageBtn" type="submit" class="tg-send hover:brightness-95 h-11 w-11 flex items-center justify-center shadow-sm transition-transform active:scale-95 shrink-0">
                         <i class="fa-solid fa-paper-plane text-sm"></i>
                     </button>
                 </form>
@@ -217,6 +217,7 @@
     <script>
         // Logique UI basique pour s'assurer que c'est sécurisé (Redirection si non connecté)
         document.addEventListener('DOMContentLoaded', async () => { // Ajout de 'async' ici
+            const t = (key, defaultStr) => (window.PSH_I18N && typeof window.PSH_I18N.t === 'function') ? window.PSH_I18N.t(key, { defaultValue: defaultStr || key }) : (defaultStr || key);
             let messageContainer=document.getElementById("chatMessages");
             const token = localStorage.getItem('token');
             if(!token) {
@@ -308,7 +309,7 @@
                     
                     let cvsHistorique = await res.json();
                     if(cvsHistorique.length > 0) {
-                        let chatHtml = '<div class="flex justify-center my-1"><span class="tg-date-pill text-xs font-semibold">Historique de discussion</span></div>';
+                        let chatHtml = `<div class="flex justify-center my-1"><span class="tg-date-pill text-xs font-semibold">${t('chat.js.historyTitle', 'Historique de discussion')}</span></div>`;
                         
                         let lastDateStr = "";
                         let today = new Date();
@@ -330,9 +331,9 @@
                         if (msgDateStr !== lastDateStr) {
                             let displayText = "";
                             if (msgDateStr === todayStr) {
-                                displayText = "Aujourd'hui";
+                                displayText = t('chat.js.today', "Aujourd'hui");
                             } else if (msgDateStr === yesterdayStr) {
-                                displayText = "Hier";
+                                displayText = t('chat.js.yesterday', "Hier");
                             } else {
                                 // Exemple: "11/04/2026" pour les dates plus anciennes
                                 displayText = String(dateObj.getDate()).padStart(2, '0') + '/' + String(dateObj.getMonth() + 1).padStart(2, '0') + '/' + dateObj.getFullYear();
@@ -385,7 +386,7 @@
 
                 }
                 else{
-                    document.getElementById('chatMessages').innerHTML = '<div class="text-center text-gray-400 mt-10 text-sm">Envoyez le premier message pour lancer la discussion avec notre équipe de support.</div>';
+                    document.getElementById('chatMessages').innerHTML = `<div class="text-center text-gray-400 mt-10 text-sm">\${t('chat.js.emptyHistory', 'Envoyez le premier message pour lancer la discussion avec notre équipe de support.')}</div>`;
                 }
             }catch(e){
 
@@ -395,6 +396,10 @@
                
             }
             loadMessages();
+
+            window.addEventListener('psh:i18n:changed', () => {
+                loadMessages();
+            });
 
             // === 2. EVENT LISTENER POUR ENVOYER UN MESSAGE ===
             const chatForm = document.getElementById('chatForm');
