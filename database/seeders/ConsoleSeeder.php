@@ -19,7 +19,10 @@ class ConsoleSeeder extends Seeder
         ];
 
         foreach ($consoles as $console) {
-            Console::create($console);
+            Console::firstOrCreate(
+                ['name' => $console['name']],
+                $console
+            );
         }
     }
 }

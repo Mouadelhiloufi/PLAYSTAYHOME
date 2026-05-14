@@ -15,10 +15,14 @@ class ManetteSeeder extends Seeder
     public function run(): void
     {
         for ($i = 1; $i <= 20; $i++) {
-            Manette::create([
-                'serial_number' => 'CTL-' . strtoupper(Str::random(8)),
-                'status' => 'available'
-            ]);
+            $serialNumber = 'CTL-' . strtoupper(Str::random(8));
+            Manette::firstOrCreate(
+                ['serial_number' => $serialNumber],
+                [
+                    'serial_number' => $serialNumber,
+                    'status' => 'available'
+                ]
+            );
         }
     }
 }

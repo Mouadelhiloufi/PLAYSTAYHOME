@@ -24,7 +24,10 @@ class GameSeeder extends Seeder
         ];
 
         foreach ($games as $gameData) {
-            Game::create($gameData);
+            Game::firstOrCreate(
+                ['title' => $gameData['title']],
+                $gameData
+            );
         }
 
         // Associer des jeux aux consoles

@@ -48,7 +48,10 @@ class CouponSeeder extends Seeder
         ];
 
         foreach ($coupons as $coupon) {
-            Coupon::create($coupon);
+            Coupon::firstOrCreate(
+                ['code' => $coupon['code']],
+                $coupon
+            );
         }
     }
 }
