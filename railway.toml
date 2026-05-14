@@ -1,0 +1,5 @@
+[deploy]
+preDeployCommand = "php artisan migrate --force"
+
+[build]
+buildCommand = "php artisan optimize"
