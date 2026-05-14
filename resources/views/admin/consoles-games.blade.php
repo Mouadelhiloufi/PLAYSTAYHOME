@@ -167,6 +167,16 @@
                     </section>
 
                     <section class="bg-white rounded-3xl shadow-[0_4px_20px_rgba(15,23,42,0.03)] border border-gray-100 p-6">
+                        <h3 class="text-lg font-black text-gray-900 mb-4">Supprimer une console</h3>
+                        <form class="space-y-3">
+                            <select id="deleteConsoleSelect" class="w-full rounded-xl border border-gray-200 px-4 py-2 text-sm">
+                                <option value="">Choisir une console</option>
+                            </select>
+                            <button id="btnDeleteConsole" type="button" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 rounded-xl">Supprimer la console</button>
+                        </form>
+                    </section>
+
+                    <section class="bg-white rounded-3xl shadow-[0_4px_20px_rgba(15,23,42,0.03)] border border-gray-100 p-6">
                         <h3 class="text-lg font-black text-gray-900 mb-4">Creer un jeu</h3>
                         <form class="space-y-3">
                             <input id="gameTitle" type="text" placeholder="Nom du jeu" class="w-full rounded-xl border border-gray-200 px-4 py-2 text-sm">
@@ -181,6 +191,16 @@
                             </select>
                             <input id="gameImage" type="text" placeholder="Image (URL)" class="w-full rounded-xl border border-gray-200 px-4 py-2 text-sm">
                             <button id="btnCreateGame" type="button" class="w-full bg-primary text-white font-bold py-2.5 rounded-xl">Creer le jeu</button>
+                        </form>
+                    </section>
+
+                    <section class="bg-white rounded-3xl shadow-[0_4px_20px_rgba(15,23,42,0.03)] border border-gray-100 p-6">
+                        <h3 class="text-lg font-black text-gray-900 mb-4">Supprimer un jeu</h3>
+                        <form class="space-y-3">
+                            <select id="deleteGameSelect" class="w-full rounded-xl border border-gray-200 px-4 py-2 text-sm">
+                                <option value="">Choisir un jeu</option>
+                            </select>
+                            <button id="btnDeleteGame" type="button" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 rounded-xl">Supprimer le jeu</button>
                         </form>
                     </section>
 
@@ -281,6 +301,7 @@
                 const count = document.getElementById('consolesCount');
                 const editSelect = document.getElementById('editConsoleSelect');
                 const addSelect = document.getElementById('addConsoleSelect');
+                const deleteSelect = document.getElementById('deleteConsoleSelect');
 
                 if (count) {
                     count.textContent = `${consoles.length} consoles`;
@@ -310,6 +331,9 @@
                     }
                     if (addSelect) {
                         addSelect.innerHTML = options;
+                    }
+                    if (deleteSelect) {
+                        deleteSelect.innerHTML = options;
                     }
                 }
 
@@ -362,6 +386,7 @@
                 const grid = document.getElementById('gamesGrid');
                 const count = document.getElementById('gamesCount');
                 const checkboxContainer = document.getElementById('consoleGamesCheckboxes');
+                const deleteGameSelect = document.getElementById('deleteGameSelect');
 
                 if (count) {
                     count.textContent = `${games.length} jeux`;
@@ -382,6 +407,17 @@
                         });
                         checkboxContainer.innerHTML = checkboxes;
                     }
+                }
+
+                if (deleteGameSelect) {
+                    let gameOptions = '<option value="">Choisir un jeu</option>';
+                    if (Array.isArray(games) && games.length > 0) {
+                        games.forEach((game) => {
+                            const label = game.title || 'Jeu';
+                            gameOptions += `<option value="${game.id}">${label}</option>`;
+                        });
+                    }
+                    deleteGameSelect.innerHTML = gameOptions;
                 }
 
                 if (!grid) {
@@ -565,6 +601,64 @@
                     return;
                 }
 
+
+            const btnDeleteGame = document.getElementById('btnDeleteGame');
+            if (btnDeleteGame) {
+                btnDeleteGame.addEventListener('click', async (e) => {
+                    e.preventDefault();
+
+                    const select = document.getElementById('deleteGameSelect');
+                    if (!select) {
+                        return;
+                    }
+
+                    const gameId = select.value;
+                    if (!gameId) {
+                        await Swal.fire({ icon: 'warning', title: 'Attention', text: 'Choisir un jeu.' });
+                        return;
+                    }
+
+                    const confirmation = await Swal.fire({
+                        icon: 'warning',
+                        title: 'Supprimer le jeu ?',
+                        text: 'Cette action supprimera aussi ses associations avec les consoles.',
+                        showCancelButton: true,
+                        confirmButtonText: 'Oui, supprimer',
+                        cancelButtonText: 'Annuler',
+                        confirmButtonColor: '#dc2626'
+                    });
+
+                    if (!confirmation.isConfirmed) {
+                        return;
+                    }
+
+                    try {
+                        const res = await fetch(`/api/games/${gameId}`, {
+                            method: 'DELETE',
+                            headers: {
+                                'Accept': 'application/json',
+                                'Authorization': 'Bearer ' + token
+                            }
+                        });
+
+                        if (!res.ok) {
+                            const error = await res.json().catch(() => null);
+                            console.error('Erreur suppression jeu', error);
+                            await Swal.fire({ icon: 'error', title: 'Erreur', text: 'Erreur suppression jeu' });
+                            return;
+                        }
+
+                        select.value = '';
+                        document.getElementById('consoleGamesCheckboxes').innerHTML = '';
+                        await Swal.fire({ icon: 'success', title: 'Supprimé', text: 'Jeu supprimé avec succès', timer: 1500, showConfirmButton: false });
+                        getGames();
+                        getConsoles();
+                    } catch (err) {
+                        console.error('Erreur suppression jeu', err);
+                        await Swal.fire({ icon: 'error', title: 'Erreur', text: 'Erreur suppression jeu' });
+                    }
+                });
+            }
                 const titleValue = title.value.trim();
                 const genreValue = genre.value.trim();
                 const imageValue = image.value.trim();
@@ -653,6 +747,65 @@
                     }
                 } catch (err) {
                     console.error("Erreur update console", err);
+                }
+            });
+        }
+
+        const btnDeleteConsole = document.getElementById('btnDeleteConsole');
+        if (btnDeleteConsole) {
+            btnDeleteConsole.addEventListener('click', async (e) => {
+                e.preventDefault();
+
+                const select = document.getElementById('deleteConsoleSelect');
+                if (!select) {
+                    return;
+                }
+
+                const consoleId = select.value;
+                if (!consoleId) {
+                    await Swal.fire({ icon: 'warning', title: 'Attention', text: 'Choisir une console.' });
+                    return;
+                }
+
+                const confirmation = await Swal.fire({
+                    icon: 'warning',
+                    title: 'Supprimer la console ?',
+                    text: 'Cette action supprimera aussi ses associations de jeux et est irreversible.',
+                    showCancelButton: true,
+                    confirmButtonText: 'Oui, supprimer',
+                    cancelButtonText: 'Annuler',
+                    confirmButtonColor: '#dc2626'
+                });
+
+                if (!confirmation.isConfirmed) {
+                    return;
+                }
+
+                try {
+                    const res = await fetch(`/api/consoles/${consoleId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Authorization': 'Bearer ' + token
+                        }
+                    });
+
+                    if (!res.ok) {
+                        const error = await res.json().catch(() => null);
+                        console.error('Erreur suppression console', error);
+                        await Swal.fire({ icon: 'error', title: 'Erreur', text: 'Erreur suppression console' });
+                        return;
+                    }
+
+                    select.value = '';
+                    document.getElementById('editConsoleSelect').value = '';
+                    document.getElementById('addConsoleSelect').value = '';
+                    document.getElementById('consoleGamesCheckboxes').innerHTML = '';
+                    await Swal.fire({ icon: 'success', title: 'Supprimée', text: 'Console supprimée avec succès', timer: 1500, showConfirmButton: false });
+                    getConsoles();
+                } catch (err) {
+                    console.error('Erreur suppression console', err);
+                    await Swal.fire({ icon: 'error', title: 'Erreur', text: 'Erreur suppression console' });
                 }
             });
         }
