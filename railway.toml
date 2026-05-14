@@ -1,5 +1,6 @@
-[deploy]
-preDeployCommand = "php artisan migrate --force"
-
 [build]
-buildCommand = "php artisan optimize"
+buildCommand = "npm install && npm run build && php artisan optimize"
+
+[deploy]
+preDeployCommand = "php artisan migrate --force && php artisan db:seed"
+

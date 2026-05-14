@@ -12,6 +12,7 @@
 
         <div class="flex shrink-0 items-center justify-end gap-3 lg:gap-8">
             <nav class="hidden items-center gap-9 lg:flex" aria-label="Navigation principale">
+                <a href="https://wa.me/+212XXXXXXXXX?text=Bonjour%20PlayStayHome" target="_blank" class="nav-link font-bold text-green-600 hover:text-green-700 flex items-center gap-2"><i class="fa-brands fa-whatsapp"></i> Réserver via WhatsApp</a>
                 <a href="/" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">Accueil</a>
                 <a href="/catalogue" class="nav-link {{ request()->routeIs('catalogue') ? 'active' : '' }}">Catalogue</a>
                 <a href="/contact" class="nav-link {{ request()->routeIs('contact') ? 'active' : '' }}">Contact</a>
@@ -89,6 +90,7 @@
         aria-label="Menu mobile"
     >
         <div class="flex flex-col px-6 py-6 pb-8 gap-2 max-h-[calc(100vh-70px)] overflow-y-auto">
+            <a role="menuitem" href="https://wa.me/+212XXXXXXXXX?text=Bonjour%20PlayStayHome" target="_blank" class="mobile-nav-link text-center block rounded-2xl px-4 py-3.5 text-lg font-bold bg-green-50 text-green-600 hover:bg-green-100 transition-colors"><i class="fa-brands fa-whatsapp mr-2"></i>Réserver via WhatsApp</a>
             <a role="menuitem" href="/" class="mobile-nav-link text-center block rounded-2xl px-4 py-3.5 text-lg font-bold text-gray-700 hover:bg-blue-50 hover:text-primary transition-colors {{ request()->routeIs('home') ? 'bg-blue-50 text-primary' : '' }}">Accueil</a>
             <a role="menuitem" href="/catalogue" class="mobile-nav-link text-center block rounded-2xl px-4 py-3.5 text-lg font-bold text-gray-700 hover:bg-blue-50 hover:text-primary transition-colors {{ request()->routeIs('catalogue') ? 'bg-blue-50 text-primary' : '' }}">Catalogue</a>
             <a role="menuitem" href="/contact" class="mobile-nav-link text-center block rounded-2xl px-4 py-3.5 text-lg font-bold text-gray-700 hover:bg-blue-50 hover:text-primary transition-colors {{ request()->routeIs('contact') ? 'bg-blue-50 text-primary' : '' }}">Contact</a>
