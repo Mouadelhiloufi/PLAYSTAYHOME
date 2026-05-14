@@ -23,9 +23,9 @@
 
         </nav>
         @if($isLogin)
-            <a href="/register" class="hidden lg:inline-flex items-center justify-center bg-primary text-white px-5 py-2 rounded-lg text-sm font-bold hover:bg-blue-700 transition-colors" data-i18n="common.register">Créer un compte</a>
+            <a href="/register" class="hidden lg:inline-flex items-center justify-center bg-primary text-white px-5 py-2 rounded-lg text-sm font-bold hover:bg-blue-700 transition-colors">Créer un compte</a>
         @else
-            <a href="/login" class="hidden lg:inline-flex items-center justify-center bg-primary text-white px-5 py-2 rounded-lg text-sm font-bold hover:bg-blue-700 transition-colors" data-i18n="common.login">Connexion</a>
+            <a href="/login" class="hidden lg:inline-flex items-center justify-center bg-primary text-white px-5 py-2 rounded-lg text-sm font-bold hover:bg-blue-700 transition-colors">Connexion</a>
         @endif
 
         <div class="relative lg:hidden">
@@ -47,13 +47,13 @@
                 role="menu"
                 aria-label="Navigation"
             >
-                <a role="menuitem" class="block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-primary" href="/" data-i18n="common.home">Accueil</a>
-                <a role="menuitem" class="block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-primary" href="/catalogue" data-i18n="common.catalogue">Catalogue</a>
-                <a role="menuitem" class="block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-primary" href="/contact" data-i18n="common.contact">Contact</a>
-                <a role="menuitem" class="block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-primary" href="/faq" data-i18n="common.faq">FAQ</a>
+                <a role="menuitem" class="block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-primary" href="/">Accueil</a>
+                <a role="menuitem" class="block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-primary" href="/catalogue">Catalogue</a>
+                <a role="menuitem" class="block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-primary" href="/contact">Contact</a>
+                <a role="menuitem" class="block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-primary" href="/faq">FAQ</a>
                 <div class="my-2 border-t border-gray-100" role="presentation"></div>
-                <a role="menuitem" class="block px-4 py-2.5 text-sm font-semibold text-primary hover:bg-blue-50" href="/login" data-i18n="common.login">Connexion</a>
-                <a role="menuitem" class="block px-4 py-2.5 text-sm font-semibold text-primary hover:bg-blue-50" href="/register" data-i18n="common.register">Créer un compte</a>
+                <a role="menuitem" class="block px-4 py-2.5 text-sm font-semibold text-primary hover:bg-blue-50" href="/login">Connexion</a>
+                <a role="menuitem" class="block px-4 py-2.5 text-sm font-semibold text-primary hover:bg-blue-50" href="/register">Créer un compte</a>
             </div>
         </div>
     </div>

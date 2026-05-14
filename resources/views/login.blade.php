@@ -91,23 +91,23 @@
         <div class="w-full md:w-1/2 flex items-center justify-center px-4 py-8 sm:p-8 md:p-12 bg-gray-50">
             <div class="w-full max-w-[480px]">
                 <div class="mb-10">
-                    <h2 class="text-gray-900 text-4xl font-black mb-2" data-i18n="login.welcomeTitle">Bienvenue</h2>
-                    <p class="text-gray-500 text-lg" data-i18n="login.welcomeSubtitle">Connectez-vous à votre compte playstayhome.</p>
+                    <h2 class="text-gray-900 text-4xl font-black mb-2">Bienvenue</h2>
+                    <p class="text-gray-500 text-lg">Connectez-vous à votre compte playstayhome.</p>
                 </div>
                 <form class="space-y-5" id="loginForm">
                     <div class="space-y-2">
-                        <label class="block text-gray-700 text-sm font-semibold uppercase tracking-wider" data-i18n="login.emailLabel">Adresse e-mail</label>
+                        <label class="block text-gray-700 text-sm font-semibold uppercase tracking-wider">Adresse e-mail</label>
                         <div class="relative input-wrapper">
                             <svg class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                             </svg>
-                            <input id="email" name="email" type="email" data-parsley-type="email" data-parsley-required="true" required placeholder="votre@email.com" data-i18n-placeholder="login.emailPlaceholder" class="w-full pl-12 pr-4 py-4 rounded-lg border border-gray-200 bg-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none">
+                            <input id="email" name="email" type="email" data-parsley-type="email" data-parsley-required="true" required placeholder="votre@email.com" class="w-full pl-12 pr-4 py-4 rounded-lg border border-gray-200 bg-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none">
                         </div>
                     </div>
                     <div class="space-y-2">
                         <div class="flex items-center justify-between">
-                            <label class="block text-gray-700 text-sm font-semibold uppercase tracking-wider" data-i18n="login.passwordLabel">Mot de passe</label>
-                            <a class="text-sm font-medium text-primary hover:underline" href="#" data-i18n="login.forgotPassword">Mot de passe oublié ?</a>
+                            <label class="block text-gray-700 text-sm font-semibold uppercase tracking-wider">Mot de passe</label>
+                            <a class="text-sm font-medium text-primary hover:underline" href="#">Mot de passe oublié ?</a>
                         </div>
                         <div class="relative input-wrapper">
                             <svg class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -118,14 +118,14 @@
                     </div>
                     <div class="flex items-center gap-3 pt-2">
                         <input type="checkbox" id="remember" class="rounded border-gray-300 text-primary focus:ring-primary">
-                        <label for="remember" class="text-sm text-gray-500" data-i18n="login.rememberMe">Se souvenir de moi pendant 30 jours</label>
+                        <label for="remember" class="text-sm text-gray-500">Se souvenir de moi pendant 30 jours</label>
                     </div>
-                    <button type="submit" class="w-full bg-primary hover:bg-blue-700 text-white font-bold py-4 rounded-lg text-lg shadow-lg" data-i18n="login.submitBtn">Connexion</button>
+                    <button type="submit" class="w-full bg-primary hover:bg-blue-700 text-white font-bold py-4 rounded-lg text-lg shadow-lg">Connexion</button>
                 </form>
                 @if (config('services.google.enabled'))
                 <div class="my-6 flex items-center gap-3">
                     <div class="h-px flex-1 bg-gray-200"></div>
-                    <span class="text-xs font-semibold uppercase tracking-wider text-gray-400" data-i18n="login.or">ou</span>
+                    <span class="text-xs font-semibold uppercase tracking-wider text-gray-400">ou</span>
                     <div class="h-px flex-1 bg-gray-200"></div>
                 </div>
                 <a href="{{ route('auth.google.redirect') }}{{ request()->filled('redirect') ? '?' . http_build_query(['redirect' => request('redirect')]) : '' }}" class="w-full inline-flex items-center justify-center gap-3 rounded-lg border border-gray-300 bg-white py-3.5 text-sm font-semibold text-gray-700 hover:bg-gray-50">
@@ -135,13 +135,13 @@
                         <path fill="#4CAF50" d="M24 44c5.1 0 9.8-1.9 13.4-5l-6.2-5.2C29.2 35.2 26.7 36 24 36c-5.2 0-9.6-3.3-11.2-8l-6.5 5C9.6 39.6 16.3 44 24 44z"/>
                         <path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.2 4.2-4.1 5.6l.1-.1 6.2 5.2C37 38.3 44 33 44 24c0-1.3-.1-2.4-.4-3.5z"/>
                     </svg>
-                    <span data-i18n="login.continueWithGoogle">Continuer avec Google</span>
+                    <span>Continuer avec Google</span>
                 </a>
                 @endif
                 <div class="mt-8 pt-8 border-t border-gray-200 text-center">
                     <p class="text-gray-600">
-                        <span data-i18n="login.noAccount">Pas de compte ?</span>
-                        <a class="text-primary font-bold hover:underline ml-1" href="/register{{ request()->getQueryString() ? '?' . request()->getQueryString() : '' }}" data-i18n="login.createAccount">Créer un compte</a>
+                        <span>Pas de compte ?</span>
+                        <a class="text-primary font-bold hover:underline ml-1" href="/register{{ request()->getQueryString() ? '?' . request()->getQueryString() : '' }}">Créer un compte</a>
                     </p>
                 </div>
             </div>

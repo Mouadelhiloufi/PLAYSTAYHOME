@@ -91,30 +91,30 @@
         <div class="w-full md:w-1/2 flex items-center justify-center px-4 py-8 sm:p-8 md:p-12 bg-gray-50">
             <div class="w-full max-w-120">  
                 <div class="mb-10">
-                    <h2 class="text-gray-900 text-4xl font-black mb-2" data-i18n="register.title">Créer un compte</h2>
-                    <p class="text-gray-500 text-lg" data-i18n="register.subtitle">Rejoignez playstayhome dès aujourd'hui.</p>
+                    <h2 class="text-gray-900 text-4xl font-black mb-2">Créer un compte</h2>
+                    <p class="text-gray-500 text-lg">Rejoignez playstayhome dès aujourd'hui.</p>
                 </div>
                 <form class="space-y-5" id="registerForm">
                     <div class="space-y-2">
-                        <label class="block text-gray-700 text-sm font-semibold uppercase tracking-wider" data-i18n="register.fullNameLabel">Nom complet</label>
+                        <label class="block text-gray-700 text-sm font-semibold uppercase tracking-wider">Nom complet</label>
                         <div class="relative input-wrapper">
                             <svg class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                             </svg>
-                            <input id="fullName" name="fullName" type="text" data-parsley-minlength="4" data-parsley-required="true" placeholder="Jean Dupont" data-i18n-placeholder="register.fullNamePlaceholder" class="w-full pl-12 pr-4 py-4 rounded-lg border border-gray-200 bg-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none">
+                            <input id="fullName" name="fullName" type="text" data-parsley-minlength="4" data-parsley-required="true" placeholder="Jean Dupont" class="w-full pl-12 pr-4 py-4 rounded-lg border border-gray-200 bg-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none">
                         </div>
                     </div>
                     <div class="space-y-2">
-                        <label class="block text-gray-700 text-sm font-semibold uppercase tracking-wider" data-i18n="login.emailLabel">Adresse e-mail</label>
+                        <label class="block text-gray-700 text-sm font-semibold uppercase tracking-wider">Adresse e-mail</label>
                         <div class="relative input-wrapper">
                             <svg class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                             </svg>
-                            <input id="email" name="email" type="email" data-parsley-type="email" data-parsley-required="true" placeholder="votre@email.com" data-i18n-placeholder="login.emailPlaceholder" class="w-full pl-12 pr-4 py-4 rounded-lg border border-gray-200 bg-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none">
+                            <input id="email" name="email" type="email" data-parsley-type="email" data-parsley-required="true" placeholder="votre@email.com" class="w-full pl-12 pr-4 py-4 rounded-lg border border-gray-200 bg-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none">
                         </div>
                     </div>
                     <div class="space-y-2">
-                        <label class="block text-gray-700 text-sm font-semibold uppercase tracking-wider" data-i18n="login.passwordLabel">Mot de passe</label>
+                        <label class="block text-gray-700 text-sm font-semibold uppercase tracking-wider">Mot de passe</label>
                         <div class="relative input-wrapper">
                             <svg class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
@@ -123,7 +123,7 @@
                         </div>
                     </div>
                     <div class="space-y-2">
-                        <label class="block text-gray-700 text-sm font-semibold uppercase tracking-wider" data-i18n="register.confirmPasswordLabel">Confirmer le mot de passe</label>
+                        <label class="block text-gray-700 text-sm font-semibold uppercase tracking-wider">Confirmer le mot de passe</label>
                         <div class="relative input-wrapper">
                             <svg class="w-5 h-5 absolute left-4 top-10 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
@@ -132,7 +132,7 @@
                         </div>
                     </div>
                     <div class="space-y-2">
-                        <label class="block text-gray-700 text-sm font-semibold uppercase tracking-wider" data-i18n="register.photoLabel">Photo de profil (optionnel)</label>
+                        <label class="block text-gray-700 text-sm font-semibold uppercase tracking-wider">Photo de profil (optionnel)</label>
                         <div class="relative input-wrapper">
                             <input id="photo" name="photo" type="file" accept="image/*" class="w-full px-4 py-3 rounded-lg border border-gray-200 bg-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none">
                         </div>
@@ -140,15 +140,15 @@
                     <div class="flex items-center gap-3 pt-2">
                         <input type="checkbox" id="terms" class="rounded border-gray-300 text-primary focus:ring-primary">
                         <label for="terms" class="text-sm text-gray-500">
-                            <span data-i18n="register.accept">J'accepte les</span> <a href="#" class="text-primary hover:underline" data-i18n="register.terms">Conditions générales</a>
+                            <span>J'accepte les</span> <a href="#" class="text-primary hover:underline">Conditions générales</a>
                         </label>
                     </div>
-                    <button type="submit" class="w-full bg-primary hover:bg-blue-700 text-white font-bold py-4 rounded-lg text-lg shadow-lg" data-i18n="register.submitBtn">Créer un compte</button>
+                    <button type="submit" class="w-full bg-primary hover:bg-blue-700 text-white font-bold py-4 rounded-lg text-lg shadow-lg">Créer un compte</button>
                 </form>
                 @if (config('services.google.enabled'))
                 <div class="my-6 flex items-center gap-3">
                     <div class="h-px flex-1 bg-gray-200"></div>
-                    <span class="text-xs font-semibold uppercase tracking-wider text-gray-400" data-i18n="login.or">ou</span>
+                    <span class="text-xs font-semibold uppercase tracking-wider text-gray-400">ou</span>
                     <div class="h-px flex-1 bg-gray-200"></div>
                 </div>
                 <a href="{{ route('auth.google.redirect') }}{{ request()->filled('redirect') ? '?' . http_build_query(['redirect' => request('redirect')]) : '' }}" class="w-full inline-flex items-center justify-center gap-3 rounded-lg border border-gray-300 bg-white py-3.5 text-sm font-semibold text-gray-700 hover:bg-gray-50">
@@ -158,13 +158,13 @@
                         <path fill="#4CAF50" d="M24 44c5.1 0 9.8-1.9 13.4-5l-6.2-5.2C29.2 35.2 26.7 36 24 36c-5.2 0-9.6-3.3-11.2-8l-6.5 5C9.6 39.6 16.3 44 24 44z"/>
                         <path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.2 4.2-4.1 5.6l.1-.1 6.2 5.2C37 38.3 44 33 44 24c0-1.3-.1-2.4-.4-3.5z"/>
                     </svg>
-                    <span data-i18n="login.continueWithGoogle">Continuer avec Google</span>
+                    <span>Continuer avec Google</span>
                 </a>
                 @endif
                 <div class="mt-8 pt-8 border-t border-gray-200 text-center">
                     <p class="text-gray-600">
-                        <span data-i18n="register.alreadyAccount">Vous avez déjà un compte ?</span>
-                        <a class="text-primary font-bold hover:underline ml-1" href="/login{{ request()->getQueryString() ? '?' . request()->getQueryString() : '' }}" data-i18n="register.loginLink">Connexion</a>
+                        <span>Vous avez déjà un compte ?</span>
+                        <a class="text-primary font-bold hover:underline ml-1" href="/login{{ request()->getQueryString() ? '?' . request()->getQueryString() : '' }}">Connexion</a>
                     </p>
                 </div>
             </div>
