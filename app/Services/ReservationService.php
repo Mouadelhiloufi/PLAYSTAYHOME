@@ -42,8 +42,18 @@ class ReservationService{
         if (!$reservation) {
             return false;
         }
+
+        $currentStatus = strtolower((string) $reservation->status);
+        if (in_array($currentStatus, ['refused', 'cancelled'], true)) {
+            return true;
+        }
        
         $this->releaseReservationResources($reservation, false);
+
+        // Mark as completed only when the reservation naturally ends.
+        $reservation->status = 'completed';
+        $reservation->save();
+
         return true;
     }
 
