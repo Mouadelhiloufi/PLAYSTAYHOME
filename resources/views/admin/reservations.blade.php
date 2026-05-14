@@ -112,6 +112,25 @@
                 return;
             }
 
+            try {
+                const meResponse = await fetch('/api/user', {
+                    headers: { 'Authorization': 'Bearer ' + token, 'Accept': 'application/json' }
+                });
+
+                if (!meResponse.ok) {
+                    throw new Error('Unauthorized');
+                }
+
+                const me = await meResponse.json();
+                if (me?.role !== 'admin') {
+                    window.location.href = '/mon-compte';
+                    return;
+                }
+            } catch (error) {
+                window.location.href = '/login';
+                return;
+            }
+
             const logoutBtn = document.getElementById('logoutBtn');
             if (logoutBtn) {
                 logoutBtn.addEventListener('click', async () => {

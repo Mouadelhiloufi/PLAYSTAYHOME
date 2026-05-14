@@ -121,7 +121,29 @@
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
             const token = localStorage.getItem('token');
-            if(!token) window.location.href = '/login';
+            if(!token) {
+                window.location.href = '/login';
+                return;
+            }
+
+            try {
+                const meResponse = await fetch('/api/user', {
+                    headers: { 'Authorization': 'Bearer ' + token, 'Accept': 'application/json' }
+                });
+
+                if (!meResponse.ok) {
+                    throw new Error('Unauthorized');
+                }
+
+                const me = await meResponse.json();
+                if (me?.role !== 'admin') {
+                    window.location.href = '/mon-compte';
+                    return;
+                }
+            } catch (error) {
+                window.location.href = '/login';
+                return;
+            }
 
             // Logique de déconnexion identique au dashboard
             let logoutBtn = document.getElementById("logoutBtn");
