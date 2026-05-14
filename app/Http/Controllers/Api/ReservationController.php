@@ -240,6 +240,13 @@ class ReservationController extends Controller
             ], 403);
         }
 
+        $currentStatus = strtolower((string) $reservation->status);
+        if (! in_array($currentStatus, ['pending', 'active'], true)) {
+            return response()->json([
+                'message' => 'Seules les réservations en attente peuvent être annulées.',
+            ], 422);
+        }
+
         $this->reservationService->releaseReservationResources($reservation, true);
 
         $reservation->status = 'refused';

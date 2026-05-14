@@ -386,7 +386,7 @@
 
                 }
                 else{
-                    document.getElementById('chatMessages').innerHTML = `<div class="text-center text-gray-400 mt-10 text-sm">\${t('chat.js.emptyHistory', 'Envoyez le premier message pour lancer la discussion avec notre équipe de support.')}</div>`;
+                    document.getElementById('chatMessages').innerHTML = `<div class="text-center text-gray-400 mt-10 text-sm">${t('chat.js.emptyHistory', 'Envoyez le premier message pour lancer la discussion avec notre équipe de support.')}</div>`;
                 }
             }catch(e){
 

@@ -18,24 +18,6 @@
                 <a href="/contact" class="nav-link {{ request()->routeIs('contact') ? 'active' : '' }}">Contact</a>
                 <a href="/faq" class="nav-link {{ request()->routeIs('faq') ? 'active' : '' }}">FAQ</a>
 
-                {{-- Language switcher disabled - French only --}}
-                <div class="relative hidden">
-                    <button
-                        type="button"
-                        class="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-3 py-2 text-xs font-bold text-gray-700 shadow-sm hover:bg-gray-50"
-                        aria-controls="langPanelMain"
-                        aria-expanded="false"
-                    >
-                        <span class="text-gray-500">▼</span>
-                        <span>Français</span>
-                        <i class="fa-solid fa-globe text-gray-400"></i>
-                    </button>
-                    <div id="langPanelMain" class="hidden absolute right-0 mt-2 w-44 rounded-xl border border-gray-200 bg-white shadow-xl overflow-hidden">
-                        <button type="button" class="w-full px-4 py-2.5 text-left text-sm font-semibold text-gray-700 hover:bg-gray-50">Français</button>
-                        <button type="button" class="w-full px-4 py-2.5 text-left text-sm font-semibold text-gray-700 hover:bg-gray-50">العربية</button>
-                    </div>
-                </div>
-
                 <div id="nav-guest-links" class="flex items-center gap-9">
                     <a href="/register" class="nav-link {{ request()->routeIs('register') ? 'active' : '' }}">Créer un compte</a>
                     <a href="/login" class="nav-link {{ request()->routeIs('login') ? 'active' : '' }}">Connexion</a>
@@ -98,11 +80,6 @@
 
             <div class="my-4 border-t border-gray-100 w-16 mx-auto"></div>
             
-            <div class="flex justify-center gap-4 mb-4 hidden">
-                <button type="button" role="menuitem" class="mobile-nav-link rounded-xl px-5 py-2.5 text-sm font-bold text-gray-600 bg-gray-50 hover:bg-blue-50 hover:text-primary transition-colors border border-gray-100">Français</button>
-                <button type="button" role="menuitem" class="mobile-nav-link rounded-xl px-5 py-2.5 text-sm font-bold text-gray-600 bg-gray-50 hover:bg-blue-50 hover:text-primary transition-colors border border-gray-100">العربية</button>
-            </div>
-
             <div id="mobile-guest-links" class="flex flex-col gap-3 mt-2">
                 <a role="menuitem" href="/login" class="mobile-nav-link block w-full rounded-2xl border border-gray-200 bg-white px-4 py-4 text-center text-base font-bold text-gray-800 shadow-sm hover:bg-gray-50">Connexion</a>
                 <a role="menuitem" href="/register" class="mobile-nav-link block w-full rounded-2xl bg-primary px-4 py-4 text-center text-base font-bold text-white shadow-sm hover:bg-blue-600">Créer un compte</a>

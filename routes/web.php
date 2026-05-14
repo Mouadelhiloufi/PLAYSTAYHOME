@@ -47,6 +47,16 @@ if (config('services.google.enabled')) {
     Route::get('/auth/google/callback', ['App\\Http\\Controllers\\Auth\\GoogleController', 'callback'])->name('auth.google.callback');
 }
 
+// DEBUG: Route to check config
+Route::get('/debug/google-config', function () {
+    return response()->json([
+        'GOOGLE_AUTH_ENABLED_env' => env('GOOGLE_AUTH_ENABLED'),
+        'config_google_enabled' => config('services.google.enabled'),
+        'config_google_client_id' => config('services.google.client_id') ? '***' : 'NOT SET',
+        'config_google_redirect' => config('services.google.redirect'),
+    ]);
+});
+
 
 Route::get('/admin/dashboard', function () {
     return view('admin.dashboard');

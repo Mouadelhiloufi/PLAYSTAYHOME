@@ -243,6 +243,73 @@
 
             // Extraire la logique de rendu pour pouvoir la rappeler
             let currentSafeReservations = [];
+            const loadAndRenderReservations = async () => {
+                const res = await fetch('/api/reservations', {
+                    headers: { 'Authorization': 'Bearer ' + token, 'Accept': 'application/json' }
+                });
+
+                if (!res.ok) {
+                    throw new Error('Erreur au chargement des réservations');
+                }
+
+                const repData = await res.json();
+                const reservationsList = Array.isArray(repData) ? repData : repData.data;
+                const safeReservations = reservationsList || [];
+                const now = new Date();
+
+                currentSafeReservations = safeReservations;
+                renderReservations(safeReservations, now);
+
+                const nextReservation = pickNextReservation(safeReservations, now);
+                if (nextReservation) {
+                    startCountdown(nextReservation);
+                }
+            };
+
+            window.cancelReservation = async (reservationId) => {
+                const result = await Swal.fire({
+                    icon: 'warning',
+                    title: 'Annuler la réservation',
+                    text: 'Voulez-vous vraiment annuler cette réservation en attente ?',
+                    showCancelButton: true,
+                    confirmButtonText: 'Oui, annuler',
+                    cancelButtonText: 'Retour',
+                    confirmButtonColor: '#dc2626'
+                });
+
+                if (!result.isConfirmed) return;
+
+                try {
+                    const response = await fetch(`/api/reservations/${reservationId}/cancel`, {
+                        method: 'PUT',
+                        headers: {
+                            'Authorization': 'Bearer ' + token,
+                            'Accept': 'application/json'
+                        }
+                    });
+
+                    const payload = await response.json().catch(() => ({}));
+
+                    if (!response.ok) {
+                        throw new Error(payload.message || 'Impossible d\'annuler cette réservation.');
+                    }
+
+                    await Swal.fire({
+                        icon: 'success',
+                        title: 'Réservation annulée',
+                        text: payload.message || 'Votre réservation a été annulée avec succès.'
+                    });
+
+                    await loadAndRenderReservations();
+                } catch (error) {
+                    await Swal.fire({
+                        icon: 'error',
+                        title: 'Erreur',
+                        text: error.message || 'Une erreur est survenue pendant l\'annulation.'
+                    });
+                }
+            };
+
             const renderReservations = (safeReservations, now) => {
                 let listHtml = '';
                 if (safeReservations.length === 0) {
@@ -331,22 +398,7 @@
             });
 
             try {
-                const res = await fetch('/api/reservations', {
-                    headers: { 'Authorization': 'Bearer ' + token, 'Accept': 'application/json' }
-                });
-
-                const repData = await res.json();
-                const reservationsList = Array.isArray(repData) ? repData : repData.data;
-                const safeReservations = reservationsList || [];
-                const now = new Date();
-
-                currentSafeReservations = safeReservations;
-                renderReservations(safeReservations, now);
-
-                const nextReservation = pickNextReservation(safeReservations, now);
-                if (nextReservation) {
-                    startCountdown(nextReservation);
-                }
+                await loadAndRenderReservations();
             } catch (e) {
                 console.error('Erreur au chargement des réservations.', e);
                 document.getElementById('reservationsList').innerHTML = `<p class="text-center text-red-500 py-10 font-bold">${t('monCompte.js.errorLoadingReservations', 'Impossible de charger vos données de réservation.')}</p>`;

@@ -61,26 +61,6 @@
                 </a>
             </nav>
 
-            <div class="mt-7 relative">
-                <button
-                    type="button"
-                    class="w-full inline-flex items-center justify-between gap-2 rounded-xl border border-gray-200 bg-white px-4 py-3 text-xs font-black text-gray-700 shadow-sm hover:bg-gray-50"
-                    data-lang-btn
-                    aria-controls="langPanelAdmin"
-                    aria-expanded="false"
-                    data-i18n-aria-label="lang.switch"
-                >
-                    <span data-i18n-lang-label>Français</span>
-                    <span class="inline-flex items-center gap-2 text-gray-400">
-                        <i class="fa-solid fa-globe"></i>
-                        <span>▼</span>
-                    </span>
-                </button>
-                <div id="langPanelAdmin" data-lang-panel class="hidden absolute left-0 right-0 mt-2 rounded-xl border border-gray-200 bg-white shadow-xl overflow-hidden">
-                    <button type="button" class="w-full px-4 py-2.5 text-left text-sm font-semibold text-gray-700 hover:bg-gray-50" data-set-lang="fr" data-i18n="lang.fr">Français</button>
-                    <button type="button" class="w-full px-4 py-2.5 text-left text-sm font-semibold text-gray-700 hover:bg-gray-50" data-set-lang="ar" data-i18n="lang.ar">العربية</button>
-                </div>
-            </div>
         </div>
 
         <!-- Deconnexion -->
