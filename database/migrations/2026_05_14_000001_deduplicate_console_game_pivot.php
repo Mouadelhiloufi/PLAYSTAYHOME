@@ -11,9 +11,9 @@ return new class extends Migration
     {
         $duplicates = DB::table('console_game')
             ->select('console_id', 'game_id')
-            ->selectRaw('MIN(id) as keep_id, COUNT(*) as total')
+            ->selectRaw('MIN(id) as keep_id, COUNT(*) as duplicate_count')
             ->groupBy('console_id', 'game_id')
-            ->having('total', '>', 1)
+            ->havingRaw('COUNT(*) > 1')
             ->get();
 
         foreach ($duplicates as $duplicate) {
