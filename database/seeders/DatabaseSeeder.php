@@ -17,10 +17,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             AdminSeeder::class,
-            ConsoleSeeder::class,
-            GameSeeder::class,
-            CouponSeeder::class,
-            ManetteSeeder::class,
         ]);
     }
 }

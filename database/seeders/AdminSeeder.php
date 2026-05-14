@@ -24,23 +24,5 @@ class AdminSeeder extends Seeder
                 'role' => 'admin'
             ]
         );
-
-        User::firstOrCreate(
-            ['email' => 'user@user.com'],
-            [
-                'name' => 'John Doe',
-                'password' => Hash::make('user123'),
-                'role' => 'client'
-            ]
-        );
-
-        User::firstOrCreate(
-            ['email' => 'jane@user.com'],
-            [
-                'name' => 'Jane Smith',
-                'password' => Hash::make('user123'),
-                'role' => 'client'
-            ]
-        );
     }
 }
