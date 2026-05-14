@@ -22,7 +22,7 @@
         }
     </script>
     <style>
-        body { font-family: 'Inter', sans-serif; background: #f8fafc; color: #111827; }
+        body { font-family: 'Inter', sans-serif; background: #f8fafc; color: #111827; visibility: hidden; }
     </style>
 </head>
 <body class="flex min-h-screen">
@@ -198,6 +198,8 @@
                     window.location.href = '/mon-compte';
                     return;
                 }
+
+                document.body.style.visibility = 'visible';
             } catch (error) {
                 window.location.href = '/login';
                 return;

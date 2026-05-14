@@ -23,7 +23,7 @@
     </script>
     @vite(['resources/js/app.js'])
     <style>
-        body { font-family: 'Inter', sans-serif; background: #d6e2e9; color: #111827; overflow: hidden; }
+        body { font-family: 'Inter', sans-serif; background: #d6e2e9; color: #111827; overflow: hidden; visibility: hidden; }
         #chatMessages::-webkit-scrollbar,
         #usersList::-webkit-scrollbar {
             width: 6px;
@@ -243,6 +243,8 @@
                     window.location.href = '/mon-compte';
                     return;
                 }
+
+                document.body.style.visibility = 'visible';
             } catch (error) {
                 window.location.href = '/login';
                 return;
