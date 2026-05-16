@@ -94,7 +94,7 @@ class ReservationController extends Controller
             'start_date' => 'required|date',
             'end_date' => 'required|date',
             'coupon_code' => 'nullable|string',
-            'nombre_manettes' => 'nullable|integer|min:0|max:4',
+            'nombre_manettes' => 'nullable|integer|min:1|max:4',
             'phone' => 'required|string|max:50',
             'address' => 'required|string|max:5000',
         ]);

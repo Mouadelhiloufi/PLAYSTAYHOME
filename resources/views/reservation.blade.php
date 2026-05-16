@@ -289,7 +289,7 @@
                                     <button type="button" id="btn-minus" class="w-8 h-8 flex items-center justify-center text-gray-600 hover:text-primary transition-colors disabled:opacity-30 disabled:cursor-not-allowed" disabled>
                                         <i class="fas fa-minus text-[10px]"></i>
                                     </button>
-                                    <span id="manettes-count" class="w-6 text-center font-bold text-xs text-gray-900">0</span>
+                                    <span id="manettes-count" class="w-6 text-center font-bold text-xs text-gray-900">1</span>
                                     <button type="button" id="btn-plus" class="w-8 h-8 flex items-center justify-center text-gray-600 hover:text-primary transition-colors disabled:opacity-30 disabled:cursor-not-allowed">
                                         <i class="fas fa-plus text-[10px]"></i>
                                     </button>
@@ -452,7 +452,7 @@
             // --- Gestion des Manettes ---
 
             let manettePrix=document.getElementById("prixManette");
-            let manettesCount = 0;
+            let manettesCount = 1;
             const maxManettes = 4;
             const btnMinus = document.getElementById('btn-minus');
             const btnPlus = document.getElementById('btn-plus');
@@ -463,7 +463,7 @@
 
             function updateManettesCounter() {
                 if(countDisplay) countDisplay.innerText = manettesCount;
-                if(btnMinus) btnMinus.disabled = manettesCount <= 0;
+                if(btnMinus) btnMinus.disabled = manettesCount <= 1;
                 if(btnPlus) btnPlus.disabled = manettesCount >= maxManettes;
                 const btnReserve = document.getElementById("btnReserve");
 
@@ -497,7 +497,7 @@
 
             if (btnMinus && btnPlus) {
                 btnMinus.addEventListener('click', () => {
-                    if (manettesCount > 0) { manettesCount--; updateManettesCounter(); }
+                    if (manettesCount > 1) { manettesCount--; updateManettesCounter(); }
                 });
                 btnPlus.addEventListener('click', () => {
                     if (manettesCount < maxManettes) { manettesCount++; updateManettesCounter(); }
