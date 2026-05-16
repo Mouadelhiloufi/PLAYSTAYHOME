@@ -123,22 +123,36 @@
             border-radius: 1.25rem;
             box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
             overflow: hidden;
-            max-width: 28rem;
+            max-width: 40rem;
             width: 100%;
             border: 1px solid #e2e8f0;
         }
         .confirm-modal-header {
             background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #1978e5 100%);
             color: #fff;
-            padding: 1.25rem 1.5rem;
+            min-height: 4rem;
+            padding: 1rem 1.5rem;
             font-weight: 800;
             font-size: 1.125rem;
             letter-spacing: -0.02em;
             text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+        }
+        .confirm-modal-header span {
+            display: block;
+            width: 100%;
+            color: #fff !important;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
         }
         .confirm-modal-body {
             background: #fff;
             padding: 1.5rem;
+            max-height: calc(100vh - 8rem);
+            overflow-y: auto;
         }
         .confirm-field-label {
             font-size: 0.8125rem;
@@ -161,6 +175,7 @@
         }
         .confirm-phone-row {
             display: flex;
+            align-items: stretch;
             border: 1px solid #e2e8f0;
             border-radius: 0.75rem;
             overflow: hidden;
@@ -182,6 +197,11 @@
             font-size: 0.875rem;
             min-width: 0;
         }
+
+        .confirm-textarea {
+            min-height: 5.5rem;
+            resize: vertical;
+        }
         .confirm-phone-input:focus {
             outline: none;
         }
@@ -194,6 +214,10 @@
 
         /* Responsive: éviter le débordement du téléphone sur mobile */
         @media (max-width: 420px) {
+            .confirm-modal-card {
+                width: calc(100vw - 1.5rem);
+            }
+
             .confirm-modal-body {
                 padding: 1.1rem;
             }
@@ -326,7 +350,7 @@
         <!-- Modal confirmation (téléphone + adresse) -->
         <div id="confirmReservationModal" class="fixed inset-0 z-200 hidden items-center justify-center p-4 confirm-modal-overlay" aria-hidden="true">
             <div class="confirm-modal-card bg-white" role="dialog" aria-labelledby="confirmModalTitle">
-                <div class="confirm-modal-header" id="confirmModalTitle">Confirmation de réservation</div>
+                <div class="confirm-modal-header" id="confirmModalTitle"><span>Confirmation de réservation</span></div>
                 <div class="confirm-modal-body space-y-5">
                     <p class="text-xs text-gray-500 leading-relaxed">Indiquez vos coordonnées pour finaliser la location. Ces informations sont enregistrées avec votre réservation.</p>
                     <div>
