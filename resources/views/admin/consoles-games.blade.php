@@ -600,65 +600,6 @@
                 if (!title || !genre || !image) {
                     return;
                 }
-
-
-            const btnDeleteGame = document.getElementById('btnDeleteGame');
-            if (btnDeleteGame) {
-                btnDeleteGame.addEventListener('click', async (e) => {
-                    e.preventDefault();
-
-                    const select = document.getElementById('deleteGameSelect');
-                    if (!select) {
-                        return;
-                    }
-
-                    const gameId = select.value;
-                    if (!gameId) {
-                        await Swal.fire({ icon: 'warning', title: 'Attention', text: 'Choisir un jeu.' });
-                        return;
-                    }
-
-                    const confirmation = await Swal.fire({
-                        icon: 'warning',
-                        title: 'Supprimer le jeu ?',
-                        text: 'Cette action supprimera aussi ses associations avec les consoles.',
-                        showCancelButton: true,
-                        confirmButtonText: 'Oui, supprimer',
-                        cancelButtonText: 'Annuler',
-                        confirmButtonColor: '#dc2626'
-                    });
-
-                    if (!confirmation.isConfirmed) {
-                        return;
-                    }
-
-                    try {
-                        const res = await fetch(`/api/games/${gameId}`, {
-                            method: 'DELETE',
-                            headers: {
-                                'Accept': 'application/json',
-                                'Authorization': 'Bearer ' + token
-                            }
-                        });
-
-                        if (!res.ok) {
-                            const error = await res.json().catch(() => null);
-                            console.error('Erreur suppression jeu', error);
-                            await Swal.fire({ icon: 'error', title: 'Erreur', text: 'Erreur suppression jeu' });
-                            return;
-                        }
-
-                        select.value = '';
-                        document.getElementById('consoleGamesCheckboxes').innerHTML = '';
-                        await Swal.fire({ icon: 'success', title: 'Supprimé', text: 'Jeu supprimé avec succès', timer: 1500, showConfirmButton: false });
-                        getGames();
-                        getConsoles();
-                    } catch (err) {
-                        console.error('Erreur suppression jeu', err);
-                        await Swal.fire({ icon: 'error', title: 'Erreur', text: 'Erreur suppression jeu' });
-                    }
-                });
-            }
                 const titleValue = title.value.trim();
                 const genreValue = genre.value.trim();
                 const imageValue = image.value.trim();
@@ -693,6 +634,64 @@
                     }
                 } catch (err) {
                     console.error("Erreur creation jeu", err);
+                }
+            });
+        }
+
+        const btnDeleteGame = document.getElementById('btnDeleteGame');
+        if (btnDeleteGame) {
+            btnDeleteGame.addEventListener('click', async (e) => {
+                e.preventDefault();
+
+                const select = document.getElementById('deleteGameSelect');
+                if (!select) {
+                    return;
+                }
+
+                const gameId = select.value;
+                if (!gameId) {
+                    await Swal.fire({ icon: 'warning', title: 'Attention', text: 'Choisir un jeu.' });
+                    return;
+                }
+
+                const confirmation = await Swal.fire({
+                    icon: 'warning',
+                    title: 'Supprimer le jeu ?',
+                    text: 'Cette action supprimera aussi ses associations avec les consoles.',
+                    showCancelButton: true,
+                    confirmButtonText: 'Oui, supprimer',
+                    cancelButtonText: 'Annuler',
+                    confirmButtonColor: '#dc2626'
+                });
+
+                if (!confirmation.isConfirmed) {
+                    return;
+                }
+
+                try {
+                    const res = await fetch(`/api/games/${gameId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Authorization': 'Bearer ' + token
+                        }
+                    });
+
+                    if (!res.ok) {
+                        const error = await res.json().catch(() => null);
+                        console.error('Erreur suppression jeu', error);
+                        await Swal.fire({ icon: 'error', title: 'Erreur', text: 'Erreur suppression jeu' });
+                        return;
+                    }
+
+                    select.value = '';
+                    document.getElementById('consoleGamesCheckboxes').innerHTML = '';
+                    await Swal.fire({ icon: 'success', title: 'Supprime', text: 'Jeu supprimé avec succès', timer: 1500, showConfirmButton: false });
+                    getGames();
+                    getConsoles();
+                } catch (err) {
+                    console.error('Erreur suppression jeu', err);
+                    await Swal.fire({ icon: 'error', title: 'Erreur', text: 'Erreur suppression jeu' });
                 }
             });
         }
@@ -811,9 +810,11 @@
         }
 
         const addConsoleSelect = document.getElementById('addConsoleSelect');
-        
-        //selection de console que je veux fetcher ces games pour le cocher
+
+        // selection de console que je veux fetcher ces games pour le cocher
+        if (addConsoleSelect) {
             addConsoleSelect.addEventListener('change', (e) => loadConsoleGames(e.target.value));
+        }
         
 
         let btnAttachGames = document.getElementById("btnAttachGames");
@@ -838,7 +839,7 @@
                 const selectedIds = [];
                 const checkedBoxes = container.querySelectorAll('input[name="consoleGame"]:checked');
                 for (const checkbox of checkedBoxes) {
-                    selectedIds.push(checkbox.value);
+                    selectedIds.push(Number(checkbox.value));
                 }
 
                 try {
@@ -856,6 +857,7 @@
                     });
 
                     if (res.ok) {
+                        await Swal.fire({ icon: 'success', title: 'Succès', text: 'Jeux associés avec succès', timer: 1400, showConfirmButton: false });
                         getConsoles();
                     } else {
                         const error = await res.json().catch(() => null);
