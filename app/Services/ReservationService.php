@@ -90,11 +90,12 @@ class ReservationService{
         }
 
 
+        // Only consider accepted reservations as blocking dates. Pending/refused should not block.
         $reservationExists= Reservation::where('console_id',$console->id)
-    ->whereIn('status', ['pending', 'accepted', 'active'])
-    ->where('start_date', '<=', $endDate)
-    ->where('end_date', '>=', $startDate)
-    ->exists();
+        ->whereIn('status', ['accepted'])
+        ->where('start_date', '<=', $endDate)
+        ->where('end_date', '>=', $startDate)
+        ->exists();
 
 
 
