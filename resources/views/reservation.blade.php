@@ -366,6 +366,11 @@
                         <textarea id="confirmAddress" class="confirm-textarea min-h-22 resize-y" rows="3" placeholder="Rue, quartier, ville..." maxlength="5000"></textarea>
                         <p class="confirm-hint">Adresse complète pour la livraison ou la prise en charge.</p>
                     </div>
+                    <div>
+                        <label class="confirm-field-label" for="confirmCIN">Numéro de carte d'identité</label>
+                        <input type="text" id="confirmCIN" class="confirm-phone-input" placeholder="AB123456" maxlength="50">
+                        <p class="confirm-hint">Votre numéro de carte nationale (CIN).</p>
+                    </div>
                     <div class="flex flex-col-reverse sm:flex-row gap-2 pt-1">
                         <button type="button" id="btnConfirmReservationCancel" class="w-full sm:flex-1 rounded-xl border border-gray-200 py-3 text-sm font-bold text-gray-600 hover:bg-gray-50 transition-colors">Annuler</button>
                         <button type="button" id="btnConfirmReservationSubmit" class="w-full sm:flex-1 rounded-xl bg-primary py-3 text-sm font-bold text-white shadow-lg shadow-blue-200 hover:bg-blue-600 transition-colors">Confirmer la réservation</button>
@@ -671,6 +676,7 @@
             const confirmModal = document.getElementById('confirmReservationModal');
             const confirmPhone = document.getElementById('confirmPhone');
             const confirmAddress = document.getElementById('confirmAddress');
+            const confirmCIN = document.getElementById('confirmCIN');
             const btnConfirmCancel = document.getElementById('btnConfirmReservationCancel');
             const btnConfirmSubmit = document.getElementById('btnConfirmReservationSubmit');
 
@@ -720,12 +726,14 @@
 
                 confirmPhone.value = '';
                 confirmAddress.value = '';
+                confirmCIN.value = '';
                 openConfirmModal();
             });
 
             btnConfirmSubmit.addEventListener('click', async () => {
                 const phoneDigits = confirmPhone.value.replace(/\D/g, '');
                 const addressVal = confirmAddress.value.trim();
+                const cinVal = confirmCIN.value.trim();
 
                 if (phoneDigits.length < 9) {
                     await Swal.fire({
@@ -764,7 +772,8 @@
                             nombre_manettes: manettesCount,
                             coupon_code: couponCode !== "" ? couponCode : null,
                             phone: phoneStored,
-                            address: addressVal
+                            address: addressVal,
+                            cin: cinVal !== "" ? cinVal : null
                         })
                     });
 

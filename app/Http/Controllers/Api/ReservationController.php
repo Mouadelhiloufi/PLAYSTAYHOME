@@ -97,10 +97,11 @@ class ReservationController extends Controller
             'nombre_manettes' => 'nullable|integer|min:1|max:4',
             'phone' => 'required|string|max:50',
             'address' => 'required|string|max:5000',
+            'cin' => 'nullable|string|max:50',
         ]);
 
         $reservation = $this->reservationService->createReservation(
-            $request->only(['console_id', 'start_date', 'end_date', 'coupon_code', 'nombre_manettes', 'phone', 'address'])
+            $request->only(['console_id', 'start_date', 'end_date', 'coupon_code', 'nombre_manettes', 'phone', 'address', 'cin'])
         );
 
         return response()->json([

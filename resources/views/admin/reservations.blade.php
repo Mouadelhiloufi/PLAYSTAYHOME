@@ -251,6 +251,7 @@
                         const status = getReservationStatus(reservation);
                         const statusBadge = getStatusBadge(status);
                         const actions = getStatusActions(reservation);
+                        const contractUrl = `/admin/reservations/${reservation.id}/contract`;
 
                         rows += `
                             <tr class="border-b border-gray-50 hover:bg-gray-50/30 transition-colors" data-reservation-row="${reservation.id}">
@@ -261,7 +262,15 @@
                                 <td class="py-5 px-4 text-gray-600">${phone}</td>
                                 <td class="py-5 px-4 text-gray-600 max-w-[18rem] truncate" title="${address}">${address}</td>
                                 <td class="py-5 px-4 text-right">${statusBadge}</td>
-                                <td class="py-5 px-7 text-right">${actions}</td>
+                                <td class="py-5 px-7 text-right">
+                                    <div class="flex items-center justify-end gap-2">
+                                        <a href="${contractUrl}" target="_blank" class="rounded-xl bg-blue-600 px-3 py-2 text-[11px] font-black uppercase tracking-wider text-white hover:bg-blue-700 transition-colors inline-flex items-center gap-2">
+                                            <i class="fa-solid fa-file-pdf"></i>
+                                            PDF
+                                        </a>
+                                        ${actions}
+                                    </div>
+                                </td>
                             </tr>
                         `;
                     });

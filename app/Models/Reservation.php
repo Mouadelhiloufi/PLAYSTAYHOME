@@ -17,6 +17,7 @@ class Reservation extends Model
         'status',
         'phone',
         'address',
+        'cin',
     ];
 
     protected $casts = [

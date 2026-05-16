@@ -66,6 +66,12 @@ Route::get('/admin/reservations', function () {
     return view('admin.reservations');
 });
 
+Route::get('/admin/reservations/{reservation}/contract', function ($reservation) {
+    return view('admin.reservation-contract', [
+        'reservationId' => $reservation,
+    ]);
+});
+
 Route::get('/admin/chat', function () {
     return view('admin.chat');
 });
