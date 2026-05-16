@@ -187,6 +187,7 @@ class ReservationService{
             'status' => 'pending',
             'phone' => $data['phone'],
             'address' => $data['address'],
+            'cin' => $data['cin'] ?? null,
         ]);
 
         if ($nombreManettes > 0) {

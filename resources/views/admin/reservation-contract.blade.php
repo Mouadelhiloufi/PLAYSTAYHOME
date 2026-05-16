@@ -554,7 +554,7 @@
             const clientName = reservation.user?.name || 'Client inconnu';
             const phone = formatPhone(reservation.phone);
             const address = reservation.address || '--';
-            const cin = reservation.cin || '--';
+            const cin = reservation.cin || reservation.user?.cin || '--';
             const consoleName = reservation.console?.name || 'Console inconnue';
             const price = reservation.total_price ? `${reservation.total_price} DH` : '0 DH';
             const startDate = formatDate(reservation.start_date);
