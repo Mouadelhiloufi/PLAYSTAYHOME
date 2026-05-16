@@ -53,7 +53,9 @@ class ConsoleController extends Controller
     public function reservedDates($id){
 
     $blocketDates=[];
+    // Ne récupérer que les réservations confirmées/actives pour bloquer les dates
     $reservations = Reservation::where('console_id',$id)
+    ->whereIn('status', ['accepted', 'active'])
     ->where('end_date','>=',now()->toDateString())
     ->get(['start_date','end_date']);
 
