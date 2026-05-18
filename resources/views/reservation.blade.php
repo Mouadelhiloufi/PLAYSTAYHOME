@@ -583,7 +583,13 @@
                     if(document.getElementById('brand')) document.getElementById('brand').innerText = `${t('common.brand', 'Marque')} : ${currentConsoleInfo.brand}`;
                     
                     if(document.getElementById('recapTitle')) document.getElementById('recapTitle').innerText = currentConsoleInfo.name;
-                    if(document.getElementById('dailyPriceDisplay')) document.getElementById('dailyPriceDisplay').innerText = `${currentConsoleInfo.daily_price} DH / jour`;
+                    if (document.getElementById('dailyPriceDisplay')) {
+                        const basePrice = Number(currentConsoleInfo.daily_price || 0);
+                        const effectivePrice = Number(currentConsoleInfo.effective_daily_price ?? currentConsoleInfo.daily_price ?? 0);
+                        document.getElementById('dailyPriceDisplay').innerHTML = effectivePrice < basePrice && currentConsoleInfo.has_active_promo
+                            ? `<span class="line-through text-gray-400 mr-2">${basePrice.toFixed(2)} DH</span><span>${effectivePrice.toFixed(2)} DH / jour</span>`
+                            : `${effectivePrice.toFixed(2)} DH / jour`;
+                    }
                 }
 
             } catch (e) {

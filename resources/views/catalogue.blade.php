@@ -380,6 +380,12 @@
                         const buttonAction = isAvailable
                             ? `onclick="window.location.href='/reservation?console_id=${console.id}'"`
                             : 'disabled';
+                        const basePrice = Number(console.daily_price || 0);
+                        const effectivePrice = Number(console.effective_daily_price ?? console.daily_price ?? 0);
+                        const hasPromo = Boolean(console.has_active_promo && effectivePrice < basePrice);
+                        const priceHtml = hasPromo
+                            ? `<span class="line-through text-gray-400 text-lg mr-2">${basePrice.toFixed(2)} DH</span><span>${effectivePrice.toFixed(2)} DH</span>`
+                            : `${basePrice.toFixed(2)} DH`;
 
                         container.innerHTML += `
                         <article class="panel catalog-card catalog-card-featured flex flex-col justify-between relative${cardClass}">
@@ -399,7 +405,7 @@
                                         </div>
                                     </div>
                                     <div class="shrink-0 text-right ml-3">
-                                        <p class="catalog-card-price text-2xl font-black text-primary">${console.daily_price} DH</p>
+                                        <p class="catalog-card-price text-2xl font-black text-primary">${priceHtml}</p>
                                         <p class="text-[9px] font-medium text-gray-400 mt-1 uppercase tracking-wide">${t('cataloguePage.perDay', '/ par jour')}</p>
                                     </div>
                                 </div>
@@ -437,7 +443,8 @@
                 priceDisplay.innerText = maxPrice + " DH";
 
                 let filteredConsoles = consoles.filter(console => {
-                    return parseFloat(console.daily_price) <= maxPrice;
+                    const price = parseFloat(console.effective_daily_price ?? console.daily_price ?? 0);
+                    return price <= maxPrice;
                 });
 
                 displayConsoles(filteredConsoles);

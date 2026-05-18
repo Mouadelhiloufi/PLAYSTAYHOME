@@ -30,7 +30,7 @@
 <body class="flex min-h-screen">
 
     <!-- Sidebar / Menu Lateral -->
-    <aside class="w-65 bg-white border-r border-gray-100 flex flex-col justify-between py-8 px-6 shrink-0 fixed h-full z-10">
+    <aside class="bg-white border-r border-gray-100 flex flex-col justify-between py-8 px-6 shrink-0 fixed h-full z-10" style="width:260px;">
         <div>
             <!-- Logo -->
             <div class="flex items-center gap-4 text-primary mb-9">
@@ -72,7 +72,7 @@
     </aside>
 
     <!-- Contenu Principal -->
-    <main class="flex-1 ml-65 flex flex-col min-h-screen">
+    <main class="flex-1 flex flex-col min-h-screen" style="margin-left:260px;">
         <div class="p-10 flex-1 max-w-6xl mx-auto w-full">
 
             <!-- Top Header -->

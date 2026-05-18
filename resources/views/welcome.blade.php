@@ -419,7 +419,7 @@
                     </div>
 
                     <div class="mt-5 sm:mt-6 grid gap-6 md:gap-10 lg:grid-cols-2 lg:items-center flex-1 min-h-0">
-                        <div class="rounded-3xl bg-gradient-to-b from-gray-50 to-white p-4 md:p-6 shadow-inner border border-gray-100 flex flex-col justify-between min-h-[200px] md:min-h-[300px]">
+                        <div class="rounded-3xl bg-linear-to-b from-gray-50 to-white p-4 md:p-6 shadow-inner border border-gray-100 flex flex-col justify-between min-h-50 md:min-h-75">
                             
                             <div class="flex justify-between items-start w-full mb-4 shrink-0">
                                 <p id="quickReserveHint" class="text-[10px] md:text-xs font-semibold text-gray-500 bg-white/80 px-3 py-1 rounded-full shadow-sm backdrop-blur-sm border border-gray-100">Console 1 sur 1</p>
@@ -444,7 +444,7 @@
                         <div class="flex flex-col justify-center space-y-4 md:space-y-6 min-w-0">
                             <div class="min-w-0">
                                 <p id="quickReserveConsoleBrand" class="text-xs md:text-sm font-bold uppercase tracking-[0.2em] text-primary truncate">Brand</p>
-                                <h3 id="quickReserveConsoleName" class="mt-1 text-2xl sm:text-3xl md:text-4xl font-black tracking-tight text-gray-900 leading-none truncate whitespace-normal break-words">Console</h3>
+                                <h3 id="quickReserveConsoleName" class="mt-1 text-2xl sm:text-3xl md:text-4xl font-black tracking-tight text-gray-900 leading-none truncate whitespace-normal wrap-break-word">Console</h3>
                                 <p id="quickReserveConsolePrice" class="mt-2 md:mt-3 text-xl sm:text-2xl md:text-3xl font-black text-gray-900">-- DH <span class="text-xs sm:text-sm md:text-lg font-medium text-gray-500" data-i18n="common.perDay">/ jour</span></p>
                             </div>
 
@@ -620,7 +620,13 @@
             quickReserveConsoleImage.alt = consoleItem.name || t('common.console', 'Console');
             quickReserveConsoleBrand.textContent = consoleItem.brand || t('common.unknownBrand', 'Marque inconnue');
             quickReserveConsoleName.textContent = consoleItem.name || t('common.console', 'Console');
-            quickReserveConsolePrice.textContent = `${consoleItem.daily_price} DH ${t('common.perDay', '/ jour')}`;
+            const quickBasePrice = Number(consoleItem.daily_price || 0);
+            const quickEffectivePrice = Number(consoleItem.effective_daily_price ?? consoleItem.daily_price ?? 0);
+            if (quickReserveConsolePrice) {
+                quickReserveConsolePrice.innerHTML = quickEffectivePrice < quickBasePrice && consoleItem.has_active_promo
+                    ? `<span class="line-through text-gray-400 text-lg mr-2">${quickBasePrice.toFixed(2)} DH</span><span>${quickEffectivePrice.toFixed(2)} DH</span> <span class="text-xs font-medium text-gray-400">${t('common.perDay', '/ jour')}</span>`
+                    : `${quickEffectivePrice.toFixed(2)} DH ${t('common.perDay', '/ jour')}`;
+            }
             quickReserveConsoleGames.innerHTML = renderGamesList(consoleItem);
 
             quickReserveReserve.onclick = () => window.location.href = reserveUrl;
@@ -693,6 +699,12 @@
                     ? `<a href="${reserveUrl}" class="block hover:-translate-y-0.5 transition-transform">`
                     : `<div class="block cursor-not-allowed">`;
                 const closeTag = isAvailable ? `</a>` : `</div>`;
+                const basePrice = Number(consoleItem.daily_price || 0);
+                const effectivePrice = Number(consoleItem.effective_daily_price ?? consoleItem.daily_price ?? 0);
+                const hasPromo = Boolean(consoleItem.has_active_promo && effectivePrice < basePrice);
+                const priceHtml = hasPromo
+                    ? `<span class="line-through text-gray-400 text-lg mr-2">${basePrice.toFixed(2)} DH</span><span>${effectivePrice.toFixed(2)} DH</span>`
+                    : `${effectivePrice.toFixed(2)} DH`;
 
                 container.innerHTML += `${openTag}<article class="console-card rounded-3xl p-4 relative${cardClass}">
                     ${lockBadge}
@@ -708,7 +720,7 @@
                             <span class="rounded-full px-2 py-1 text-[10px] font-bold uppercase tracking-wide ${statusClass}">${statusLabel}</span>
                         </div>
                         <div class="mt-5 flex items-end justify-between relative">
-                            <p class="text-3xl font-black text-primary">${consoleItem.daily_price} <span class="text-lg">DH</span><span class="ml-1 text-xs font-medium text-gray-400">${t('common.perDay', '/ jour')}</span></p>
+                            <p class="text-3xl font-black text-primary">${priceHtml} <span class="ml-1 text-xs font-medium text-gray-400">${t('common.perDay', '/ jour')}</span></p>
                             
                             <div class="relative">
                                 <button onclick="event.preventDefault(); event.stopPropagation(); toggleConsoleMenu(${consoleItem.id});" class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-900 text-white hover:bg-gray-800 transition-colors">
