@@ -374,6 +374,7 @@
                         <div class="grid-2">
                             <div class="field"><span class="label">Type de console</span><div class="value" id="consoleFr">--</div></div>
                             <div class="field"><span class="label">Prix de location</span><div class="value" id="priceFr">--</div></div>
+                            <div class="field"><span class="label">Nombre de manettes</span><div class="value" id="manettesFr">--</div></div>
                             <div class="field"><span class="label">Date de prise</span><div class="value" id="startFr">--</div></div>
                             <div class="field"><span class="label">Date de retour</span><div class="value" id="endFr">--</div></div>
                         </div>
@@ -383,6 +384,7 @@
                         <div class="grid-2 rtl">
                             <div class="field"><span class="label">نوع الكونصول</span><div class="value" id="consoleAr">--</div></div>
                             <div class="field"><span class="label">ثمن الكراء</span><div class="value" id="priceAr">--</div></div>
+                            <div class="field"><span class="label">عدد اليدات</span><div class="value" id="manettesAr">--</div></div>
                             <div class="field"><span class="label">تاريخ الاستلام</span><div class="value" id="startAr">--</div></div>
                             <div class="field"><span class="label">تاريخ الإرجاع</span><div class="value" id="endAr">--</div></div>
                         </div>
@@ -557,6 +559,9 @@
             const cin = reservation.cin || reservation.user?.cin || '--';
             const consoleName = reservation.console?.name || 'Console inconnue';
             const price = reservation.total_price ? `${reservation.total_price} DH` : '0 DH';
+            const controllersCount = Number(reservation.manettes_count ?? reservation.manettes?.length ?? 0);
+            const controllersLabelFr = `${controllersCount} manette${controllersCount > 1 ? 's' : ''}`;
+            const controllersLabelAr = controllersCount > 1 ? `${controllersCount} يدات` : `${controllersCount} يدة`;
             const startDate = formatDate(reservation.start_date);
             const endDate = formatDate(reservation.end_date);
             const issueDate = new Date().toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' });
@@ -574,6 +579,8 @@
             fillValue('consoleAr', consoleArabic(consoleName));
             fillValue('priceFr', price);
             fillValue('priceAr', price);
+            fillValue('manettesFr', controllersLabelFr);
+            fillValue('manettesAr', controllersLabelAr);
             fillValue('startFr', startDate);
             fillValue('startAr', startDate);
             fillValue('endFr', endDate);

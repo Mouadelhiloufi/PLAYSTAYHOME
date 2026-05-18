@@ -119,6 +119,7 @@
                             <tr class="bg-gray-50/50 text-[10px] uppercase tracking-widest text-gray-400 font-black">
                                 <th class="py-5 px-7">Client</th>
                                 <th class="py-5 px-4">Article</th>
+                                <th class="py-5 px-4">Manettes</th>
                                 <th class="py-5 px-4">Dates</th>
                                 <th class="py-5 px-4">Montant</th>
                                 <th class="py-5 px-7 text-right">Statut</th>
@@ -126,7 +127,7 @@
                         </thead>
                         <tbody id="historyTbody" class="text-sm font-semibold text-gray-700">
                             <tr>
-                                <td colspan="5" class="py-8 px-7 text-center text-gray-400">Chargement...</td>
+                                <td colspan="6" class="py-8 px-7 text-center text-gray-400">Chargement...</td>
                             </tr>
                         </tbody>
                     </table>
@@ -262,7 +263,7 @@
                 const reservations = Array.isArray(payload.data) ? payload.data : [];
                 const latest = reservations.slice(0, 6);
                 if (!latest.length) {
-                    historyTbody.innerHTML = '<tr><td colspan="5" class="py-8 px-7 text-center text-gray-400">Aucune reservation trouvee.</td></tr>';
+                    historyTbody.innerHTML = '<tr><td colspan="6" class="py-8 px-7 text-center text-gray-400">Aucune reservation trouvee.</td></tr>';
                     return;
                 }
 
@@ -271,6 +272,7 @@
                     const clientName = r.user?.name || 'Client inconnu';
                     const firstLetter = clientName.charAt(0).toUpperCase();
                     const consoleName = r.console?.name || 'Console inconnue';
+                    const controllersCount = Number(r.manettes_count ?? r.manettes?.length ?? 0);
 
                     const start = new Date(r.start_date);
                     const end = new Date(r.end_date);
@@ -287,6 +289,11 @@
                                 </div>
                             </td>
                             <td class="py-5 px-4 text-gray-900 font-bold">${consoleName}</td>
+                            <td class="py-5 px-4">
+                                <span class="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-100 text-[10px] font-black uppercase tracking-wider">
+                                    ${controllersCount} manette${controllersCount > 1 ? 's' : ''}
+                                </span>
+                            </td>
                             <td class="py-5 px-4 text-gray-500">${startText} - ${endText}</td>
                             <td class="py-5 px-4 font-black text-gray-900">${Number(r.total_price || 0).toFixed(2)} DH</td>
                             <td class="py-5 px-7 text-right">${statusBadge}</td>
@@ -297,7 +304,7 @@
                 historyTbody.innerHTML = rows;
             } catch (error) {
                 console.error('Erreur chargement dashboard reservations:', error);
-                historyTbody.innerHTML = '<tr><td colspan="5" class="py-8 px-7 text-center text-red-400">Impossible de charger l historique.</td></tr>';
+                historyTbody.innerHTML = '<tr><td colspan="6" class="py-8 px-7 text-center text-red-400">Impossible de charger l historique.</td></tr>';
             }
         });
     </script>

@@ -28,7 +28,7 @@ class ReservationController extends Controller
 
         $user = Auth::user();
 
-        $query = Reservation::with(['console', 'user'])->latest();
+        $query = Reservation::with(['console', 'user'])->withCount('manettes')->latest();
 
         if ($user->role !== 'admin') {
             $query->where('user_id', Auth::id());
@@ -124,7 +124,7 @@ class ReservationController extends Controller
             return response()->json(['message' => 'Accès non autorisé.'], 403);
         }
 
-        $reservation = Reservation::with(['console', 'user'])->findOrFail($id);
+        $reservation = Reservation::with(['console', 'user'])->withCount('manettes')->findOrFail($id);
         $currentStatus = strtolower((string) $reservation->status);
 
         if (! in_array($currentStatus, ['pending', 'active'], true)) {
@@ -183,7 +183,7 @@ class ReservationController extends Controller
 
     public function show($id)
     {
-        $reservation = Reservation::with(['console', 'user'])->findOrFail($id);
+        $reservation = Reservation::with(['console', 'user'])->withCount('manettes')->findOrFail($id);
 
         if (! Auth::check()) {
             return response()->json(['message' => 'Non authentifié.'], 401);
