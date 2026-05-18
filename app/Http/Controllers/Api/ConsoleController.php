@@ -7,6 +7,8 @@ use App\Models\Console;
 use Illuminate\Http\Request;
 use App\Models\Reservation;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
+use Illuminate\Validation\ValidationException;
 
 class ConsoleController extends Controller
 {
@@ -23,6 +25,10 @@ class ConsoleController extends Controller
             'brand' => 'required|string|max:255',
             'daily_price' => 'required|numeric|min:0',
             'ability' => 'nullable|boolean',
+            'promo_price' => 'nullable|numeric|min:0',
+            'promo_starts_at' => 'nullable|date',
+            'promo_ends_at' => 'nullable|date',
+            'promo_active' => 'nullable|boolean',
         ];
 
         if ($request->hasFile('image')) {
@@ -40,6 +46,15 @@ class ConsoleController extends Controller
         }
 
         $validated['ability'] = $validated['ability'] ?? true;
+        $validated['promo_active'] = $validated['promo_active'] ?? false;
+
+        if (! empty($validated['promo_starts_at']) && ! empty($validated['promo_ends_at'])) {
+            if (Carbon::parse($validated['promo_ends_at'])->lt(Carbon::parse($validated['promo_starts_at']))) {
+                throw ValidationException::withMessages([
+                    'promo_ends_at' => 'La date de fin de promo doit être supérieure ou égale à la date de début.',
+                ]);
+            }
+        }
 
         $console = Console::create($validated);
 
@@ -80,6 +95,10 @@ class ConsoleController extends Controller
             'brand' => 'string|max:255',
             'daily_price' => 'numeric|min:0',
             'ability' => 'nullable|boolean',
+            'promo_price' => 'nullable|numeric|min:0',
+            'promo_starts_at' => 'nullable|date',
+            'promo_ends_at' => 'nullable|date',
+            'promo_active' => 'nullable|boolean',
         ];
 
         if ($request->hasFile('image')) {
@@ -89,6 +108,14 @@ class ConsoleController extends Controller
         }
 
         $validated = $request->validate($rules);
+
+        if (! empty($validated['promo_starts_at']) && ! empty($validated['promo_ends_at'])) {
+            if (Carbon::parse($validated['promo_ends_at'])->lt(Carbon::parse($validated['promo_starts_at']))) {
+                throw ValidationException::withMessages([
+                    'promo_ends_at' => 'La date de fin de promo doit être supérieure ou égale à la date de début.',
+                ]);
+            }
+        }
 
         if ($request->hasFile('image')) {
             if ($console->image) {

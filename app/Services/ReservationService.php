@@ -226,7 +226,7 @@ class ReservationService{
         $totalPrice = 0;
 
         foreach (CarbonPeriod::create($startDate, $endDate) as $date) {
-            $price = $console->daily_price;
+            $price = $console->effectiveDailyPriceForDate($date);
 
             // tarif majore le weekend
             if ($date->isWeekend()) {

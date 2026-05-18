@@ -30,7 +30,7 @@
 <body class="flex min-h-screen">
 
     <!-- Sidebar / Menu Lateral -->
-    <aside class="w-[260px] bg-white border-r border-gray-100 flex flex-col justify-between py-8 px-6 shrink-0 fixed h-full z-10">
+    <aside class="w-65 bg-white border-r border-gray-100 flex flex-col justify-between py-8 px-6 shrink-0 fixed h-full z-10">
         <div>
             <!-- Logo -->
             <div class="flex items-center gap-4 text-primary mb-9">
@@ -72,7 +72,7 @@
     </aside>
 
     <!-- Contenu Principal -->
-    <main class="flex-1 ml-[260px] flex flex-col min-h-screen">
+    <main class="flex-1 ml-65 flex flex-col min-h-screen">
         <div class="p-10 flex-1 max-w-6xl mx-auto w-full">
 
             <!-- Top Header -->
@@ -163,6 +163,26 @@
                                 <option>Maintenance</option>
                             </select>
                             <button id="btnUpdate" type="button" class="w-full bg-gray-900 text-white font-bold py-2.5 rounded-xl">Enregistrer</button>
+                        </form>
+                    </section>
+
+                    <section class="bg-white rounded-3xl shadow-[0_4px_20px_rgba(15,23,42,0.03)] border border-gray-100 p-6">
+                        <h3 class="text-lg font-black text-gray-900 mb-4">Promotions par console</h3>
+                        <form class="space-y-3">
+                            <select id="promoConsoleSelect" class="w-full rounded-xl border border-gray-200 px-4 py-2 text-sm">
+                                <option value="">Choisir une console</option>
+                            </select>
+                            <input id="promoPrice" type="number" min="0" step="0.01" placeholder="Prix promo / jour" class="w-full rounded-xl border border-gray-200 px-4 py-2 text-sm">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <input id="promoStartsAt" type="date" class="w-full rounded-xl border border-gray-200 px-4 py-2 text-sm">
+                                <input id="promoEndsAt" type="date" class="w-full rounded-xl border border-gray-200 px-4 py-2 text-sm">
+                            </div>
+                            <label class="flex items-center gap-2 text-sm text-gray-700 font-medium">
+                                <input id="promoActive" type="checkbox" class="rounded border-gray-300" checked>
+                                Promo active
+                            </label>
+                            <p class="text-xs text-gray-400 leading-relaxed">Le prix promo remplace le prix journalier de base pendant la période indiquée.</p>
+                            <button id="btnSavePromo" type="button" class="w-full bg-primary text-white font-bold py-2.5 rounded-xl">Enregistrer la promo</button>
                         </form>
                     </section>
 
@@ -302,6 +322,7 @@
                 const editSelect = document.getElementById('editConsoleSelect');
                 const addSelect = document.getElementById('addConsoleSelect');
                 const deleteSelect = document.getElementById('deleteConsoleSelect');
+                const promoSelect = document.getElementById('promoConsoleSelect');
 
                 if (count) {
                     count.textContent = `${consoles.length} consoles`;
@@ -315,6 +336,9 @@
                     }
                     if (addSelect) {
                         addSelect.innerHTML = '<option value="">Choisir une console</option>';
+                    }
+                    if (promoSelect) {
+                        promoSelect.innerHTML = '<option value="">Choisir une console</option>';
                     }
                     return;
                 }
@@ -335,6 +359,9 @@
                     if (deleteSelect) {
                         deleteSelect.innerHTML = options;
                     }
+                    if (promoSelect) {
+                        promoSelect.innerHTML = options;
+                    }
                 }
 
                 let html = '';
@@ -342,7 +369,15 @@
                     const ref = item.id ? String(item.id).padStart(3, '0') : '--';
                     const name = item.name || 'Console';
                     const brand = item.brand || '';
-                    const price = item.daily_price ? `${item.daily_price} DH / jour` : '0 DH / jour';
+                    const basePrice = Number(item.daily_price || 0);
+                    const effectivePrice = Number(item.effective_daily_price ?? item.daily_price ?? 0);
+                    const promoActive = Boolean(item.has_active_promo);
+                    const promoLine = promoActive && effectivePrice !== basePrice
+                        ? `<p class="text-xs font-bold text-emerald-600 mt-1">Promo active: ${effectivePrice.toFixed(2)} DH / jour</p>`
+                        : '';
+                    const price = promoActive && effectivePrice !== basePrice
+                        ? `<span class="line-through text-gray-400 mr-2">${basePrice.toFixed(2)} DH / jour</span><span>${effectivePrice.toFixed(2)} DH / jour</span>`
+                        : `${basePrice.toFixed(2)} DH / jour`;
                     const statusLabel = item.ability ? 'Disponible' : 'Non disponible';
                     const statusClass = item.ability ? 'bg-green-100 text-green-600' : 'bg-yellow-100 text-yellow-700';
                     const games = Array.isArray(item.games) && item.games.length
@@ -360,7 +395,10 @@
                                 <span class="text-[10px] font-black uppercase ${statusClass} px-3 py-1 rounded-full">${statusLabel}</span>
                             </div>
                             <div class="mt-4 flex items-center justify-between text-sm">
-                                <p class="font-bold text-primary">${price}</p>
+                                <div>
+                                    <p class="font-bold text-primary">${price}</p>
+                                    ${promoLine}
+                                </div>
                                 <button type="button" class="text-xs font-bold text-gray-500 hover:text-gray-900">Modifier</button>
                             </div>
                             <div class="mt-3 text-xs text-gray-500">Jeux : ${games}</div>
@@ -746,6 +784,69 @@
                     }
                 } catch (err) {
                     console.error("Erreur update console", err);
+                }
+            });
+        }
+
+        const btnSavePromo = document.getElementById('btnSavePromo');
+        if (btnSavePromo) {
+            btnSavePromo.addEventListener('click', async (e) => {
+                e.preventDefault();
+
+                const select = document.getElementById('promoConsoleSelect');
+                const promoPrice = document.getElementById('promoPrice');
+                const promoStartsAt = document.getElementById('promoStartsAt');
+                const promoEndsAt = document.getElementById('promoEndsAt');
+                const promoActive = document.getElementById('promoActive');
+
+                if (!select || !promoPrice || !promoStartsAt || !promoEndsAt || !promoActive) {
+                    return;
+                }
+
+                const consoleId = select.value;
+                if (!consoleId) {
+                    await Swal.fire({ icon: 'warning', title: 'Attention', text: 'Choisir une console.' });
+                    return;
+                }
+
+                const promoPriceValue = promoPrice.value.trim();
+                if (!promoPriceValue) {
+                    await Swal.fire({ icon: 'warning', title: 'Attention', text: 'Indiquez un prix promo.' });
+                    return;
+                }
+
+                try {
+                    const res = await fetch(`/api/consoles/${consoleId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + token
+                        },
+                        body: JSON.stringify({
+                            promo_price: promoPriceValue,
+                            promo_starts_at: promoStartsAt.value || null,
+                            promo_ends_at: promoEndsAt.value || null,
+                            promo_active: !!promoActive.checked
+                        })
+                    });
+
+                    if (!res.ok) {
+                        const error = await res.json().catch(() => null);
+                        console.error('Erreur promo console', error);
+                        await Swal.fire({ icon: 'error', title: 'Erreur', text: error?.message || 'Erreur enregistrement promo' });
+                        return;
+                    }
+
+                    promoPrice.value = '';
+                    promoStartsAt.value = '';
+                    promoEndsAt.value = '';
+                    promoActive.checked = true;
+                    await Swal.fire({ icon: 'success', title: 'Succès', text: 'Promo enregistrée avec succès', timer: 1500, showConfirmButton: false });
+                    await getConsoles();
+                } catch (err) {
+                    console.error('Erreur promo console', err);
+                    await Swal.fire({ icon: 'error', title: 'Erreur', text: 'Erreur enregistrement promo' });
                 }
             });
         }
