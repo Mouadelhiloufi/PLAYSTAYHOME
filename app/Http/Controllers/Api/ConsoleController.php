@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Reservation;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Illuminate\Validation\ValidationException;
 
 class ConsoleController extends Controller
@@ -67,20 +68,20 @@ class ConsoleController extends Controller
 
     public function reservedDates($id){
 
-    $blocketDates=[];
-    // Ne récupérer que les réservations confirmées/actives pour bloquer les dates
-    $reservations = Reservation::where('console_id',$id)
-    ->whereIn('status', ['accepted', 'active'])
-    ->where('end_date','>=',now()->toDateString())
-    ->get(['start_date','end_date']);
+    $blockedDates = [];
+    // On bloque chaque jour individuellement pour que Flatpickr colore aussi le dernier jour en rouge.
+    $reservations = Reservation::where('console_id', $id)
+        ->whereIn('status', ['accepted', 'active'])
+        ->where('end_date', '>=', now()->toDateString())
+        ->get(['start_date', 'end_date']);
 
-    foreach($reservations as $res){
-        $blocketDates[]=[
-            'from'=>$res->start_date,
-            'to'=>$res->end_date
-        ];
+    foreach ($reservations as $reservation) {
+        foreach (CarbonPeriod::create($reservation->start_date, $reservation->end_date) as $date) {
+            $blockedDates[] = $date->toDateString();
+        }
     }
-    return response()->json($blocketDates);
+
+    return response()->json(array_values(array_unique($blockedDates)));
     }
 
     public function show(Console $console)
